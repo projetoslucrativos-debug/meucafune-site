@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cafuné – o app de autocuidado com o Dudu</title>
+<meta name="description" content="O Dudu é uma preguiça que comemora cada passinho seu: beber água, arrumar a cama, respirar fundo. Experimente grátis o Cafuné.">
+<meta property="og:title" content="Cafuné – um passinho de cada vez">
+<meta property="og:description" content="O app de autocuidado com o Dudu, a preguiça mais carinhosa (ou zoeira) do Brasil. Experimente grátis.">
+<meta property="og:image" content="/posts/s1-sab-qual-dudu-1.jpg">
+<meta name="theme-color" content="#FBF0B5">
+<link rel="icon" href="/icon.png">
+<link rel="apple-touch-icon" href="/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF6EE;--yel:#F6E38F;--yel2:#FBF0B5;--ink:#6B3420;--ink2:#8A5A3C;--coral:#E8665A;--line:#EFE2D2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;line-height:1.45}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font-size:30px;font-weight:900;letter-spacing:-.5px}
+.logo span{color:var(--coral)}
+.ig{font-weight:800;color:var(--ink2);text-decoration:none;font-size:15px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding:20px 0 40px}
+h1{font-size:clamp(34px,5.4vw,56px);line-height:1.05;margin:0 0 14px;font-weight:900;letter-spacing:-1px}
+.lead{font-size:clamp(17px,2vw,20px);color:var(--ink2);font-weight:700;margin:0 0 22px}
+.art{background:var(--yel2);border-radius:40px;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.art svg{width:88%;height:88%}
+.btn{display:inline-block;background:var(--ink);color:#fff;font-weight:900;font-size:18px;padding:16px 26px;border-radius:18px;text-decoration:none;border:none;cursor:pointer;font-family:inherit}
+.pill{display:inline-block;background:var(--yel);border-radius:999px;padding:6px 14px;font-weight:900;font-size:14px;margin-bottom:14px}
+section{padding:44px 0}
+h2{font-size:clamp(26px,3.6vw,38px);margin:0 0 8px;font-weight:900;letter-spacing:-.5px}
+.sub{color:var(--ink2);font-weight:700;margin:0 0 24px;font-size:17px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:#fff;border-radius:26px;padding:22px}
+.card h3{margin:8px 0 6px;font-size:22px;font-weight:900}
+.card p{margin:0;color:var(--ink2);font-weight:700}
+.card .q{margin-top:12px;background:var(--yel2);border-radius:16px;padding:10px 14px;color:var(--ink);font-weight:800}
+.face{width:86px;height:86px}
+.steps{counter-reset:s}
+.steps .card h3:before{counter-increment:s;content:counter(s);display:inline-flex;width:34px;height:34px;border-radius:50%;background:var(--yel);align-items:center;justify-content:center;margin-right:10px;font-size:18px}
+.offer{background:var(--ink);color:#fff;border-radius:34px;padding:34px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.offer h2{color:#fff}
+.offer .sub{color:#F3D9C6}
+.price{font-size:clamp(30px,8vw,44px);font-weight:900;white-space:nowrap}
+.price s{font-size:.5em;opacity:.6;margin-left:8px}
+form{background:#fff;color:var(--ink);border-radius:26px;padding:22px;display:flex;flex-direction:column;gap:12px}
+label{font-weight:800;font-size:15px}
+input,select{width:100%;margin-top:6px;border:2px solid var(--line);border-radius:14px;padding:13px 14px;font-size:17px;font-family:inherit;font-weight:700;color:var(--ink);background:var(--bg)}
+input:focus,select:focus{outline:none;border-color:var(--yel)}
+.hp{position:absolute;left:-9999px}
+.fine{font-size:13px;color:var(--ink2);font-weight:700;margin:0}
+footer{padding:30px 0 50px;color:var(--ink2);font-weight:700;font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+footer a{color:var(--ink2)}
+@media(max-width:780px){.hero,.offer{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}.art{max-width:360px;margin:0 auto;width:100%}.hero{padding-top:0}}
+.langs{margin-top:14px;font-weight:700;font-size:15px;color:#8A5A3C}.langs a{color:inherit;font-weight:800}
+.yelbtn{background:#F6E38F!important;color:#6B3420!important}.fine.light{color:#F3D9C6!important;opacity:.9}
+.cta{display:flex;flex-direction:column;justify-content:center;gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">cafun<span>é</span></div>
+  <a class="ig" href="https://instagram.com/meucafune.app">@meucafune.app</a>
+</header>
+
+<div class="hero">
+  <div>
+    <span class="pill">Beta aberta · grátis 💛</span>
+    <h1>Um bichinho que cuida de você. Um passinho de cada vez.</h1>
+    <p class="lead">No Cafuné, o Dudu, uma preguiça muito fofa, comemora cada coisinha que você faz por você: beber água, arrumar a cama, respirar fundo. Sem cobrança, sem pressa. Pressa, aliás, nem é com ele.</p>
+    <a class="btn" href="/app/">Experimentar grátis</a>
+    <p class="langs">Abre direto no celular, sem baixar nada.<br><a href="/app/" data-l="pt-BR">🇧🇷 Brasil</a> · <a href="/app/pt/" data-l="pt-PT">🇵🇹 Portugal</a> · <a href="/app/en/" data-l="en">🌍 English</a></p>
+  </div>
+  <div class="art"><svg viewBox="40 0 330 360" role="img" aria-label="Dudu, a preguiça, acenando"><ellipse cx="192" cy="336" rx="104" ry="13" fill="#F2D98A"/>
+<ellipse cx="104" cy="282" rx="20" ry="26" fill="#E59E72" stroke="#6B3420" stroke-width="5"/>
+<path d="M138 222 C112 252 106 302 126 330 C146 350 228 352 256 332 C282 312 284 262 262 230 C244 212 156 208 138 222 Z" fill="#E59E72" stroke="#6B3420" stroke-width="5"/>
+<path d="M150 252 C146 272 150 292 160 304" stroke="#D4875C" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<path d="M196 248 C210 270 218 296 222 318" stroke="#D4875C" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+<path d="M240 252 C268 236 290 214 302 192" stroke="#6B3420" stroke-width="40" stroke-linecap="round" fill="none"/>
+<path d="M240 252 C268 236 290 214 302 192" stroke="#E59E72" stroke-width="30" stroke-linecap="round" fill="none"/>
+<g transform="rotate(28 306 184)"><ellipse cx="306" cy="184" rx="20" ry="25" fill="#E59E72" stroke="#6B3420" stroke-width="5"/>
+<path d="M288 176 C288 156 324 156 324 176 C314 170 298 170 288 176 Z" fill="#6E2633" stroke="#6B3420" stroke-width="3" stroke-linejoin="round"/>
+<path d="M298 164 l-1 8 M306 162 l0 8 M314 164 l1 8" stroke="#A64B58" stroke-width="2.5" stroke-linecap="round"/>
+<ellipse cx="306" cy="194" rx="8.5" ry="7" fill="#FBE3D3"/><circle cx="297" cy="183" r="3" fill="#FBE3D3"/><circle cx="306" cy="180" r="3" fill="#FBE3D3"/><circle cx="315" cy="183" r="3" fill="#FBE3D3"/></g>
+<g transform="translate(212 336)"><path d="M-14 0 C-14 -14 14 -14 14 0 C6 -4 -6 -4 -14 0 Z" fill="#6E2633" stroke="#6B3420" stroke-width="3" stroke-linejoin="round"/><path d="M-5 -9 l-1 6 M0 -10 l0 6 M5 -9 l1 6" stroke="#A64B58" stroke-width="2" stroke-linecap="round"/></g>
+<g transform="rotate(-8 174 312)">
+<ellipse cx="174" cy="312" rx="24" ry="30" fill="#E59E72" stroke="#6B3420" stroke-width="5"/>
+<path d="M155 300 C156 280 192 280 193 300 C182 294 166 294 155 300 Z" fill="#6E2633" stroke="#6B3420" stroke-width="3" stroke-linejoin="round"/>
+<path d="M165 288 l-2 9 M174 286 l0 9 M183 288 l2 9" stroke="#A64B58" stroke-width="2.5" stroke-linecap="round"/>
+<ellipse cx="174" cy="324" rx="10" ry="8.5" fill="#FBE3D3"/>
+<circle cx="164" cy="310" r="3.6" fill="#FBE3D3"/><circle cx="174" cy="307" r="3.6" fill="#FBE3D3"/><circle cx="184" cy="310" r="3.6" fill="#FBE3D3"/>
+</g><g transform="rotate(12 258 300)">
+<ellipse cx="258" cy="300" rx="24" ry="30" fill="#E59E72" stroke="#6B3420" stroke-width="5"/>
+<path d="M239 288 C240 268 276 268 277 288 C266 282 250 282 239 288 Z" fill="#6E2633" stroke="#6B3420" stroke-width="3" stroke-linejoin="round"/>
+<path d="M249 276 l-2 9 M258 274 l0 9 M267 276 l2 9" stroke="#A64B58" stroke-width="2.5" stroke-linecap="round"/>
+<ellipse cx="258" cy="312" rx="10" ry="8.5" fill="#FBE3D3"/>
+<circle cx="248" cy="298" r="3.6" fill="#FBE3D3"/><circle cx="258" cy="295" r="3.6" fill="#FBE3D3"/><circle cx="268" cy="298" r="3.6" fill="#FBE3D3"/>
+</g><path transform="translate(-8 26)" d="M232 62 C228 44 238 30 252 28 C246 38 248 48 258 52 C262 44 270 40 278 42 C270 50 268 60 262 70" fill="#E59E72" stroke="#6B3420" stroke-width="5" stroke-linejoin="round"/>
+<ellipse cx="198" cy="150" rx="98" ry="80" fill="#E59E72" stroke="#6B3420" stroke-width="5" transform="rotate(-10 198 150)"/>
+<path d="M114 172 C110 132 150 108 196 116 C210 102 244 100 266 112 C292 128 296 168 282 192 C264 220 230 230 196 228 C156 226 118 210 114 172 Z" fill="#FCEBDF"/>
+<ellipse cx="162" cy="172" rx="29" ry="24" fill="#B9693F" transform="rotate(-18 162 172)"/>
+<ellipse cx="256" cy="156" rx="26" ry="24" fill="#B9693F" transform="rotate(-18 256 156)"/>
+<circle cx="169" cy="161" r="14" fill="#3B1D12"/><circle cx="252" cy="148" r="13" fill="#3B1D12"/><circle cx="174" cy="156" r="5" fill="#fff"/><circle cx="165" cy="167" r="2.4" fill="#fff"/><circle cx="257" cy="143" r="4.6" fill="#fff"/><circle cx="248" cy="154" r="2.2" fill="#fff"/>
+<ellipse cx="217" cy="157" rx="13" ry="8.5" fill="#4A2416"/><ellipse cx="213" cy="154" rx="4.5" ry="2.4" fill="#fff" opacity="0.6"/>
+<path d="M203 171 Q218 198 234 168 Z" fill="#7A2A1E" stroke="#6B3420" stroke-width="3" stroke-linejoin="round"/><path d="M211 184 Q219 178 227 183 Q222 191 216 190 Z" fill="#EE7F71"/><ellipse cx="160" cy="190" rx="13" ry="8.5" fill="#F4A090"/><ellipse cx="268" cy="172" rx="12" ry="8" fill="#F4A090"/><path transform="translate(60 136) scale(0.55)" d="M32 56 C8 40 0 26 0 16 C0 7 7 0 16 0 C23 0 29 4 32 10 C35 4 41 0 48 0 C57 0 64 7 64 16 C64 26 56 40 32 56 Z" fill="none" stroke="#C8780E" stroke-width="7" stroke-linejoin="round"/>
+<path d="M310 128 l4 18 M324 136 l-6 15 M336 152 l-14 8" stroke="#F2BE32" stroke-width="5" stroke-linecap="round"/></svg></div>
+</div>
+</div>
+
+<section style="background:#fff">
+<div class="wrap">
+  <h2>Escolha o seu Dudu</h2>
+  <p class="sub">Três personalidades. O mesmo carinho (mais ou menos).</p>
+  <div class="grid3">
+    <div class="card" style="background:var(--bg)"><svg class="face" viewBox="90 20 230 230"><path transform="translate(-8 26)" d="M232 62 C228 44 238 30 252 28 C246 38 248 48 258 52 C262 44 270 40 278 42 C270 50 268 60 262 70" fill="#E59E72" stroke="#6B3420" stroke-width="5" stroke-linejoin="round"/>
+<ellipse cx="198" cy="150" rx="98" ry="80" fill="#E59E72" stroke="#6B3420" stroke-width="5" transform="rotate(-10 198 150)"/>
+<path d="M114 172 C110 132 150 108 196 116 C210 102 244 100 266 112 C292 128 296 168 282 192 C264 220 230 230 196 228 C156 226 118 210 114 172 Z" fill="#FCEBDF"/>
+<ellipse cx="162" cy="172" rx="29" ry="24" fill="#B9693F" transform="rotate(-18 162 172)"/>
+<ellipse cx="256" cy="156" rx="26" ry="24" fill="#B9693F" transform="rotate(-18 256 156)"/>
+<path d="M156 164 Q169 172 182 162" stroke="#3B1D12" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M240 151 Q252 158 264 148" stroke="#3B1D12" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+<ellipse cx="217" cy="157" rx="13" ry="8.5" fill="#4A2416"/><ellipse cx="213" cy="154" rx="4.5" ry="2.4" fill="#fff" opacity="0.6"/>
+<ellipse cx="219" cy="180" rx="6" ry="7" fill="#7A2A1E" stroke="#6B3420" stroke-width="2.5"/><ellipse cx="160" cy="190" rx="13" ry="8.5" fill="#F4A090"/><ellipse cx="268" cy="172" rx="12" ry="8" fill="#F4A090"/><text x="290" y="96" font-family="Nunito, Arial Rounded MT Bold, sans-serif" font-weight="900" font-size="24" fill="#6B3420">z</text><text x="306" y="78" font-family="Nunito, sans-serif" font-weight="900" font-size="16" fill="#6B3420">z</text></svg><h3>Zen</h3><p>Calminho, fala baixinho e te lembra de respirar.</p><div class="q">"Sem pressa. Tudo no seu tempo. 🍃"</div></div>
+    <div class="card" style="background:var(--bg)"><svg class="face" viewBox="90 20 230 230"><path transform="translate(-8 26)" d="M232 62 C228 44 238 30 252 28 C246 38 248 48 258 52 C262 44 270 40 278 42 C270 50 268 60 262 70" fill="#E59E72" stroke="#6B3420" stroke-width="5" stroke-linejoin="round"/>
+<ellipse cx="198" cy="150" rx="98" ry="80" fill="#E59E72" stroke="#6B3420" stroke-width="5" transform="rotate(-10 198 150)"/>
+<path d="M114 172 C110 132 150 108 196 116 C210 102 244 100 266 112 C292 128 296 168 282 192 C264 220 230 230 196 228 C156 226 118 210 114 172 Z" fill="#FCEBDF"/>
+<ellipse cx="162" cy="172" rx="29" ry="24" fill="#B9693F" transform="rotate(-18 162 172)"/>
+<ellipse cx="256" cy="156" rx="26" ry="24" fill="#B9693F" transform="rotate(-18 256 156)"/>
+<circle cx="169" cy="161" r="14" fill="#3B1D12"/><circle cx="252" cy="148" r="13" fill="#3B1D12"/><circle cx="174" cy="156" r="5" fill="#fff"/><circle cx="165" cy="167" r="2.4" fill="#fff"/><circle cx="257" cy="143" r="4.6" fill="#fff"/><circle cx="248" cy="154" r="2.2" fill="#fff"/>
+<ellipse cx="217" cy="157" rx="13" ry="8.5" fill="#4A2416"/><ellipse cx="213" cy="154" rx="4.5" ry="2.4" fill="#fff" opacity="0.6"/>
+<path d="M203 171 Q218 198 234 168 Z" fill="#7A2A1E" stroke="#6B3420" stroke-width="3" stroke-linejoin="round"/><path d="M211 184 Q219 178 227 183 Q222 191 216 190 Z" fill="#EE7F71"/><ellipse cx="160" cy="190" rx="13" ry="8.5" fill="#F4A090"/><ellipse cx="268" cy="172" rx="12" ry="8" fill="#F4A090"/></svg><h3>Fofo</h3><p>Carinhoso e animado. O Dudu clássico.</p><div class="q">"Arrasou! Tô orgulhoso de você 🥹"</div></div>
+    <div class="card" style="background:var(--bg)"><svg class="face" viewBox="90 20 230 230"><path transform="translate(-8 26)" d="M232 62 C228 44 238 30 252 28 C246 38 248 48 258 52 C262 44 270 40 278 42 C270 50 268 60 262 70" fill="#E59E72" stroke="#6B3420" stroke-width="5" stroke-linejoin="round"/>
+<ellipse cx="198" cy="150" rx="98" ry="80" fill="#E59E72" stroke="#6B3420" stroke-width="5" transform="rotate(-10 198 150)"/>
+<path d="M114 172 C110 132 150 108 196 116 C210 102 244 100 266 112 C292 128 296 168 282 192 C264 220 230 230 196 228 C156 226 118 210 114 172 Z" fill="#FCEBDF"/>
+<ellipse cx="162" cy="172" rx="29" ry="24" fill="#B9693F" transform="rotate(-18 162 172)"/>
+<ellipse cx="256" cy="156" rx="26" ry="24" fill="#B9693F" transform="rotate(-18 256 156)"/>
+<path d="M156 166 Q169 152 182 164" stroke="#3B1D12" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M240 153 Q252 139 264 151" stroke="#3B1D12" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+<ellipse cx="217" cy="157" rx="13" ry="8.5" fill="#4A2416"/><ellipse cx="213" cy="154" rx="4.5" ry="2.4" fill="#fff" opacity="0.6"/>
+<path d="M203 171 Q218 198 234 168 Z" fill="#7A2A1E" stroke="#6B3420" stroke-width="3" stroke-linejoin="round"/><path d="M211 184 Q219 178 227 183 Q222 191 216 190 Z" fill="#EE7F71"/><ellipse cx="160" cy="190" rx="13" ry="8.5" fill="#F4A090"/><ellipse cx="268" cy="172" rx="12" ry="8" fill="#F4A090"/></svg><h3>Zoeiro</h3><p>Te zoa e te chama de molenga. Com amor. Tem até modo sem filtro.</p><div class="q">"Comeu uma fruta? E o quarto continua uma bagunça, hein, seu porquinho 🐷"</div></div>
+  </div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+  <h2>Como funciona</h2>
+  <p class="sub">Autocuidado de verdade cabe em passos pequenos.</p>
+  <div class="grid3 steps">
+    <div class="card"><h3>Escolha seus passinhos</h3><p>Coisas pequenas que te fazem bem. Um copo d'água já conta.</p></div>
+    <div class="card"><h3>Ganhe cafunés</h3><p>Cada passinho dá cafunés e energia. Com energia, o Dudu sai pra passear e volta com postais e figurinhas pro seu álbum.</p></div>
+    <div class="card"><h3>Cuide do Dudu (e dos amigos)</h3><p>Troque cafunés por mimos, registre seu humor e respire com ele. Com amigos, regue um vasinho a dois e troquem recados e figurinhas.</p></div>
+  </div>
+</div>
+</section>
+
+<section id="lista">
+<div class="wrap">
+  <div class="offer">
+    <div>
+      <span class="pill" style="color:var(--ink)">Só durante a beta</span>
+      <h2>Seja fundador do Cafuné</h2>
+      <p class="sub">Quem assinar durante a beta garante o Cafuné+ com preço de fundador, para sempre.</p>
+      <div class="price">R$ 59,90/ano <s>R$ 89,90</s></div>
+      <p class="sub" style="margin-top:6px">Isso dá menos de R$ 5 por mês. A versão grátis continua grátis.</p>
+    </div>
+    <div class="cta">
+      <a class="btn yelbtn" href="/app/">Experimentar grátis</a>
+      <p class="fine light">Comece de graça. Pra virar fundador, abra o app e toque em Dudu → Cafuné+. Cancele quando quiser, reembolso total em 14 dias.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="wrap">
+<footer>
+  <span>© 2026 Cafuné · O Cafuné é um app de autocuidado e não substitui acompanhamento profissional.</span>
+  <span><a href="/termos">Termos</a> · <a href="/privacidade">Privacidade</a> · <a href="https://instagram.com/meucafune.app">Instagram @meucafune.app</a></span>
+</footer>
+</div>
+<script>document.querySelectorAll("[data-l]").forEach(function(a){a.addEventListener("click",function(){try{localStorage.setItem("cafune-lang",a.getAttribute("data-l"))}catch(e){}})});</script>
+</body>
+</html>

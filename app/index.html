@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>(function(){var p=location.pathname,cur=/\/app\/en\//.test(p)?'en':/\/app\/pt\//.test(p)?'pt-PT':'pt-BR',l=null;
+try{l=localStorage.getItem('cafune-lang')}catch(e){}
+if(!l){var n=(navigator.language||'').toLowerCase(),tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
+if(n.indexOf('pt')===0){l=(n==='pt-br'||/^America\//.test(tz))?'pt-BR':(n==='pt-pt'||/Lisbon|Madeira|Azores/.test(tz))?'pt-PT':'pt-BR'}else{l='en'}
+try{localStorage.setItem('cafune-lang',l)}catch(e){}}
+window.CAFUNE_LANG=cur;if(l!==cur&&!/[?&]nolang/.test(location.search)){location.replace({'pt-BR':'/app/','pt-PT':'/app/pt/','en':'/app/en/'}[l]+location.search+location.hash)}})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cafuné">
+<meta name="theme-color" content="#FBF6EE">
+<link rel="apple-touch-icon" href="/app/icon-180.png">
+<link rel="icon" href="/icon.png">
+<link rel="manifest" href="/app/manifest.webmanifest">
+<title>Cafuné</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF6EE; --card:#FFFFFF; --ink:#6B3420; --ink2:#8A5A3C; --soft:#B98B6C;
+  --yel:#F6E38F; --yel2:#FBF0B5; --coral:#E8665A; --green:#7DB87A; --line:#EFE2D2;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif}
+button,input{font-family:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+#app{max-width:440px;margin:0 auto;min-height:100%;position:relative;padding:calc(env(safe-area-inset-top) + 12px) 18px calc(env(safe-area-inset-bottom) + 96px)}
+.screen{display:none;animation:fade .25s ease}
+.screen.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.hello{font-size:22px;font-weight:900;margin:0}
+.sub{font-size:14px;color:var(--ink2);margin:2px 0 0;font-weight:700}
+.pills{display:flex;gap:6px;flex-shrink:0}
+.pill{background:var(--card);border-radius:999px;padding:6px 11px;font-weight:800;font-size:14px;box-shadow:0 1px 0 var(--line)}
+
+/* stage */
+.stage{position:relative;background:var(--yel2);border-radius:28px;height:318px;overflow:hidden;margin:6px 0 14px}
+.stage .ground{position:absolute;left:0;right:0;bottom:0;height:54px;background:#F3DF8B;border-radius:50% 50% 0 0/30px 30px 0 0}
+.dudu-wrap{position:absolute;left:50%;bottom:4px;width:260px;height:260px;margin-left:-130px;touch-action:manipulation}
+.dudu-wrap svg{width:100%;height:100%;display:block;transform-origin:50% 90%;animation:breathe 3.6s ease-in-out infinite}
+.dudu-wrap.pet svg{animation:squish .5s ease}
+@keyframes breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.015,.985)}}
+@keyframes squish{0%{transform:scale(1)}35%{transform:scale(1.06,.93)}70%{transform:scale(.97,1.03)}100%{transform:scale(1)}}
+.bubble{position:absolute;left:14px;right:14px;top:12px;background:#fff;border-radius:18px;padding:10px 14px;font-weight:800;font-size:15px;line-height:1.35;text-align:center;box-shadow:0 2px 0 rgba(107,52,32,.08);z-index:2;transition:opacity .2s}
+.bubble:after{content:"";position:absolute;left:50%;bottom:-8px;margin-left:-8px;border:8px solid transparent;border-bottom:0;border-top-color:#fff}
+.heart{position:absolute;font-size:24px;pointer-events:none;animation:up 1.2s ease-out forwards;z-index:1}
+@keyframes up{from{opacity:1;transform:translateY(0) scale(.8)}to{opacity:0;transform:translateY(-110px) scale(1.25)}}
+.away .dudu-wrap{animation:walk 1.6s ease-in forwards}
+@keyframes walk{to{transform:translateX(260px) rotate(8deg);opacity:0}}
+
+/* energy */
+.energy{background:var(--card);border-radius:20px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.energy b{font-size:14px;font-weight:900;display:block}
+.energy small{font-size:12.5px;color:var(--ink2);font-weight:700}
+.leaves{display:flex;gap:5px;margin-left:auto}
+.leaf{width:22px;height:22px;border-radius:50% 0 50% 0;background:#EBDCC9;transform:rotate(-45deg);transition:background .3s,transform .3s}
+.leaf.on{background:var(--green);transform:rotate(-45deg) scale(1.08)}
+
+/* cards & lists */
+.card{background:var(--card);border-radius:22px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:18px;font-weight:900}
+.card p{margin:0;font-size:15px;color:var(--ink2);font-weight:600;line-height:1.45}
+.checkin{background:var(--coral);color:#fff;display:flex;align-items:center;gap:12px;width:100%;text-align:left;border-radius:22px;padding:14px 16px;margin-bottom:14px;font-weight:900;font-size:16px}
+.checkin span{font-size:28px}
+.row{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1.5px solid var(--line);width:100%;text-align:left;font-size:16px;font-weight:700}
+.row:last-child{border-bottom:none}
+.box{width:28px;height:28px;border-radius:10px;border:2.5px solid var(--soft);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.row.done .box{background:var(--green);border-color:var(--green)}
+.row.done .box:after{content:"";width:7px;height:13px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-2px)}
+.row.done .txt{text-decoration:line-through;color:var(--soft)}
+.row .em{font-size:20px}
+.row .del{margin-left:auto;color:var(--soft);font-size:20px;padding:0 4px;display:none}
+.editing .row .del{display:block}
+.add{display:flex;gap:8px;margin-top:10px}
+.add input{flex:1;min-width:0;border:2px solid var(--line);border-radius:14px;padding:11px 12px;font-size:16px;font-weight:700;background:var(--bg);outline:none}
+.add input:focus{border-color:var(--yel)}
+.btn{background:var(--ink);color:#fff;border-radius:14px;padding:12px 16px;font-weight:900;font-size:16px}
+.btn.yel{background:var(--yel);color:var(--ink)}
+.btn.big{width:100%;padding:16px;font-size:17px;border-radius:18px}
+.btn.ghost{background:transparent;color:var(--ink2);border:2px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:var(--bg);border:2px solid var(--line);border-radius:999px;padding:8px 12px;font-weight:800;font-size:14px}
+.chip.sel{background:var(--yel);border-color:var(--yel)}
+.link{color:var(--ink2);font-weight:800;font-size:14px;text-decoration:underline;padding:4px 0}
+.linkrow{display:flex;justify-content:space-between;align-items:center}
+
+/* tabs */
+.tabs{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1.5px solid var(--line);padding:8px 8px calc(env(safe-area-inset-bottom) + 8px);display:flex;justify-content:center;z-index:20}
+.tabs .in{display:flex;max-width:440px;width:100%;justify-content:space-around}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:800;color:var(--soft);padding:4px 10px;min-width:64px}
+.tab i{font-style:normal;font-size:23px;filter:grayscale(1);opacity:.6}
+.tab.on{color:var(--ink)}
+.tab.on i{filter:none;opacity:1}
+
+/* mood */
+.week{display:flex;justify-content:space-between;gap:4px}
+.day{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:800;color:var(--ink2)}
+.day .c{width:38px;height:38px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:20px;border:2px dashed var(--line)}
+.day .c.f{border:none;background:var(--yel2)}
+.day.today .c{outline:2.5px solid var(--yel);outline-offset:2px}
+.moods{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.mood{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 2px;border-radius:16px;background:var(--bg);font-size:11.5px;font-weight:800;line-height:1.15;text-align:center}
+.mood span{font-size:30px}
+.mood.sel{background:var(--yel)}
+.help{background:#FFF1EE;border-radius:22px;padding:16px;margin-bottom:14px}
+.help b{display:block;font-size:16px;font-weight:900;margin-bottom:4px}
+.help p{margin:0 0 10px;font-size:14.5px;font-weight:600;line-height:1.45;color:var(--ink2)}
+.fine{font-size:13px;color:var(--soft);font-weight:700;line-height:1.45;text-align:center;margin:6px 8px 0}
+
+/* breathe */
+.breath{display:flex;flex-direction:column;align-items:center;gap:18px;padding:12px 0 6px}
+.orb{width:250px;height:250px;border-radius:50%;background:var(--yel2);display:flex;align-items:center;justify-content:center;transition:transform 4s ease-in-out,background 1s}
+.orb svg{width:200px;height:200px}
+.orb.inhale{transform:scale(1.18);background:#F6E38F}
+.orb.exhale{transform:scale(.88);transition-duration:6s}
+.phase{font-size:26px;font-weight:900;min-height:36px}
+.count{font-size:15px;color:var(--ink2);font-weight:700}
+
+/* shop */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.item{background:var(--bg);border-radius:18px;padding:12px 8px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;border:2.5px solid transparent;font-weight:800;font-size:14px}
+.item svg{width:72px;height:72px}
+.item.wear{border-color:var(--green)}
+.item small{font-size:13px;color:var(--ink2);font-weight:800}
+.mini{width:120px;height:120px;margin:0 auto 4px;display:block}
+.mini svg{width:100%;height:100%;display:block}
+.found{display:flex;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1.5px solid var(--line);font-size:15px;font-weight:700}
+.found:last-child{border-bottom:none}
+.found small{color:var(--soft);font-size:12.5px;flex-shrink:0;width:44px}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(61,30,15,.38);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.modal.on{display:flex;animation:fade .2s}
+.sheet{background:var(--bg);width:100%;max-width:440px;border-radius:28px 28px 0 0;padding:22px 18px calc(env(safe-area-inset-bottom) + 22px);text-align:center}
+.sheet h3{margin:0 0 6px;font-size:22px;font-weight:900}
+.sheet p{margin:0 0 16px;font-size:16px;color:var(--ink2);font-weight:600;line-height:1.45}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%) translateY(-90px);background:var(--ink);color:#fff;font-weight:800;font-size:14.5px;padding:10px 16px;border-radius:999px;z-index:60;transition:transform .3s;white-space:nowrap}
+.toast.on{transform:translateX(-50%) translateY(0)}
+
+/* onboarding */
+#onb{position:fixed;inset:0;background:var(--yel2);z-index:40;display:none;overflow:auto}
+#onb.on{display:block}
+.onb-in{max-width:440px;margin:0 auto;min-height:100%;padding:calc(env(safe-area-inset-top) + 28px) 22px calc(env(safe-area-inset-bottom) + 28px);display:flex;flex-direction:column;gap:14px;text-align:center}
+.onb-in h1{margin:0;font-size:28px;font-weight:900;line-height:1.15}
+.onb-in p{margin:0;font-size:17px;font-weight:600;color:var(--ink2);line-height:1.45}
+.onb-in svg.big{width:240px;height:240px;margin:0 auto}
+.onb-in input{border:2.5px solid #fff;border-radius:16px;padding:15px;font-size:19px;font-weight:800;text-align:center;background:#fff;outline:none}
+.onb-in .chips{justify-content:center}
+.onb-in .chip{background:#fff;border-color:#fff;font-size:15px}
+.onb-in .chip.sel{background:var(--yel);border-color:var(--ink)}
+.dots{display:flex;gap:6px;justify-content:center}
+.dots i{width:8px;height:8px;border-radius:50%;background:#E8D486}
+.dots i.on{background:var(--ink);width:22px;border-radius:4px}
+.step{display:none;flex-direction:column;gap:14px}
+.step.on{display:flex}
+.spacer{flex:1}
+.testonly{display:none}
+body.teste .testonly{display:block}
+.pers{display:flex;flex-direction:column;gap:10px}
+.per{display:flex;align-items:center;gap:12px;background:#fff;border:3px solid #fff;border-radius:20px;padding:10px 14px 10px 8px;text-align:left}
+.per.sel{border-color:var(--ink);background:#FFFBEA}
+.per svg{width:70px;height:70px;flex-shrink:0}
+.per b{display:block;font-size:18px;font-weight:900}
+.per span{display:block;font-size:14px;font-weight:700;color:var(--ink2);line-height:1.35}
+.per i{display:block;font-style:normal;font-size:13.5px;font-weight:800;color:var(--ink);margin-top:4px}
+.seg{display:flex;gap:6px;margin-top:8px}
+.seg button{flex:1;background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:10px 4px;font-weight:900;font-size:14px}
+.seg button.sel{background:var(--yel);border-color:var(--yel)}
+.login{display:flex;flex-direction:column;gap:10px}
+.login input{border:2px solid var(--line);border-radius:14px;padding:13px 14px;font-size:17px;font-weight:800;background:var(--bg);outline:none;width:100%}
+.login input.code{letter-spacing:8px;text-align:center;font-size:24px}
+.login .msg{font-size:14px;font-weight:700;color:var(--ink2);margin:0}
+.login .err{color:#C0392B}
+.minibub{position:relative;background:var(--yel2);border-radius:16px;padding:10px 14px;font-weight:800;font-size:15px;line-height:1.35;text-align:center;margin:0 6px 12px}
+.minibub:after{content:"";position:absolute;left:50%;bottom:-8px;margin-left:-8px;border:8px solid transparent;border-bottom:0;border-top-color:var(--yel2)}
+.share{position:absolute;right:12px;bottom:12px;z-index:2;background:#fff;border-radius:999px;padding:8px 12px;font-weight:900;font-size:13.5px;box-shadow:0 2px 0 rgba(107,52,32,.1)}
+.shot{display:block;max-width:100%;max-height:52vh;margin:0 auto 14px;border-radius:18px;box-shadow:0 4px 18px rgba(107,52,32,.18)}
+.tog{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;background:var(--bg);border-radius:14px;padding:10px 12px;font-weight:800;font-size:14.5px;width:100%;text-align:left}
+.tog small{display:block;color:var(--ink2);font-weight:700;font-size:12.5px}
+.sw{width:46px;height:28px;border-radius:14px;background:#DCCBB6;position:relative;flex-shrink:0;transition:background .2s}
+.sw:after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .2s}
+.tog.on .sw{background:var(--coral)}.tog.on .sw:after{left:21px}
+.amigo{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.amigo:first-child{border-top:0}
+.amigo .av{width:62px;height:62px;flex:none;background:var(--yel2);border-radius:50%;overflow:hidden}
+.amigo .av svg{width:100%;height:100%}
+.amigo .nm{flex:1;min-width:0}
+.amigo .nm b{display:block;color:var(--ink);font-size:16px}
+.amigo .nm small{color:var(--ink2);font-size:13px;font-weight:600}
+.amigo .btn{padding:8px 12px;font-size:13px;white-space:nowrap}
+.share.roast{left:12px;right:auto;background:#E8665A;color:#fff}
+.album{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cromo{position:relative;aspect-ratio:1/1;border-radius:12px;background:var(--yel2);border:2px solid #F0D98A;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px;font:inherit;color:var(--ink)}
+.cromo .e{font-size:26px;line-height:1}.cromo .n{font-size:10.5px;font-weight:800;text-align:center;line-height:1.15;margin-top:4px}
+.cromo .q{position:absolute;top:3px;right:4px;font-size:10px;font-weight:900;background:#fff;border-radius:999px;padding:0 5px}
+.cromo .rr{position:absolute;bottom:3px;font-size:9px;font-weight:900;text-transform:uppercase;color:#8A5A3C}
+.cromo.r{border-color:#7DB6E8;background:#EAF4FD}.cromo.l{border-color:#E8B54A;background:linear-gradient(135deg,#FFF3C4,#FBE0A0)}
+.cromo.off{background:#F3EEE6;border-style:dashed;border-color:#E2D6C4;color:#C9B8A2}
+.extra{padding:0 0 10px 0}.vaso{display:flex;gap:10px;align-items:center;background:#F3F8EC;border-radius:12px;padding:8px 10px;font-size:13.5px}
+.vaso .pl{font-size:26px}.vaso small{display:block;color:#8A5A3C}.vaso.murcho{filter:saturate(.4)}
+.extra .acoes{display:flex;gap:8px;margin-top:8px}.extra .acoes .btn{padding:8px 12px;font-size:13.5px}
+.frases{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.frase{background:var(--yel2);border-radius:12px;padding:10px;font:inherit;font-weight:800;color:var(--ink);text-align:left}.frase small{display:block;font-size:10.5px;color:#8A5A3C;margin-top:3px}.frase.bloq{opacity:.6}
+.escolha{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.recado{display:flex;flex-direction:column;padding:8px 0;border-top:1px solid var(--line)}.recado span{color:var(--ink)}
+.nivel{text-align:center;font-weight:800;font-size:13.5px;color:#8A5A3C;margin:0 0 8px}.nivel .nv{letter-spacing:1px}
+#scene .bebe{left:6%;bottom:58px;width:66px;height:72px;z-index:1}#scene .bebe svg{width:100%;height:100%}
+.postal{display:flex;gap:10px;align-items:center;text-align:left;background:#fff;border:2px dashed #E8B54A;border-radius:14px;padding:10px;margin-top:8px}.postal .pe{font-size:34px}.postal small{display:block;font-weight:800;color:#8A5A3C}
+.postais{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.pc{background:#fff;border:2px dashed #E8B54A;border-radius:12px;padding:8px 4px;font:inherit;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px}.pc .pe{font-size:26px}
+.bebeBox{margin-top:12px;background:#FFF6E0;border-radius:12px;padding:10px;font-size:13.5px}.bebeBox small{display:block;color:#8A5A3C;margin-top:4px}.barra{height:8px;background:#F0E2C4;border-radius:99px;margin-top:6px;overflow:hidden}.barra i{display:block;height:100%;background:#E8665A}
+.codigo{font-size:30px;font-weight:900;letter-spacing:6px;color:var(--ink);text-align:center;background:var(--yel2);border-radius:14px;padding:10px;margin:10px 0}
+#scene .sc{position:absolute;pointer-events:none}
+#scene .sc svg{width:100%;height:100%;display:block}
+#scene .sc-ceu{top:0;left:0;right:0;height:46px}
+#scene .sc-esq{left:6px;bottom:26px;width:86px;height:104px}
+#scene .sc-dir{right:6px;bottom:26px;width:86px;height:120px}
+#scene .sc-chao{left:0;right:0;top:0;bottom:0;background-image:radial-gradient(#fff 2.6px,transparent 3.2px),radial-gradient(#fff 1.8px,transparent 2.4px);background-size:70px 70px,46px 46px;background-position:0 0,23px 30px;animation:neve 10s linear infinite;opacity:.95}
+#scene .sc-chao svg{display:none}
+#scene .sc-chao::after{content:'';position:absolute;left:0;right:0;bottom:0;height:40px;background:#fff;border-radius:50% 50% 0 0/22px 22px 0 0;opacity:.9}
+@keyframes neve{from{background-position:0 0,23px 30px}to{background-position:0 140px,23px 122px}}
+.cores{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:6px 0 14px}
+.cor{width:46px;height:46px;border-radius:50%;border:3px solid var(--line);position:relative;font-size:14px}
+.cor.sel{border-color:var(--ink);box-shadow:0 0 0 3px var(--yel)}
+.cor i{position:absolute;right:-6px;bottom:-6px;font-style:normal;font-size:15px}
+.lbl{font-weight:800;color:var(--ink);text-align:center;margin-top:4px}
+.item.lock{opacity:.75}
+.instb{display:flex;align-items:center;gap:12px;background:#fff;border:2.5px dashed var(--yel);border-radius:20px;padding:12px 14px;margin:0 0 14px}
+.instb .ic{font-size:30px}
+.instb p{flex:1;font-size:14px;margin:0}
+.instb .x{font-size:20px;color:var(--soft);padding:4px 8px}
+.passo{display:flex;gap:12px;align-items:flex-start;text-align:left;margin:12px 0}
+.passo .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+.passo .t{flex:1}
+.passo .t b{color:var(--ink)}
+.passo .ico{display:inline-flex;vertical-align:middle;background:var(--bg);border:2px solid var(--line);border-radius:10px;padding:3px 6px;margin:0 2px}
+.passo .ico svg{width:22px;height:22px}
+.seta{font-size:34px;text-align:center;animation:bob 1s ease-in-out infinite;margin-top:4px}
+@keyframes bob{50%{transform:translateY(8px)}}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HOJE -->
+  <section class="screen on" id="s-hoje">
+    <div class="top">
+      <div><h1 class="hello" id="hello">Oi!</h1><p class="sub" id="dateLabel"></p></div>
+      <div class="pills"><span class="pill" id="streak" title="Dias seguidos">🌿 0</span><span class="pill" id="coins" title="Cafunés">💛 0</span></div>
+    </div>
+    <div class="stage" id="stage">
+      <div class="bubble" id="bubble">…</div>
+      <div class="ground"></div>
+      <div id="scene"></div>
+      <button class="dudu-wrap" id="dudu" aria-label="Fazer cafuné no Dudu"></button>
+      <button class="share" id="shareBtn">📸 Compartilhar</button>
+    </div>
+    <div class="instb" id="instBanner" style="display:none"><span class="ic">📲</span><p><b>Coloque o Dudu na tela do celular</b><br>Assim ele pode te mandar lembretes.</p><button class="btn yel" id="instBtn">Como?</button><button class="x" id="instX" aria-label="Fechar">×</button></div>
+    <div class="energy">
+      <div><b>Energia pro passeio</b><small id="energyTxt">Cada passinho dá uma folhinha</small></div>
+      <div class="leaves" id="leaves"></div>
+    </div>
+    <button class="checkin" id="checkinBtn"><span>🌤️</span>Como você tá hoje? Conta pro Dudu</button>
+    <div class="card" id="listCard">
+      <div class="linkrow"><h2>Passinhos de hoje</h2><button class="link" id="editBtn">Editar</button></div>
+      <div id="list"></div>
+      <form class="add" id="addForm"><input id="addInput" placeholder="Novo passinho…" maxlength="60" autocomplete="off"><button class="btn" type="submit">+</button></form>
+      <div class="chips" id="sugg"></div>
+    </div>
+  </section>
+
+  <!-- HUMOR -->
+  <section class="screen" id="s-humor">
+    <div class="top"><div><h1 class="hello">Seu humor</h1><p class="sub">Um registro por dia, sem pressão</p></div></div>
+    <div class="card"><h2>Últimos 7 dias</h2><div class="week" id="week"></div></div>
+    <div class="card"><h2>Como você tá hoje?</h2><div class="moods" id="moods"></div><p id="moodReply" style="margin-top:12px;display:none"></p></div>
+    <div class="help" id="helpCard" style="display:none">
+      <b>Dia pesado? Você não precisa passar por isso sozinho.</b>
+      <p>Respirar um pouquinho com o Dudu pode ajudar agora. E se precisar conversar com alguém, o CVV atende de graça, 24 horas, pelo 188 ou pelo chat em cvv.org.br.</p>
+      <button class="btn yel" data-go="respirar">Respirar com o Dudu</button>
+    </div>
+    <p class="fine">O Cafuné é um cantinho de autocuidado e não substitui acompanhamento profissional. Precisa conversar? CVV: 188, ligação gratuita, 24h.</p>
+  </section>
+
+  <!-- RESPIRAR -->
+  <section class="screen" id="s-respirar">
+    <div class="top"><div><h1 class="hello">Respirar com o Dudu</h1><p class="sub">Inspire 4 segundos, solte 6. Bem devagarinho.</p></div></div>
+    <div class="card breath">
+      <div class="orb" id="orb"></div>
+      <div class="phase" id="phase">Pronto?</div>
+      <div class="count" id="bcount">5 respirações · 1 minuto</div>
+      <button class="btn big" id="breathBtn">Começar</button>
+    </div>
+  </section>
+
+  <!-- AMIGOS -->
+  <section class="screen" id="s-amigos">
+    <div class="top"><div><h1 class="hello">Amiguinhos</h1><p class="sub">Cuidar de si fica mais leve junto</p></div></div>
+    <div class="card" id="amigosConvite"></div>
+    <div class="card"><h2>Seus amiguinhos</h2><div id="amigosLista"></div></div>
+    <div class="card" id="recadosCard" style="display:none"></div>
+  </section>
+
+  <!-- DUDU -->
+  <section class="screen" id="s-dudu">
+    <div class="top"><div><h1 class="hello">Cantinho do Dudu</h1><p class="sub" id="coinsLine"></p></div></div>
+    <div class="card"><p class="nivel" id="nivelLine"></p><div class="minibub" id="miniSay">Tá olhando o quê? Compra alguma coisa pra mim.</div><div id="mini"></div><h2 style="text-align:center;margin-top:6px">Guarda-roupa</h2>
+      <p style="text-align:center;margin-bottom:12px">Troque cafunés por mimos pro Dudu. Toque de novo pra tirar.</p>
+      <p class="lbl">Cor do pelo</p>
+      <div class="cores" id="cores"></div>
+      <p class="lbl" style="margin-bottom:8px">Acessórios</p>
+      <div class="grid" id="shop"></div>
+    </div>
+    <div class="card"><h2>Cenário 🏡</h2><p style="margin-bottom:12px">Decore o cantinho do Dudu. Aparece na tela de hoje.</p><div class="grid" id="cenario"></div></div>
+    <div class="card" id="natalCard"><h2>Pacote de Natal 🎄</h2><div id="natalBox"></div></div>
+    <div class="card" id="retroCard"></div>
+    <div class="card" id="albumCard"></div>
+    <div class="card" id="postaisCard"></div>
+    <div class="card"><h2>Achados dos passeios</h2><div id="finds"></div></div>
+    <div class="card" id="lembCard"><h2>Lembretes do Dudu 🔔</h2><div id="lembBox"></div></div>
+    <div class="card" id="plusCard"><h2>Cafuné+ 💛</h2><div id="plusBox"></div></div>
+    <div class="card" id="contaCard"><h2>Sua conta</h2><div id="contaBox"></div></div>
+    <div class="card" id="installCard" style="display:none"><h2>Instalar no celular</h2><p>Com o Dudu na tela do celular, ele abre como um app e pode te mandar lembretes.</p><button class="btn yel big" id="installOpen" style="margin-top:10px">Ver como instalar (1 minuto)</button></div>
+    <div class="card"><h2>Ajustes</h2>
+      <div class="add" style="margin-top:0"><input id="nameInput" maxlength="20" placeholder="Seu nome"><button class="btn yel" id="nameSave">Salvar</button></div>
+      <p style="margin-top:14px;font-weight:800;color:var(--ink)">Personalidade do Dudu</p>
+      <div class="seg" id="seg"></div>
+      <p style="margin-top:14px;font-weight:800;color:var(--ink)">Idioma</p>
+      <div class="seg" id="langSeg"><button data-lang="pt-BR">🇧🇷 Brasil</button><button data-lang="pt-PT">🇵🇹 Portugal</button><button data-lang="en">🌍 English</button></div>
+      <button class="tog" id="somTog"><span>Sons e preguicês 🔊<small>O Dudu fala na língua das preguiças. No iPhone, desligue o modo silencioso.</small></span><i class="sw"></i></button>
+      <button class="tog" id="filtroTog"><span>Modo sem filtro 🤬<small>O Zoeiro solta palavrão. Pra quem aguenta.</small></span><i class="sw"></i></button>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+        <button class="btn ghost testonly" id="nextDay">Avançar um dia (teste)</button>
+        <button class="btn ghost testonly" id="gift">Ganhar 50 cafunés (teste)</button>
+        <button class="btn ghost" id="reset">Recomeçar do zero</button>
+      </div>
+      <p class="fine" style="text-align:left;margin:12px 0 0"><a href="/termos" style="color:inherit">Termos de uso</a> · <a href="/privacidade" style="color:inherit">Privacidade</a> · Ajuda: meucafune@gmail.com</p>
+      <p class="fine" style="text-align:left;margin:6px 0 0">O Cafuné é um app de autocuidado e não substitui acompanhamento profissional. Precisa conversar? CVV: 188.</p>
+    </div>
+  </section>
+</div>
+
+<nav class="tabs"><div class="in">
+  <button class="tab on" data-go="hoje"><i>🏡</i>Hoje</button>
+  <button class="tab" data-go="humor"><i>🌤️</i>Humor</button>
+  <button class="tab" data-go="respirar"><i>🫧</i>Respirar</button>
+  <button class="tab" data-go="amigos"><i>💛</i>Amigos</button>
+  <button class="tab" data-go="dudu"><i>🦥</i>Dudu</button>
+</div></nav>
+
+<!-- modals -->
+<div class="modal" id="mMood"><div class="sheet">
+  <h3>Como você tá hoje?</h3><p>Sem resposta certa. O Dudu só quer saber.</p>
+  <div class="moods" id="moodsSheet"></div>
+  <button class="link" style="margin-top:14px" data-close>Agora não</button>
+</div></div>
+<div class="modal" id="mWalk"><div class="sheet">
+  <div id="walkArt"></div>
+  <h3 id="walkTitle">O Dudu saiu pra passear!</h3>
+  <p id="walkTxt"></p>
+  <button class="btn big" id="walkBtn">Oba!</button>
+</div></div>
+<div class="modal" id="mConfirm"><div class="sheet">
+  <h3>Recomeçar do zero?</h3><p>Isso apaga seus passinhos, humor e cafunés, neste aparelho e na nuvem.</p>
+  <div style="display:flex;gap:8px"><button class="btn ghost big" data-close>Cancelar</button><button class="btn big" id="resetYes" style="background:var(--coral)">Apagar</button></div>
+</div></div>
+<div class="modal" id="mFiltro"><div class="sheet">
+  <h3>Liberar os palavrões? 🤬</h3><p>O Dudu Zoeiro vai xingar de verdade. Sempre de brincadeira, mas sem papas na língua. Dá pra desligar quando quiser.</p>
+  <div style="display:flex;gap:8px"><button class="btn ghost big" data-close>Melhor não</button><button class="btn big" id="filtroYes" style="background:var(--coral)">Pode xingar</button></div>
+</div></div>
+<div class="modal" id="mShare"><div class="sheet">
+  <h3>Compartilhar o Dudu</h3>
+  <img class="shot" id="shot" alt="Imagem do Dudu com a frase">
+  <div class="seg" id="fmtSeg" style="margin:0 0 12px"><button data-fmt="post" class="sel">Post</button><button data-fmt="story">Story</button></div>
+  <button class="btn big" id="shareSave">Salvar ou compartilhar</button>
+  <p class="fine" id="shareHint" style="display:none;margin-top:10px">Toque e segure na imagem pra salvar.</p>
+  <button class="link" style="margin-top:10px" data-close>Fechar</button>
+</div></div>
+<div class="modal" id="mInstall"><div class="sheet">
+  <h3 id="instTitle">Instalar o Dudu</h3>
+  <div id="instBody"></div>
+  <button class="link" style="margin-top:12px" data-close>Fechar</button>
+</div></div>
+<div class="modal" id="mApagar"><div class="sheet">
+  <h3>Apagar a sua conta?</h3>
+  <p>Isto apaga para sempre a sua conta e tudo o que está na nuvem: o Dudu, os passinhos, o humor, os amigos, os lembretes e as compras. Não dá pra desfazer.</p>
+  <p class="fine" id="apagarMsg" style="display:none;text-align:left;margin-top:8px"></p>
+  <div style="display:flex;gap:8px;margin-top:12px"><button class="btn ghost big" data-close>Cancelar</button><button class="btn big" id="apagarSim" style="background:var(--coral)">Apagar tudo</button></div>
+</div></div>
+<div class="modal" id="mLogin"><div class="sheet" style="text-align:left">
+  <h3 style="text-align:center">Salvar meu Dudu</h3><p style="text-align:center">Entre com seu e-mail pra guardar o Dudu na nuvem e usar em qualquer celular.</p>
+  <div id="loginModalBox"></div>
+  <button class="link" style="margin:12px auto 0;display:block" data-close>Agora não</button>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<!-- onboarding -->
+<div id="onb"><div class="onb-in">
+  <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+  <div class="step on" data-step="0">
+    <div id="onbArt"></div>
+    <h1>Oi! Eu sou o Dudu 🦥</h1>
+    <p>Vou te acompanhar no dia a dia, um passinho de cada vez. Sem cobrança, sem pressa. Pressa, aliás, nem é comigo.</p>
+    <div class="spacer"></div>
+    <button class="btn big" id="o1">Oi, Dudu!</button>
+  </div>
+  <div class="step" data-step="1">
+    <div id="onbArt2"></div>
+    <h1>Como posso te chamar?</h1>
+    <input id="onbName" maxlength="20" placeholder="Seu nome ou apelido" autocomplete="given-name">
+    <div class="spacer"></div>
+    <button class="btn big" id="o2">Continuar</button>
+  </div>
+  <div class="step" data-step="2">
+    <h1>Qual Dudu combina com você?</h1>
+    <p>Dá pra trocar depois no Cantinho do Dudu.</p>
+    <div class="pers" id="onbPers"></div>
+    <div class="spacer"></div>
+    <button class="btn big" id="o2b">Esse mesmo!</button>
+  </div>
+  <div class="step" data-step="3">
+    <h1>Escolha seus primeiros passinhos</h1>
+    <p>Coisas pequenas que te fazem bem. Pode escolher até 4, e mudar quando quiser.</p>
+    <div class="chips" id="onbChips"></div>
+    <div class="spacer"></div>
+    <button class="btn big" id="o3">Continuar</button>
+  </div>
+  <div class="step" data-step="4">
+    <div id="onbArt3"></div>
+    <h1>Pra não perder o Dudu</h1>
+    <p>Entre com seu e-mail. A gente manda um código, sem senha. Assim seu Dudu fica guardado mesmo se trocar de celular.</p>
+    <div id="loginOnbBox"></div>
+    <div class="spacer"></div>
+    <button class="link" id="o4skip">Agora não, depois eu salvo</button>
+  </div>
+</div></div>
+
+<script>
+const ART = {"bodyWave": "<ellipse cx=\"192\" cy=\"336\" rx=\"104\" ry=\"13\" fill=\"#F2D98A\"/>\n<ellipse cx=\"104\" cy=\"282\" rx=\"20\" ry=\"26\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\"/>\n<path d=\"M138 222 C112 252 106 302 126 330 C146 350 228 352 256 332 C282 312 284 262 262 230 C244 212 156 208 138 222 Z\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\"/>\n<path d=\"M150 252 C146 272 150 292 160 304\" stroke=\"#D4875C\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/>\n<path d=\"M196 248 C210 270 218 296 222 318\" stroke=\"#D4875C\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/>\n<path d=\"M240 252 C268 236 290 214 302 192\" stroke=\"#6B3420\" stroke-width=\"40\" stroke-linecap=\"round\" fill=\"none\"/>\n<path d=\"M240 252 C268 236 290 214 302 192\" stroke=\"#E59E72\" stroke-width=\"30\" stroke-linecap=\"round\" fill=\"none\"/>\n<g transform=\"rotate(28 306 184)\"><ellipse cx=\"306\" cy=\"184\" rx=\"20\" ry=\"25\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\"/>\n<path d=\"M288 176 C288 156 324 156 324 176 C314 170 298 170 288 176 Z\" fill=\"#6E2633\" stroke=\"#6B3420\" stroke-width=\"3\" stroke-linejoin=\"round\"/>\n<path d=\"M298 164 l-1 8 M306 162 l0 8 M314 164 l1 8\" stroke=\"#A64B58\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n<ellipse cx=\"306\" cy=\"194\" rx=\"8.5\" ry=\"7\" fill=\"#FBE3D3\"/><circle cx=\"297\" cy=\"183\" r=\"3\" fill=\"#FBE3D3\"/><circle cx=\"306\" cy=\"180\" r=\"3\" fill=\"#FBE3D3\"/><circle cx=\"315\" cy=\"183\" r=\"3\" fill=\"#FBE3D3\"/></g>\n<g transform=\"translate(212 336)\"><path d=\"M-14 0 C-14 -14 14 -14 14 0 C6 -4 -6 -4 -14 0 Z\" fill=\"#6E2633\" stroke=\"#6B3420\" stroke-width=\"3\" stroke-linejoin=\"round\"/><path d=\"M-5 -9 l-1 6 M0 -10 l0 6 M5 -9 l1 6\" stroke=\"#A64B58\" stroke-width=\"2\" stroke-linecap=\"round\"/></g>\n<g transform=\"rotate(-8 174 312)\">\n<ellipse cx=\"174\" cy=\"312\" rx=\"24\" ry=\"30\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\"/>\n<path d=\"M155 300 C156 280 192 280 193 300 C182 294 166 294 155 300 Z\" fill=\"#6E2633\" stroke=\"#6B3420\" stroke-width=\"3\" stroke-linejoin=\"round\"/>\n<path d=\"M165 288 l-2 9 M174 286 l0 9 M183 288 l2 9\" stroke=\"#A64B58\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n<ellipse cx=\"174\" cy=\"324\" rx=\"10\" ry=\"8.5\" fill=\"#FBE3D3\"/>\n<circle cx=\"164\" cy=\"310\" r=\"3.6\" fill=\"#FBE3D3\"/><circle cx=\"174\" cy=\"307\" r=\"3.6\" fill=\"#FBE3D3\"/><circle cx=\"184\" cy=\"310\" r=\"3.6\" fill=\"#FBE3D3\"/>\n</g><g transform=\"rotate(12 258 300)\">\n<ellipse cx=\"258\" cy=\"300\" rx=\"24\" ry=\"30\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\"/>\n<path d=\"M239 288 C240 268 276 268 277 288 C266 282 250 282 239 288 Z\" fill=\"#6E2633\" stroke=\"#6B3420\" stroke-width=\"3\" stroke-linejoin=\"round\"/>\n<path d=\"M249 276 l-2 9 M258 274 l0 9 M267 276 l2 9\" stroke=\"#A64B58\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n<ellipse cx=\"258\" cy=\"312\" rx=\"10\" ry=\"8.5\" fill=\"#FBE3D3\"/>\n<circle cx=\"248\" cy=\"298\" r=\"3.6\" fill=\"#FBE3D3\"/><circle cx=\"258\" cy=\"295\" r=\"3.6\" fill=\"#FBE3D3\"/><circle cx=\"268\" cy=\"298\" r=\"3.6\" fill=\"#FBE3D3\"/>\n</g>", "bodySit": "<ellipse cx=\"192\" cy=\"336\" rx=\"104\" ry=\"13\" fill=\"#F2D98A\"/>\n<ellipse cx=\"104\" cy=\"282\" rx=\"20\" ry=\"26\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\"/>\n<path d=\"M138 222 C112 252 106 302 126 330 C146 350 228 352 256 332 C282 312 284 262 262 230 C244 212 156 208 138 222 Z\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\"/>\n<path d=\"M150 252 C146 272 150 292 160 304\" stroke=\"#D4875C\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/>\n<path d=\"M196 248 C210 270 218 296 222 318\" stroke=\"#D4875C\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/>\n\n<g transform=\"translate(212 336)\"><path d=\"M-14 0 C-14 -14 14 -14 14 0 C6 -4 -6 -4 -14 0 Z\" fill=\"#6E2633\" stroke=\"#6B3420\" stroke-width=\"3\" stroke-linejoin=\"round\"/><path d=\"M-5 -9 l-1 6 M0 -10 l0 6 M5 -9 l1 6\" stroke=\"#A64B58\" stroke-width=\"2\" stroke-linecap=\"round\"/></g>\n<g transform=\"rotate(-8 174 312)\">\n<ellipse cx=\"174\" cy=\"312\" rx=\"24\" ry=\"30\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\"/>\n<path d=\"M155 300 C156 280 192 280 193 300 C182 294 166 294 155 300 Z\" fill=\"#6E2633\" stroke=\"#6B3420\" stroke-width=\"3\" stroke-linejoin=\"round\"/>\n<path d=\"M165 288 l-2 9 M174 286 l0 9 M183 288 l2 9\" stroke=\"#A64B58\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n<ellipse cx=\"174\" cy=\"324\" rx=\"10\" ry=\"8.5\" fill=\"#FBE3D3\"/>\n<circle cx=\"164\" cy=\"310\" r=\"3.6\" fill=\"#FBE3D3\"/><circle cx=\"174\" cy=\"307\" r=\"3.6\" fill=\"#FBE3D3\"/><circle cx=\"184\" cy=\"310\" r=\"3.6\" fill=\"#FBE3D3\"/>\n</g><g transform=\"rotate(12 258 300)\">\n<ellipse cx=\"258\" cy=\"300\" rx=\"24\" ry=\"30\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\"/>\n<path d=\"M239 288 C240 268 276 268 277 288 C266 282 250 282 239 288 Z\" fill=\"#6E2633\" stroke=\"#6B3420\" stroke-width=\"3\" stroke-linejoin=\"round\"/>\n<path d=\"M249 276 l-2 9 M258 274 l0 9 M267 276 l2 9\" stroke=\"#A64B58\" stroke-width=\"2.5\" stroke-linecap=\"round\"/>\n<ellipse cx=\"258\" cy=\"312\" rx=\"10\" ry=\"8.5\" fill=\"#FBE3D3\"/>\n<circle cx=\"248\" cy=\"298\" r=\"3.6\" fill=\"#FBE3D3\"/><circle cx=\"258\" cy=\"295\" r=\"3.6\" fill=\"#FBE3D3\"/><circle cx=\"268\" cy=\"298\" r=\"3.6\" fill=\"#FBE3D3\"/>\n</g>", "faces": {"feliz": "<path transform=\"translate(-8 26)\" d=\"M232 62 C228 44 238 30 252 28 C246 38 248 48 258 52 C262 44 270 40 278 42 C270 50 268 60 262 70\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\" stroke-linejoin=\"round\"/>\n<ellipse cx=\"198\" cy=\"150\" rx=\"98\" ry=\"80\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\" transform=\"rotate(-10 198 150)\"/>\n<path d=\"M114 172 C110 132 150 108 196 116 C210 102 244 100 266 112 C292 128 296 168 282 192 C264 220 230 230 196 228 C156 226 118 210 114 172 Z\" fill=\"#FCEBDF\"/>\n<ellipse cx=\"162\" cy=\"172\" rx=\"29\" ry=\"24\" fill=\"#B9693F\" transform=\"rotate(-18 162 172)\"/>\n<ellipse cx=\"256\" cy=\"156\" rx=\"26\" ry=\"24\" fill=\"#B9693F\" transform=\"rotate(-18 256 156)\"/>\n<circle cx=\"169\" cy=\"161\" r=\"14\" fill=\"#3B1D12\"/><circle cx=\"252\" cy=\"148\" r=\"13\" fill=\"#3B1D12\"/><circle cx=\"174\" cy=\"156\" r=\"5\" fill=\"#fff\"/><circle cx=\"165\" cy=\"167\" r=\"2.4\" fill=\"#fff\"/><circle cx=\"257\" cy=\"143\" r=\"4.6\" fill=\"#fff\"/><circle cx=\"248\" cy=\"154\" r=\"2.2\" fill=\"#fff\"/>\n<ellipse cx=\"217\" cy=\"157\" rx=\"13\" ry=\"8.5\" fill=\"#4A2416\"/><ellipse cx=\"213\" cy=\"154\" rx=\"4.5\" ry=\"2.4\" fill=\"#fff\" opacity=\"0.6\"/>\n<path d=\"M203 171 Q218 198 234 168 Z\" fill=\"#7A2A1E\" stroke=\"#6B3420\" stroke-width=\"3\" stroke-linejoin=\"round\"/><path d=\"M211 184 Q219 178 227 183 Q222 191 216 190 Z\" fill=\"#EE7F71\"/><ellipse cx=\"160\" cy=\"190\" rx=\"13\" ry=\"8.5\" fill=\"#F4A090\"/><ellipse cx=\"268\" cy=\"172\" rx=\"12\" ry=\"8\" fill=\"#F4A090\"/>", "orgulho": "<path transform=\"translate(-8 26)\" d=\"M232 62 C228 44 238 30 252 28 C246 38 248 48 258 52 C262 44 270 40 278 42 C270 50 268 60 262 70\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\" stroke-linejoin=\"round\"/>\n<ellipse cx=\"198\" cy=\"150\" rx=\"98\" ry=\"80\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\" transform=\"rotate(-10 198 150)\"/>\n<path d=\"M114 172 C110 132 150 108 196 116 C210 102 244 100 266 112 C292 128 296 168 282 192 C264 220 230 230 196 228 C156 226 118 210 114 172 Z\" fill=\"#FCEBDF\"/>\n<ellipse cx=\"162\" cy=\"172\" rx=\"29\" ry=\"24\" fill=\"#B9693F\" transform=\"rotate(-18 162 172)\"/>\n<ellipse cx=\"256\" cy=\"156\" rx=\"26\" ry=\"24\" fill=\"#B9693F\" transform=\"rotate(-18 256 156)\"/>\n<path d=\"M156 166 Q169 152 182 164\" stroke=\"#3B1D12\" stroke-width=\"4.5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M240 153 Q252 139 264 151\" stroke=\"#3B1D12\" stroke-width=\"4.5\" fill=\"none\" stroke-linecap=\"round\"/>\n<ellipse cx=\"217\" cy=\"157\" rx=\"13\" ry=\"8.5\" fill=\"#4A2416\"/><ellipse cx=\"213\" cy=\"154\" rx=\"4.5\" ry=\"2.4\" fill=\"#fff\" opacity=\"0.6\"/>\n<path d=\"M203 171 Q218 198 234 168 Z\" fill=\"#7A2A1E\" stroke=\"#6B3420\" stroke-width=\"3\" stroke-linejoin=\"round\"/><path d=\"M211 184 Q219 178 227 183 Q222 191 216 190 Z\" fill=\"#EE7F71\"/><ellipse cx=\"160\" cy=\"190\" rx=\"13\" ry=\"8.5\" fill=\"#F4A090\"/><ellipse cx=\"268\" cy=\"172\" rx=\"12\" ry=\"8\" fill=\"#F4A090\"/>", "sono": "<path transform=\"translate(-8 26)\" d=\"M232 62 C228 44 238 30 252 28 C246 38 248 48 258 52 C262 44 270 40 278 42 C270 50 268 60 262 70\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\" stroke-linejoin=\"round\"/>\n<ellipse cx=\"198\" cy=\"150\" rx=\"98\" ry=\"80\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\" transform=\"rotate(-10 198 150)\"/>\n<path d=\"M114 172 C110 132 150 108 196 116 C210 102 244 100 266 112 C292 128 296 168 282 192 C264 220 230 230 196 228 C156 226 118 210 114 172 Z\" fill=\"#FCEBDF\"/>\n<ellipse cx=\"162\" cy=\"172\" rx=\"29\" ry=\"24\" fill=\"#B9693F\" transform=\"rotate(-18 162 172)\"/>\n<ellipse cx=\"256\" cy=\"156\" rx=\"26\" ry=\"24\" fill=\"#B9693F\" transform=\"rotate(-18 256 156)\"/>\n<path d=\"M156 164 Q169 172 182 162\" stroke=\"#3B1D12\" stroke-width=\"4.5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M240 151 Q252 158 264 148\" stroke=\"#3B1D12\" stroke-width=\"4.5\" fill=\"none\" stroke-linecap=\"round\"/>\n<ellipse cx=\"217\" cy=\"157\" rx=\"13\" ry=\"8.5\" fill=\"#4A2416\"/><ellipse cx=\"213\" cy=\"154\" rx=\"4.5\" ry=\"2.4\" fill=\"#fff\" opacity=\"0.6\"/>\n<ellipse cx=\"219\" cy=\"180\" rx=\"6\" ry=\"7\" fill=\"#7A2A1E\" stroke=\"#6B3420\" stroke-width=\"2.5\"/><ellipse cx=\"160\" cy=\"190\" rx=\"13\" ry=\"8.5\" fill=\"#F4A090\"/><ellipse cx=\"268\" cy=\"172\" rx=\"12\" ry=\"8\" fill=\"#F4A090\"/><text x=\"290\" y=\"96\" font-family=\"Nunito, Arial Rounded MT Bold, sans-serif\" font-weight=\"900\" font-size=\"24\" fill=\"#6B3420\">z</text><text x=\"306\" y=\"78\" font-family=\"Nunito, sans-serif\" font-weight=\"900\" font-size=\"16\" fill=\"#6B3420\">z</text>", "triste": "<path transform=\"translate(-8 26)\" d=\"M232 62 C228 44 238 30 252 28 C246 38 248 48 258 52 C262 44 270 40 278 42 C270 50 268 60 262 70\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\" stroke-linejoin=\"round\"/>\n<ellipse cx=\"198\" cy=\"150\" rx=\"98\" ry=\"80\" fill=\"#E59E72\" stroke=\"#6B3420\" stroke-width=\"5\" transform=\"rotate(-10 198 150)\"/>\n<path d=\"M114 172 C110 132 150 108 196 116 C210 102 244 100 266 112 C292 128 296 168 282 192 C264 220 230 230 196 228 C156 226 118 210 114 172 Z\" fill=\"#FCEBDF\"/>\n<ellipse cx=\"162\" cy=\"172\" rx=\"29\" ry=\"24\" fill=\"#B9693F\" transform=\"rotate(-18 162 172)\"/>\n<ellipse cx=\"256\" cy=\"156\" rx=\"26\" ry=\"24\" fill=\"#B9693F\" transform=\"rotate(-18 256 156)\"/>\n<circle cx=\"169\" cy=\"163\" r=\"12\" fill=\"#3B1D12\"/><circle cx=\"252\" cy=\"150\" r=\"11\" fill=\"#3B1D12\"/><circle cx=\"173\" cy=\"159\" r=\"4.2\" fill=\"#fff\"/><circle cx=\"256\" cy=\"146\" r=\"4\" fill=\"#fff\"/><path d=\"M150 146 L176 136\" stroke=\"#3B1D12\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M268 132 L242 124\" stroke=\"#3B1D12\" stroke-width=\"4\" stroke-linecap=\"round\"/>\n<ellipse cx=\"217\" cy=\"157\" rx=\"13\" ry=\"8.5\" fill=\"#4A2416\"/><ellipse cx=\"213\" cy=\"154\" rx=\"4.5\" ry=\"2.4\" fill=\"#fff\" opacity=\"0.6\"/>\n<path d=\"M206 186 Q219 176 232 184\" stroke=\"#6B3420\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><ellipse cx=\"160\" cy=\"190\" rx=\"13\" ry=\"8.5\" fill=\"#F4A090\"/><ellipse cx=\"268\" cy=\"172\" rx=\"12\" ry=\"8\" fill=\"#F4A090\"/>"}};
+const OL = '#6B3420';
+const ACC = {
+  cachecol:{name:'Cachecol', price:15, svg:`<g><path d="M128 222 C170 250 232 246 276 214 L284 236 C236 272 168 274 120 244 Z" fill="#E8665A" stroke="${OL}" stroke-width="5" stroke-linejoin="round"/><path d="M150 248 L140 300 L170 304 L176 254 Z" fill="#E8665A" stroke="${OL}" stroke-width="5" stroke-linejoin="round"/><path d="M146 282 L172 286 M148 268 L174 271" stroke="#F7B3AB" stroke-width="4" stroke-linecap="round"/></g>`},
+  oculos:{name:'Óculos', price:20, svg:`<g transform="rotate(-10 210 155)" fill="rgba(255,255,255,.18)" stroke="${OL}" stroke-width="5"><circle cx="166" cy="170" r="31"/><circle cx="254" cy="170" r="31"/><path d="M197 166 Q210 156 223 166" fill="none"/></g>`},
+  gorro:{name:'Gorro', price:25, svg:`<g transform="rotate(-10 198 150)"><path d="M120 100 C118 26 278 26 276 100 Z" fill="#8FC1E3" stroke="${OL}" stroke-width="5" stroke-linejoin="round"/><path d="M150 96 L156 46 M198 92 L198 36 M246 96 L240 46" stroke="#B9D8EE" stroke-width="5" stroke-linecap="round"/><rect x="108" y="88" width="180" height="26" rx="13" fill="#B9D8EE" stroke="${OL}" stroke-width="5"/><circle cx="198" cy="30" r="17" fill="#fff" stroke="${OL}" stroke-width="5"/></g>`},
+  laco:{name:'Laço', price:15, svg:`<g transform="translate(136 84) rotate(-22)"><path d="M0 0 L-30 -19 Q-36 0 -30 19 Z" fill="#F28CA8" stroke="${OL}" stroke-width="4.5" stroke-linejoin="round"/><path d="M0 0 L30 -19 Q36 0 30 19 Z" fill="#F28CA8" stroke="${OL}" stroke-width="4.5" stroke-linejoin="round"/><circle r="9" fill="#E8667F" stroke="${OL}" stroke-width="4.5"/></g>`},
+  bone:{name:'Boné', price:20, svg:`<g transform="rotate(-10 198 150)"><path d="M262 96 C296 92 330 100 340 112 C320 120 286 118 258 112 Z" fill="#5E9C5B" stroke="${OL}" stroke-width="5" stroke-linejoin="round"/><path d="M118 104 C114 28 282 28 278 104 Z" fill="#7DB87A" stroke="${OL}" stroke-width="5" stroke-linejoin="round"/><path d="M198 34 L198 102 M156 44 C150 64 148 84 150 102 M240 44 C246 64 248 84 246 102" stroke="#5E9C5B" stroke-width="3.5" fill="none"/><circle cx="198" cy="32" r="8" fill="#5E9C5B" stroke="${OL}" stroke-width="4"/></g>`},
+  fones:{name:'Fones', price:25, svg:`<g><path d="M106 168 C94 50 300 24 298 146" fill="none" stroke="${OL}" stroke-width="17" stroke-linecap="round"/><path d="M106 168 C94 50 300 24 298 146" fill="none" stroke="#B9A6E8" stroke-width="8" stroke-linecap="round"/><ellipse cx="104" cy="176" rx="20" ry="28" fill="#B9A6E8" stroke="${OL}" stroke-width="5"/><ellipse cx="298" cy="154" rx="20" ry="28" fill="#B9A6E8" stroke="${OL}" stroke-width="5"/><ellipse cx="104" cy="176" rx="9" ry="15" fill="#9580D6"/><ellipse cx="298" cy="154" rx="9" ry="15" fill="#9580D6"/></g>`},
+  gorroNatal:{name:'Gorro de Natal', price:0, pack:'natal', svg:`<g transform="rotate(-12 198 150)"><path d="M122 100 C128 46 192 18 250 26 C292 32 316 56 322 86 L290 96 C284 76 270 66 256 66 L272 100 Z" fill="#E0463C" stroke="${OL}" stroke-width="5" stroke-linejoin="round"/><rect x="108" y="86" width="180" height="28" rx="14" fill="#fff" stroke="${OL}" stroke-width="5"/><circle cx="320" cy="90" r="17" fill="#fff" stroke="${OL}" stroke-width="5"/></g>`},
+  flor:{name:'Flor de ipê', price:10, svg:`<g transform="translate(128 96) rotate(-15)"><g fill="#F7D04A" stroke="${OL}" stroke-width="4"><circle cx="0" cy="-17" r="13"/><circle cx="16" cy="-5" r="13"/><circle cx="10" cy="14" r="13"/><circle cx="-10" cy="14" r="13"/><circle cx="-16" cy="-5" r="13"/></g><circle r="8" fill="#E8665A" stroke="${OL}" stroke-width="4"/></g>`}
+};
+const ACC_ORDER = ['cachecol','oculos','gorro','flor','laco','bone','fones','gorroNatal'];
+const HATS = ['gorro','bone','gorroNatal'];
+const ACC_VB = {cachecol:'110 200 190 110', oculos:'120 120 180 100', gorro:'100 10 200 120', flor:'95 60 70 70', laco:'96 54 80 64', bone:'100 10 250 120', fones:'76 20 250 190', gorroNatal:'100 10 245 120'};
+const ACCX = {fofo:'Que lindo! Obrigado 💛', zen:'Que bonito. Obrigado 🍃', zoeiro:'Ficou melhor em mim do que ficaria em você. Admite.'};
+const CORES = {
+  caramelo:{n:'Caramelo', f:'#E59E72', s:'#D4875C', p:'#B9693F'},
+  chocolate:{n:'Chocolate', f:'#A86A45', s:'#8E5536', p:'#6E3F25'},
+  cinza:{n:'Cinza', f:'#BDB5AA', s:'#A0988D', p:'#7F776C'},
+  rosa:{n:'Rosa', f:'#F2A7B5', s:'#DE8C9D', p:'#C46E82', plus:true},
+  menta:{n:'Menta', f:'#9ED3BD', s:'#80BBA3', p:'#5F9C83', plus:true},
+  dourado:{n:'Dourado', f:'#EBC46C', s:'#D4AB52', p:'#B38A33', plus:true}
+};
+const SCN = {
+  planta:{slot:'esq', name:'Plantinha', price:10, vb:'0 0 100 120', svg:`<path d="M50 84 C46 60 30 50 18 46 C30 40 44 50 50 64 C52 44 62 30 78 26 C72 42 60 56 54 84 Z" fill="#7DB87A" stroke="${OL}" stroke-width="3.5" stroke-linejoin="round"/><path d="M50 82 C40 70 34 66 26 66 C34 74 40 80 46 86 Z" fill="#5E9C5B" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/><path d="M26 82 L74 82 L67 116 L33 116 Z" fill="#D9825B" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><rect x="22" y="78" width="56" height="10" rx="4" fill="#C46D48" stroke="${OL}" stroke-width="4"/>`},
+  livros:{slot:'dir', name:'Livros e chá', price:10, vb:'0 0 100 140', svg:`<rect x="12" y="112" width="70" height="16" rx="3" fill="#8FC1E3" stroke="${OL}" stroke-width="4"/><rect x="18" y="96" width="62" height="16" rx="3" fill="#E8665A" stroke="${OL}" stroke-width="4"/><rect x="10" y="80" width="66" height="16" rx="3" fill="#F7D04A" stroke="${OL}" stroke-width="4"/><path d="M30 56 L58 56 L55 80 L33 80 Z" fill="#fff" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><path d="M58 62 C68 62 68 74 56 74" fill="none" stroke="${OL}" stroke-width="4"/><path d="M38 48 C34 40 42 36 38 28 M48 48 C44 40 52 36 48 28" fill="none" stroke="#C9B49C" stroke-width="3" stroke-linecap="round"/>`},
+  estrelas:{slot:'ceu', name:'Lua e estrelas', price:15, vb:'0 0 360 70', tvb:'100 0 250 60', svg:`<path d="M318 12 A22 22 0 1 0 340 46 A17 17 0 1 1 318 12 Z" fill="#F7D04A" stroke="${OL}" stroke-width="3.5"/><g fill="#F7D04A" stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"><path d="M40 18 l4 9 10 1 -8 6 3 10 -9 -6 -9 6 3 -10 -8 -6 10 -1 Z"/><path d="M120 34 l3 6 7 1 -5 4 2 7 -7 -4 -6 4 2 -7 -5 -4 7 -1 Z"/><path d="M230 14 l3 7 8 1 -6 5 2 8 -7 -5 -7 5 2 -8 -6 -5 8 -1 Z"/></g>`},
+  presepio:{slot:'esq', name:'Presépio', pack:'natal', vb:'0 0 100 120', svg:`<path d="M50 4 l3 7 8 1 -6 5 2 8 -7 -5 -7 5 2 -8 -6 -5 8 -1 Z" fill="#F7D04A" stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"/><path d="M6 58 L50 26 L94 58 Z" fill="#B97A4A" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><rect x="14" y="56" width="72" height="60" fill="#E3B884" stroke="${OL}" stroke-width="4"/><rect x="28" y="70" width="44" height="46" fill="#7A4A2A" stroke="${OL}" stroke-width="3"/><path d="M34 104 L66 104 L60 116 L40 116 Z" fill="#C9934F" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/><path d="M38 102 C40 92 60 92 62 102 Z" fill="#F6E38F"/><circle cx="50" cy="96" r="6" fill="#FCEBDF" stroke="${OL}" stroke-width="2.5"/>`},
+  arvore:{slot:'dir', name:'Árvore de Natal', pack:'natal', vb:'0 0 100 140', svg:`<rect x="42" y="116" width="16" height="18" fill="#8A5A3C" stroke="${OL}" stroke-width="4"/><path d="M50 40 L86 120 L14 120 Z" fill="#4E9A5C" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><path d="M50 26 L78 86 L22 86 Z" fill="#5FB06C" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><path d="M50 14 L70 54 L30 54 Z" fill="#6FC27C" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><path d="M50 2 l3 7 8 1 -6 5 2 8 -7 -5 -7 5 2 -8 -6 -5 8 -1 Z" fill="#F7D04A" stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"/><circle cx="42" cy="48" r="4.5" fill="#E8665A"/><circle cx="58" cy="70" r="4.5" fill="#F7D04A"/><circle cx="36" cy="80" r="4.5" fill="#8FC1E3"/><circle cx="64" cy="102" r="5" fill="#E8665A"/><circle cx="34" cy="108" r="5" fill="#F7D04A"/><circle cx="50" cy="94" r="4.5" fill="#B9A6E8"/>`},
+  luzinhas:{slot:'ceu', name:'Luzinhas', pack:'natal', vb:'0 0 360 70', tvb:'0 0 140 50', svg:`<path d="M0 10 Q45 40 90 14 Q135 40 180 14 Q225 40 270 14 Q315 40 360 10" fill="none" stroke="${OL}" stroke-width="3"/><g stroke="${OL}" stroke-width="2.5"><ellipse cx="22" cy="30" rx="6" ry="9" fill="#E8665A"/><ellipse cx="66" cy="32" rx="6" ry="9" fill="#F7D04A"/><ellipse cx="112" cy="32" rx="6" ry="9" fill="#7DB87A"/><ellipse cx="158" cy="32" rx="6" ry="9" fill="#8FC1E3"/><ellipse cx="202" cy="32" rx="6" ry="9" fill="#E8665A"/><ellipse cx="248" cy="32" rx="6" ry="9" fill="#F7D04A"/><ellipse cx="292" cy="32" rx="6" ry="9" fill="#7DB87A"/><ellipse cx="338" cy="30" rx="6" ry="9" fill="#B9A6E8"/></g>`},
+  neve:{slot:'chao', name:'Neve', pack:'natal', vb:'0 0 100 100', svg:`<circle cx="20" cy="22" r="7" fill="#fff" stroke="#C9DCEB" stroke-width="2"/><circle cx="62" cy="14" r="5" fill="#fff" stroke="#C9DCEB" stroke-width="2"/><circle cx="44" cy="48" r="8" fill="#fff" stroke="#C9DCEB" stroke-width="2"/><circle cx="80" cy="56" r="6" fill="#fff" stroke="#C9DCEB" stroke-width="2"/><circle cx="24" cy="76" r="5" fill="#fff" stroke="#C9DCEB" stroke-width="2"/><circle cx="66" cy="86" r="7" fill="#fff" stroke="#C9DCEB" stroke-width="2"/>`}
+};
+const SCN_ORDER = ['planta','livros','estrelas','presepio','arvore','luzinhas','neve'];
+let compras = [];
+const hasPack = p => !!plus || compras.includes(p);
+const MOODS = [
+  {k:'radiante', e:'🤩', l:'Radiante', r:'Que alegria! Guarda esse sentimento num potinho, tá?'},
+  {k:'bem', e:'🙂', l:'Bem', r:'Que bom! Bora aproveitar o dia, no nosso ritmo.'},
+  {k:'meh', e:'😐', l:'Mais ou menos', r:'Tudo bem ser mais ou menos. Um passinho pequeno já conta.'},
+  {k:'cansado', e:'🥱', l:'Cansado', r:'Cansaço é sinal pra ir devagar. Disso eu entendo 😴'},
+  {k:'baixo', e:'🌧️', l:'Pra baixo', r:'Sinto muito que hoje tá pesado. Tô aqui com você. Quer respirar comigo um pouquinho?'}
+];
+const SUGG = [
+  ['💧','Beber um copo d\'água'],['🛏️','Arrumar a cama'],['🪟','Abrir a janela e respirar'],['🧘','Alongar 2 minutinhos'],
+  ['🍎','Comer uma fruta'],['🚶','Caminhar 10 minutos'],['💬','Mandar mensagem pra alguém querido'],['📵','Largar o celular antes de dormir'],
+  ['📖','Ler uma página'],['☀️','Pegar um solzinho']
+];
+const FINDS = ['uma folha em forma de coração 🍃','uma pedrinha lisinha 🪨','um besouro que só queria conversar 🐞','uma flor de ipê amarelo 🌼',
+  'uma nuvem com formato de rede 🛏️','a sombra perfeita de um cajueiro 🌳','uma pena azul de sanhaço 🪶','o pôr do sol mais bonito da semana 🌅',
+  'uma goiaba madurinha 🍈','um cantinho perfeito pra cochilar 💤','um caracol que andava mais rápido que ele 🐌','uma concha que escuta o mar 🐚'];
+const PERS = {
+  zen:{name:'Zen', face:'sono', desc:'Calminho, fala baixinho e te lembra de respirar.', sample:'"Sem pressa. Tudo no seu tempo 🍃"'},
+  fofo:{name:'Fofo', face:'feliz', desc:'Carinhoso e animado. O Dudu clássico.', sample:'"Arrasou! Tô orgulhoso 🥹"'},
+  zoeiro:{name:'Zoeiro', face:'orgulho', desc:'Te zoa e te chama de molenga. Com amor.', sample:'"Até que enfim, hein, criatura!"'}
+};
+const L = {
+  fofo:{
+    greet:['Bom dia, {n}! ☀️ Um passinho de cada vez, tá?','Boa tarde, {n}! Bora de um passinho?','Boa noite, {n} 🌙 Ainda dá tempo de um passinho.'],
+    done:['Isso aí! 🎉','Arrasou, {n}!','Mais um passinho! Tô orgulhoso 🥹','Devagarinho a gente chega longe.','Uhuul! (devagar, mas uhuul)','Olha você! 💛'],
+    all:'Você fez tudo hoje, {n}! Tô muito orgulhoso 🥹', allIdle:'Você fez tudo hoje! Bora descansar juntinhos? 🌙',
+    prog:'{d} de {t} passinhos! No nosso ritmo.',
+    pet:['Hmm, cafuné… 🥰','Mais um, vai…','Que mão boa!','Se eu ronronasse, tava ronronando.','Fica mais um pouquinho?'],
+    add:'Anotado! Mais um passinho na lista ✍️',
+    walk:'Demorou um pouquinho… é preguiça, né?', back:'Voltei! Trouxe uma coisinha pra você 🎁',
+    start:'Prontinho, {n}! Marque um passinho quando fizer. Ah, e pode me fazer cafuné 🥰',
+    mood:{radiante:'Que alegria! Guarda esse sentimento num potinho, tá?', bem:'Que bom! Bora aproveitar o dia, no nosso ritmo.', meh:'Tudo bem ser mais ou menos. Um passinho pequeno já conta.', cansado:'Cansaço é sinal pra ir devagar. Disso eu entendo 😴'}
+  },
+  zen:{
+    greet:['Bom dia, {n}. Respira fundo… o dia tá só começando 🍃','Boa tarde, {n}. Sem pressa. Tudo no seu tempo.','Boa noite, {n} 🌙 Vamos desacelerar juntos.'],
+    done:['Que bonito, {n} 🍃','Cada passinho é uma sementinha.','Sinta isso. Você cuidou de você.','Leve como uma folha. Muito bem.','Um passo de cada vez. Assim mesmo.'],
+    all:'Tudo feito, {n}. Agora é só descansar e agradecer 🌙', allIdle:'Tudo feito por hoje. Respira e descansa 🍃',
+    prog:'{d} de {t}. O caminho se faz caminhando 🍃',
+    pet:['Que paz… 🍃','Obrigado pelo carinho.','Hmm… fica mais um pouquinho.','Esse momento é nosso.'],
+    add:'Anotado com carinho 🍃',
+    walk:'Voltou sem pressa, como deve ser.', back:'Voltei do passeio. A natureza manda um abraço 🍃',
+    start:'Prontinho, {n}. Um passinho de cada vez, no seu tempo 🍃',
+    mood:{radiante:'Que luz! Guarda esse momento com carinho ✨', bem:'Que bom. Vamos aproveitar o dia com calma.', meh:'Tudo bem ser mais ou menos. Respira, e um passinho de cada vez.', cansado:'Descansar também é se cuidar. Hoje, devagarinho 🍃'}
+  },
+  zoeiro:{
+    greet:['Bom dia, {n}! Levanta, criatura, que nem eu tô deitado.','Boa tarde, {n}. Vai fazer alguma coisa hoje ou vai ficar me olhando?','Boa noite, {n}. Ainda dá tempo de um passinho, seu molenga.'],
+    done:['Olha só quem resolveu se mexer!','Até que enfim, hein, {n}!','Viu? Nem doeu. Tá, doeu um pouquinho.','Mais rápido que eu. O que não é difícil.','Uau. Tô chocado. De verdade.','Isso aí, lesminha! 🐌'],
+    all:'Fez tudo?! Quem é você e o que fez com {n}? 😳', allIdle:'Fez tudo hoje. Pode deitar, você mereceu, folgado(a) 😎',
+    prog:'{d} de {t}. Bora, que eu já cansei só de olhar.',
+    pet:['Ei, sem intimidade!','Tá, pode continuar… mas não conta pra ninguém.','Mão fria, hein, criatura!','Só mais um. Ou dez.','Isso não conta como passinho, viu?'],
+    add:'Anotado. Agora vê se faz, hein!',
+    walk:'Demorou uma eternidade, mas você também demora pra beber água, então tamo quites.', back:'Voltei! Sentiu saudade, né? Admite.',
+    start:'Pronto, {n}. Agora é contigo. Não me decepciona, hein? (Brincadeira. Mais ou menos.)',
+    mood:{radiante:'Radiante? Tá tomando o quê? Divide aí!', bem:'Bem? Ótimo, então sem desculpa pros passinhos.', meh:'Mais ou menos é melhor que nada. Bora de um passinho pra subir isso aí.', cansado:'Cansado, é? Tá, hoje eu pego leve contigo. Só hoje, hein.'}
+  }
+};
+L.zoeiroX = {
+  greet:['Bom dia, {n}! Levanta dessa porra de cama, criatura.','Boa tarde, {n}. Vai fazer alguma coisa útil hoje ou vai ficar coçando?','Boa noite, {n}. Ainda dá tempo de um passinho, seu molenga do caralho.'],
+  done:['Porra, até que enfim!','Puta merda, fez mesmo! Tô chocado.','Caralho, {n}, assim você me assusta.','Olha só, o preguiçoso de merda se mexeu! …Tá, olha quem fala.','Cacete, mais rápido que eu!','Fez? Não foi mais que a obrigação, porra.'],
+  all:'PQP, fez tudo?! Quem é você e o que fez com {n}? 😳', allIdle:'Fez tudo. Agora pode deitar, folgado da porra 😎',
+  prog:'{d} de {t}. Bora, porra, que eu já cansei só de olhar.',
+  pet:['Ei, tira essa mão daí, porra! …Tá, pode continuar.','Caralho, que mão boa.','Isso não conta como passinho, espertinho.','Só mais um. Ou dez. Foda-se, faz vinte.'],
+  add:'Anotado. Agora vê se faz essa merda, hein!',
+  walk:'Demorou pra caralho, mas você também demora pra beber água, então tamo quites.', back:'Voltei, porra! Sentiu saudade, né? Admite.',
+  start:'Pronto, {n}. Agora é contigo. Não me faz passar vergonha, caralho.',
+  mood:{radiante:'Radiante? Tá tomando o quê, caralho? Divide aí!', bem:'Bem? Então sem desculpa de merda pros passinhos.', meh:'Mais ou menos? Bora de um passinho que melhora essa porra.', cansado:'Cansado, é? Tá, hoje eu pego leve contigo. Só hoje, cacete.'}
+};
+const P = () => S.persona === 'zoeiro' && S.filtro ? Object.assign({}, L.zoeiro, L.zoeiroX) : (L[S.persona] || L.fofo);
+const X = () => S.persona === 'zoeiro' && S.filtro;
+// zoeira por passinho: piada ao fazer + alfinetada pelo que falta
+const JOKE = {
+  "Beber um copo d'água":'Bebeu água! Parabéns, você é uma planta funcional 🌱',
+  'Arrumar a cama':'Arrumou a cama! Pra bagunçar daqui a pouco, mas tá valendo.',
+  'Abrir a janela e respirar':'Abriu a janela! Agora o bairro todo vê essa cara amassada.',
+  'Alongar 2 minutinhos':'Alongou? Ouvi os estalos daqui. Tá com 80 anos?',
+  'Comer uma fruta':'Comeu uma fruta! Barriguinha cheia 🍎',
+  'Caminhar 10 minutos':'Caminhou 10 minutos? Eu levaria uma semana. Exibição, hein.',
+  'Mandar mensagem pra alguém querido':'Mandou mensagem? Coitado de quem recebeu.',
+  'Largar o celular antes de dormir':'Largou o celular? Quero ver durar cinco minutos.',
+  'Ler uma página':'Leu uma página! Nesse ritmo termina o livro em 2087.',
+  'Pegar um solzinho':'Pegou sol? Pelo menos agora tem cor de gente.'
+};
+const JAB = {
+  "Beber um copo d'água":'Agora bebe água, ou vai esperar virar uva-passa?',
+  'Arrumar a cama':'Mas o quarto continua uma bagunça, hein, seu porquinho 🐷',
+  'Abrir a janela e respirar':'E essa janela fechada? Tá criando cogumelo aí dentro?',
+  'Alongar 2 minutinhos':'Falta alongar, seu tronco de árvore.',
+  'Comer uma fruta':'E a fruta? Vai comer ou vai esperar apodrecer?',
+  'Caminhar 10 minutos':'Agora bora caminhar, que o sofá já tem o formato da sua bunda.',
+  'Mandar mensagem pra alguém querido':'Falta mandar mensagem. Ninguém vai adivinhar que você tá vivo.',
+  'Largar o celular antes de dormir':'E larga esse celular, criatura!',
+  'Ler uma página':'E aquela página? O livro tá lá chorando.',
+  'Pegar um solzinho':'Vai pegar sol ou vai continuar com cor de vela?'
+};
+const JABX = {
+  'Arrumar a cama':'Mas o quarto continua uma zona do caralho, hein, seu porquinho 🐷',
+  'Mandar mensagem pra alguém querido':'Manda logo a porra da mensagem, ninguém vai adivinhar que você tá vivo.',
+  'Largar o celular antes de dormir':'E larga essa merda de celular, criatura!',
+  "Beber um copo d'água":'Agora bebe a porra da água, ou vai virar uva-passa?'
+};
+function zoeiraLine(item, pending, all){
+  if(all) return P().all;
+  let s = (JOKE[item.t] && Math.random() < .8) ? JOKE[item.t] : pick(P().done);
+  if(pending.length && Math.random() < .75){
+    const p = pick(pending);
+    s += ' ' + ((X() && JABX[p.t]) || JAB[p.t] || `Ainda falta "${p.t}", viu? Tô de olho 👀`);
+  }
+  return s;
+}
+const ACCL = {
+  fofo:{cachecol:'Quentinho! Obrigado 🧣💛', oculos:'Tô enxergando tudo mais bonito! Principalmente você 🤓', gorro:'Gorrinho! Tô pronto pro inverno ❄️', flor:'Uma flor pra mim? Que fofura 🌼', off:'Guardei com carinho!', poor:'Faltam uns cafunés… mas a gente chega lá!', idle:'Escolhe um mimo pra mim? 🥺'},
+  zen:{cachecol:'Um abraço em volta do pescoço 🍃', oculos:'Ver o mundo com outros olhos. Bonito.', gorro:'Calor e calma. Obrigado.', flor:'Uma flor de ipê… a natureza agradece 🌼', off:'Desapegar também é bonito.', poor:'Tudo tem seu tempo. Os cafunés virão 🍃', idle:'Nada nos falta. Mas um mimo seria gentil 🍃'},
+  zoeiro:{cachecol:'Ai, que chique! Não tenho casaco, mas com cachecol já não pego resfriado 🧣', oculos:'Agora pareço inteligente. Só pareço, tá? Igual você.', gorro:'Gorro na cabeça, cérebro quentinho. Não que eu use muito.', flor:'Uma flor pra mim? Ai, para… tô vermelho. Mas não me ilude, hein?', off:'Tirou? Tava lindo. Mas beleza, você que manda… por enquanto.', poor:'Sem cafuné no bolso? Vai fazer passinho, pão-duro!', idle:'Tá olhando o quê? Compra alguma coisa pra mim.'},
+  zoeiroX:{cachecol:'Porra, que chique! Não tenho casaco, mas com cachecol já não pego resfriado 🧣', off:'Tirou, porra? Tava lindo!', poor:'Tá liso, né? Vai fazer passinho, pão-duro do caralho!', idle:'Tá olhando o quê, caralho? Compra alguma coisa pra mim.'}
+};
+const accLine = k => (X() && ACCL.zoeiroX[k]) || (ACCL[S.persona] || ACCL.fofo)[k];
+const moodLine = k => k === 'baixo' ? (S.persona === 'zoeiro' ? 'Ei, hoje sem zoeira. Tô aqui com você. Quer respirar comigo um pouquinho?' : MOODS.find(m => m.k === 'baixo').r) : P().mood[k];
+const ENERGY_MAX = 5;
+
+/* ---------- state ---------- */
+const KEY = 'cafune-proto-v1';
+let mem = null;
+function load(){ try{ const s = localStorage.getItem(KEY); if(s) return JSON.parse(s);}catch(e){} return mem; }
+function save(){ S.updatedAt = Date.now(); mem = S; try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} pushLater(); }
+/* ---------- nuvem (Supabase) ---------- */
+const SB_URL = 'https://hdjfvoojxewceskiuoaj.supabase.co', SB_KEY = 'sb_publishable_1AlhtIB1IX9VosyK4L_RLw_8TAdnqqg';
+let sb = null, user = null, pushT = null, pulled = false;
+try{ sb = window.supabase.createClient(SB_URL, SB_KEY, {auth:{persistSession:true, autoRefreshToken:true, detectSessionInUrl:true}}); }catch(e){ sb = null; }
+function pushLater(){ clearTimeout(pushT); pushT = setTimeout(pushRemote, 1200); }
+async function pushRemote(){
+  if(!sb || !user || !pulled) return;
+  try{ await sb.from('estado').upsert({user_id:user.id, dados:S, atualizado_em:new Date().toISOString()}); }catch(e){}
+  syncLemb(); syncPerfil();
+}
+async function pullRemote(){
+  if(!sb || !user) return;
+  try{
+    const {data} = await sb.from('estado').select('dados').eq('user_id', user.id).maybeSingle();
+    const r = data && data.dados;
+    if(r && r.onboarded && (!S.onboarded || (r.updatedAt||0) > (S.updatedAt||0))){
+      S = Object.assign(fresh(), r); mem = S;
+      try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+      if(S.onboarded){ $('onb').classList.remove('on'); }
+      render(); drawDudu(); idleLine();
+    }
+  }catch(e){}
+  pulled = true; pushRemote();
+}
+function fresh(){ return {name:'', onboarded:false, items:[], done:{}, moods:{}, coins:0, energy:0, owned:[], wearing:[], finds:[], offset:0, breathDay:null, uid:1, persona:'fofo', filtro:false}; }
+let S = load() || fresh();
+
+function dkey(off){ const d = new Date(); d.setDate(d.getDate() + S.offset + (off||0)); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function ddate(off){ const d = new Date(); d.setDate(d.getDate() + S.offset + (off||0)); return d; }
+const today = () => dkey(0);
+const doneToday = () => S.done[today()] || [];
+const nm = s => s.replace('{n}', S.name || 'você');
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function streak(){
+  let n = 0, i = (S.done[today()]||[]).length ? 0 : -1;
+  while((S.done[dkey(i)]||[]).length){ n++; i--; }
+  return n;
+}
+
+/* ---------- dudu drawing ---------- */
+function baseFace(){
+  const m = S.moods[today()];
+  if(m === 'baixo') return 'triste';
+  if(m === 'cansado') return 'sono';
+  const h = new Date().getHours();
+  if(h >= 23 || h < 5) return 'sono';
+  return 'feliz';
+}
+function duduSVG(face, wave, wearing, cor){
+  const w = wearing || S.wearing;
+  const acc = ACC_ORDER.filter(k => w.includes(k)).map(k => ACC[k].svg).join('');
+  const body = wave ? ART.bodyWave : ART.bodySit;
+  let svg = `<svg viewBox="40 0 330 360" xmlns="http://www.w3.org/2000/svg">${body}${ART.faces[face]}${acc}</svg>`;
+  const c = CORES[cor || (wearing ? (w.find(x => String(x).startsWith('cor:')) || '').slice(4) : S.cor) || 'caramelo'];
+  if(c && c.f !== '#E59E72') svg = svg.split('#E59E72').join(c.f).split('#D4875C').join(c.s).split('#B9693F').join(c.p);
+  return svg;
+}
+function drawScene(){
+  const el = $('scene'); if(!el) return;
+  const sc = S.scene || {};
+  el.innerHTML = ['ceu','esq','dir','chao'].map(slot => { const k = sc[slot], it = SCN[k]; if(!it) return ''; if(it.pack && !hasPack(it.pack)) return '';
+    return `<div class="sc sc-${slot}"><svg viewBox="${it.vb}" preserveAspectRatio="${slot === 'chao' ? 'none' : 'xMidYMax meet'}">${it.svg}</svg></div>`; }).join('');
+}
+let reactTimer = null, curFace = null, petTimes = [];
+function drawDudu(face){
+  face = face || baseFace();
+  curFace = face;
+  const wave = face === 'feliz' || face === 'orgulho';
+  $('dudu').innerHTML = duduSVG(face, wave);
+}
+function react(face, ms){
+  drawDudu(face);
+  clearTimeout(reactTimer);
+  reactTimer = setTimeout(() => drawDudu(), ms || 1800);
+}
+let bubbleTimer = null;
+function say(t, ms){
+  const b = $('bubble'); b.textContent = nm(t); b.style.opacity = 1;
+  try{ SOM.fala(b.textContent); }catch(e){}
+  clearTimeout(bubbleTimer);
+  if(ms) bubbleTimer = setTimeout(idleLine, ms);
+}
+function idleLine(){
+  const d = doneToday().length, n = S.items.length, h = new Date().getHours();
+  if(S.moods[today()] === 'baixo') return say(S.persona === 'zoeiro' ? 'Hoje sem zoeira. Um passinho só já tá ótimo 💛' : 'Hoje é dia de pegar leve. Um passinho só já tá ótimo 💛');
+  if(n && d === n) return say(P().allIdle);
+  if(d > 0) return say(P().prog.replace('{d}', d).replace('{t}', n));
+  return say(P().greet[h < 12 ? 0 : h < 18 ? 1 : 2]);
+}
+function hearts(n, emoji){
+  const st = $('stage'), r = st.getBoundingClientRect();
+  for(let i=0;i<n;i++){
+    const h = document.createElement('span'); h.className = 'heart'; h.textContent = emoji || pick(['💛','🧡','❤️']);
+    h.style.left = (r.width/2 - 40 + Math.random()*80) + 'px'; h.style.top = (110 + Math.random()*60) + 'px';
+    h.style.animationDelay = (i*0.12)+'s';
+    st.appendChild(h); setTimeout(() => h.remove(), 1600 + i*120);
+  }
+}
+
+/* ---------- render ---------- */
+const DIAS = ['dom','seg','ter','qua','qui','sex','sáb'];
+const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+function render(){
+  const d = ddate(0);
+  $('hello').textContent = S.name ? `Oi, ${S.name}!` : 'Oi!';
+  $('dateLabel').textContent = `${['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'][d.getDay()]}, ${d.getDate()} de ${MESES[d.getMonth()]}`;
+  $('streak').textContent = '🌿 ' + streak();
+  $('coins').textContent = '💛 ' + S.coins;
+  $('coinsLine').textContent = `Você tem ${S.coins} cafunés 💛`;
+  $('checkinBtn').style.display = S.moods[today()] ? 'none' : 'flex';
+  // leaves
+  $('leaves').innerHTML = Array.from({length:ENERGY_MAX}, (_,i) => `<i class="leaf ${i < S.energy ? 'on':''}"></i>`).join('');
+  $('energyTxt').textContent = S.energy >= ENERGY_MAX-1 && S.energy < ENERGY_MAX ? 'Falta só uma folhinha!' : 'Cada passinho dá uma folhinha';
+  // list
+  const dn = doneToday();
+  $('list').innerHTML = S.items.length ? S.items.map(it => `<div class="row ${dn.includes(it.id)?'done':''}" data-id="${it.id}" role="button" tabindex="0"><span class="box"></span><span class="em">${it.e}</span><span class="txt">${esc(it.t)}</span><button class="del" data-del="${it.id}" aria-label="Apagar">×</button></div>`).join('')
+    : `<p style="padding:6px 0">Nenhum passinho ainda. Que tal começar com algo bem pequeno?</p>`;
+  const have = S.items.map(i => i.t);
+  $('sugg').innerHTML = SUGG.filter(s => !have.includes(s[1])).slice(0,4).map(s => `<button class="chip" data-sugg="${esc(s[1])}">${s[0]} ${esc(s[1])}</button>`).join('');
+  renderMood(); renderShop();
+}
+function renderMood(){
+  let w = '';
+  for(let i=-6;i<=0;i++){
+    const m = MOODS.find(x => x.k === S.moods[dkey(i)]);
+    w += `<div class="day ${i===0?'today':''}"><div class="c ${m?'f':''}">${m?m.e:''}</div>${i===0?'hoje':DIAS[ddate(i).getDay()]}</div>`;
+  }
+  $('week').innerHTML = w;
+  const cur = S.moods[today()];
+  const mk = MOODS.map(m => `<button class="mood ${cur===m.k?'sel':''}" data-mood="${m.k}"><span>${m.e}</span>${m.l}</button>`).join('');
+  $('moods').innerHTML = mk; $('moodsSheet').innerHTML = mk;
+  const m = MOODS.find(x => x.k === cur);
+  $('moodReply').style.display = m ? 'block' : 'none';
+  if(m) $('moodReply').textContent = '🦥 ' + moodLine(m.k);
+  $('helpCard').style.display = cur === 'baixo' ? 'block' : 'none';
+}
+function renderShop(){
+  $('mini').innerHTML = `<div class="mini">${duduSVG('feliz', true)}</div>`;
+  $('cores').innerHTML = Object.keys(CORES).map(k => { const c = CORES[k], lock = c.plus && !plus;
+    return `<button class="cor ${(S.cor||'caramelo')===k?'sel':''}" data-cor="${k}" title="${c.n}" style="background:${c.f}">${lock?'<i>💛</i>':''}</button>`; }).join('');
+  $('cenario').innerHTML = SCN_ORDER.map(k => { const it = SCN[k], sc = S.scene || {}, on = sc[it.slot] === k, own = S.owned.includes(k), lock = it.pack && !hasPack(it.pack);
+    const tag = on ? 'No cenário ✓' : it.pack ? (lock ? '🎄 Pacote de Natal' : 'Toque pra pôr') : own ? 'Toque pra pôr' : plus ? 'Grátis no Cafuné+' : '💛 ' + it.price;
+    return `<button class="item ${on?'wear':''} ${lock?'lock':''}" data-scn="${k}"><svg viewBox="${it.tvb || it.vb}">${it.svg}</svg>${it.name}<small>${tag}</small></button>`; }).join('');
+  renderNatal(); drawScene();
+  $('shop').innerHTML = ACC_ORDER.map(k => {
+    const a = ACC[k], own = S.owned.includes(k), wear = S.wearing.includes(k);
+    const lock = a.pack && !hasPack(a.pack);
+    const tag = wear ? 'Usando ✓' : (a.pack ? (lock ? '🎄 Pacote de Natal' : 'Toque pra usar') : own ? 'Toque pra usar' : plus ? 'Grátis no Cafuné+' : '💛 ' + a.price);
+    return `<button class="item ${wear?'wear':''} ${lock?'lock':''}" data-acc="${k}"><svg viewBox="${ACC_VB[k]}">${a.svg}</svg>${a.name}<small>${tag}</small></button>`;
+  }).join('');
+  $('finds').innerHTML = S.finds.length ? S.finds.slice().reverse().map(f => `<div class="found"><small>${f.d}</small><span>${f.t}</span></div>`).join('')
+    : `<p>Complete ${ENERGY_MAX} passinhos e o Dudu sai pra passear. Ele sempre volta com alguma coisa (devagar, claro).</p>`;
+  $('nameInput').value = S.name;
+  $('filtroTog').style.display = S.persona === 'zoeiro' ? 'flex' : 'none';
+  $('filtroTog').classList.toggle('on', !!S.filtro);
+  $('somTog').classList.toggle('on', S.som !== false);
+  $('seg').innerHTML = Object.keys(PERS).map(k => `<button data-pers="${k}" class="${(S.persona||'fofo')===k?'sel':''}">${PERS[k].name}</button>`).join('');
+}
+
+/* ---------- actions ---------- */
+function toast(t){ const el = $('toast'); el.textContent = t; el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 2000); }
+function toggle(id){
+  const k = today(); const arr = S.done[k] = S.done[k] || [];
+  const i = arr.indexOf(id);
+  if(i >= 0){
+    arr.splice(i,1); S.coins = Math.max(0, S.coins-2); S.energy = Math.max(0, S.energy-1);
+    save(); render(); idleLine(); drawDudu(); return;
+  }
+  arr.push(id); S.coins += 2; S.energy++;
+  track('passo');
+  try{ SOM.plim(); }catch(e){}
+  save(); render();
+  react('orgulho'); hearts(3);
+  const all = arr.length === S.items.length;
+  const it = S.items.find(i => i.id === id), pend = S.items.filter(i => !arr.includes(i.id));
+  say(S.persona === 'zoeiro' ? zoeiraLine(it, pend, all) : (all ? P().all : pick(P().done)), S.persona === 'zoeiro' ? 6000 : 3500);
+  if(S.energy >= ENERGY_MAX) setTimeout(walk, 1200);
+}
+function walk(){
+  $('stage').classList.add('away');
+  track('passeio');
+  try{ SOM.boceja(); }catch(e){}
+  setTimeout(() => {
+    const f = pick(FINDS);
+    const d = ddate(0);
+    S.finds.push({d: `${d.getDate()}/${d.getMonth()+1}`, t: f.charAt(0).toUpperCase()+f.slice(1)});
+    S.energy = 0; S.coins += 5; save();
+    $('walkArt').innerHTML = `<div class="mini" style="width:150px;height:150px">${duduSVG('orgulho', true)}</div>`;
+    $('walkTitle').textContent = 'O Dudu voltou do passeio!';
+    try{ SOM.achado(); }catch(e){}
+    $('walkTxt').innerHTML = `Ele trouxe <b>${f}</b>. ${P().walk}<br>+5 cafunés 💛`;
+    open('mWalk');
+    try{ cromoNoPasseio(); }catch(e){}
+  }, 1500);
+}
+function setMood(k){
+  S.moods[today()] = k;
+  const first = !S._m || S._m !== today();
+  if(first){ S.coins += 1; S._m = today(); }
+  save(); close('mMood'); render(); drawDudu();
+  say(moodLine(k), 6000);
+  if(k === 'baixo' && cur !== 'humor') go('humor');
+}
+function addItem(t, e){
+  t = t.trim(); if(!t) return;
+  const s = SUGG.find(x => x[1] === t);
+  S.items.push({id: S.uid++, t, e: e || (s ? s[0] : '🌱')});
+  save(); render(); say(P().add, 3000);
+}
+function open(id){ $(id).classList.add('on'); }
+function close(id){ $(id).classList.remove('on'); }
+let cur = 'hoje';
+function go(t){
+  cur = t;
+  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === 's-'+t));
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.go === t));
+  if(t !== 'respirar') stopBreath();
+  if(t === 'dudu') $('miniSay').textContent = accLine('idle');
+  if(t === 'amigos') loadAmigos();
+  window.scrollTo(0,0);
+}
+
+/* ---------- breathing ---------- */
+let bt = null, bn = 0, running = false;
+function stopBreath(){
+  running = false; clearTimeout(bt); const o = $('orb'); o.className = 'orb';
+  $('phase').textContent = 'Pronto?'; $('breathBtn').textContent = 'Começar'; $('bcount').textContent = '5 respirações · 1 minuto';
+}
+function breathStep(){
+  if(!running) return;
+  if(bn >= 5){
+    running = false; $('orb').className = 'orb'; $('phase').textContent = 'Muito bem 💛';
+    $('bcount').textContent = 'Como tá se sentindo agora?'; $('breathBtn').textContent = 'De novo';
+    $('orb').innerHTML = duduSVG('orgulho', true);
+    if(S.breathDay !== today()){ S.breathDay = today(); S.coins += 1; save(); render(); toast('+1 cafuné por respirar com o Dudu 💛'); }
+    return;
+  }
+  const o = $('orb');
+  o.className = 'orb inhale'; $('phase').textContent = 'Inspire…'; $('bcount').textContent = `${bn+1} de 5`;
+  bt = setTimeout(() => {
+    if(!running) return;
+    o.className = 'orb exhale'; $('phase').textContent = 'Solte devagar…';
+    bt = setTimeout(() => { bn++; breathStep(); }, 6000);
+  }, 4000);
+}
+$('breathBtn').onclick = () => {
+  if(running){ stopBreath(); return; }
+  running = true; bn = 0; $('breathBtn').textContent = 'Parar';
+  $('orb').innerHTML = duduSVG('sono', false);
+  breathStep();
+};
+
+/* ---------- events ---------- */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-go],[data-del],[data-sugg],[data-mood],[data-acc],[data-scn],[data-cor],[data-close],[data-pers],.row');
+  if(!t) return;
+  if(t.dataset.go){ go(t.dataset.go); return; }
+  if(t.dataset.pers){
+    S.persona = t.dataset.pers; save();
+    if(t.closest('#onbPers')){ document.querySelectorAll('#onbPers .per').forEach(b => b.classList.toggle('sel', b === t)); return; }
+    render(); $('miniSay').textContent = accLine('idle'); toast(`Dudu ${PERS[S.persona].name} ativado`); idleLine(); return;
+  }
+  if(t.dataset.close !== undefined){ t.closest('.modal').classList.remove('on'); return; }
+  if(t.dataset.del){
+    e.stopPropagation(); const id = +t.dataset.del;
+    S.items = S.items.filter(i => i.id !== id); save(); render(); return;
+  }
+  if(t.dataset.sugg){ addItem(t.dataset.sugg); return; }
+  if(t.dataset.mood){ setMood(t.dataset.mood); return; }
+  if(t.dataset.cor){
+    const c = CORES[t.dataset.cor];
+    if(c.plus && !plus){ $('plusCard').scrollIntoView({behavior:'smooth', block:'center'}); toast('Essa cor é do Cafuné+ 💛'); return; }
+    S.cor = t.dataset.cor; save(); render(); drawDudu(); $('miniSay').textContent = ACCX[S.persona] || ACCX.fofo; return;
+  }
+  if(t.dataset.scn){
+    const k = t.dataset.scn, it = SCN[k]; S.scene = S.scene || {};
+    if(it.pack && !hasPack(it.pack)){ $('natalCard').scrollIntoView({behavior:'smooth', block:'center'}); toast('Faz parte do Pacote de Natal 🎄'); return; }
+    if(S.scene[it.slot] === k){ S.scene[it.slot] = null; }
+    else if(S.owned.includes(k) || it.pack){ S.scene[it.slot] = k; }
+    else if(plus){ S.owned.push(k); S.scene[it.slot] = k; }
+    else if(S.coins >= it.price){ S.coins -= it.price; S.owned.push(k); S.scene[it.slot] = k; }
+    else { toast(`Faltam ${it.price - S.coins} cafunés 💛`); return; }
+    save(); render(); toast(S.scene[it.slot] === k ? 'Pronto! Veja na tela de hoje 🏡' : 'Tirado do cenário'); return;
+  }
+  if(t.dataset.acc){
+    const k = t.dataset.acc, a = ACC[k];
+    let line;
+    const put = () => { if(HATS.includes(k)) S.wearing = S.wearing.filter(x => !HATS.includes(x)); S.wearing.push(k); line = accLine(k) || ACCX[S.persona] || ACCX.fofo; };
+    if(a.pack && !hasPack(a.pack)){ $('natalCard').scrollIntoView({behavior:'smooth', block:'center'}); toast('Faz parte do Pacote de Natal 🎄'); return; }
+    if(S.wearing.includes(k)){ S.wearing = S.wearing.filter(x => x !== k); line = accLine('off'); }
+    else if(S.owned.includes(k) || a.pack){ put(); }
+    else if(plus){ S.owned.push(k); put(); }
+    else if(S.coins >= a.price){ S.coins -= a.price; S.owned.push(k); put(); }
+    else { $('miniSay').textContent = accLine('poor') + ` (faltam ${a.price - S.coins} 💛)`; return; }
+    save(); render(); drawDudu(); $('miniSay').textContent = line; return;
+  }
+  if(t.classList.contains('row') && !$('listCard').classList.contains('editing')){ toggle(+t.dataset.id); }
+});
+$('dudu').onclick = () => {
+  const w = $('dudu'); w.classList.remove('pet'); void w.offsetWidth; w.classList.add('pet');
+  const now = Date.now(); petTimes = petTimes.filter(x => now - x < 4000); petTimes.push(now);
+  hearts(2); if(curFace !== 'triste') react('orgulho', 1400);
+  try{ SOM.ronrona(); }catch(e){}
+  if(petTimes.length >= 6){
+    petTimes = [];
+    const spam = {fofo:'Hihi, para! Cócegas! 🤭', zen:'Respira… um cafuné de cada vez 🍃', zoeiro: X() ? 'Porra, chega! Vai zuar com outro, cacete!' : 'Ô, chega! Vai zuar com outro!'};
+    if(S.moods[today()] !== 'baixo'){ react('triste', 1500); say(spam[S.persona] || spam.fofo, 3000); return; }
+  }
+  say(pick(P().pet), 2600);
+};
+$('checkinBtn').onclick = () => open('mMood');
+$('editBtn').onclick = () => { const c = $('listCard'); c.classList.toggle('editing'); $('editBtn').textContent = c.classList.contains('editing') ? 'Pronto' : 'Editar'; };
+$('addForm').onsubmit = e => { e.preventDefault(); addItem($('addInput').value); $('addInput').value = ''; };
+$('walkBtn').onclick = () => { close('mWalk'); $('stage').classList.remove('away'); render(); react('orgulho', 2500); say(P().back, 4000); hearts(4); };
+$('nameSave').onclick = () => { S.name = $('nameInput').value.trim().slice(0,20); save(); render(); toast('Nome salvo'); };
+$('nextDay').onclick = () => { S.offset++; save(); render(); drawDudu(); idleLine(); go('hoje'); toast('Um novo dia começou ☀️'); };
+$('filtroTog').onclick = () => {
+  if(S.filtro){ S.filtro = false; save(); render(); $('miniSay').textContent = 'Tá bom, tá bom. Volto a ser educado. Mais ou menos.'; return; }
+  open('mFiltro');
+};
+$('filtroYes').onclick = () => { S.filtro = true; save(); close('mFiltro'); render(); $('miniSay').textContent = 'Finalmente, porra! Agora a gente conversa direito.'; };
+$('gift').onclick = () => { S.coins += 50; save(); render(); toast('+50 cafunés 💛'); };
+$('reset').onclick = () => open('mConfirm');
+$('resetYes').onclick = () => { S = fresh(); save(); if(sb && user){ sb.from('estado').delete().eq('user_id', user.id).then(() => {}); } close('mConfirm'); startOnb(); };
+document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => { if(e.target === m && m.id !== 'mWalk') m.classList.remove('on'); }));
+
+/* ---------- onboarding ---------- */
+let onbSel = [];
+function onbStep(n){
+  document.querySelectorAll('.step').forEach(s => s.classList.toggle('on', +s.dataset.step === n));
+  document.querySelectorAll('.dots i').forEach((d,i) => d.classList.toggle('on', i === n));
+}
+function startOnb(){
+  $('onb').classList.add('on'); onbSel = [];
+  $('onbArt').innerHTML = duduSVG('feliz', true, []).replace('<svg ', '<svg class="big" ');
+  $('onbArt2').innerHTML = duduSVG('orgulho', true, []).replace('<svg ', '<svg class="big" style="width:180px;height:180px" ');
+  $('onbChips').innerHTML = SUGG.map((s,i) => `<button class="chip" data-o="${i}">${s[0]} ${esc(s[1])}</button>`).join('');
+  $('onbName').value = ''; S.persona = 'fofo';
+  $('onbPers').innerHTML = Object.keys(PERS).map(k => { const p = PERS[k]; return `<button class="per ${k==='fofo'?'sel':''}" data-pers="${k}"><svg viewBox="95 55 210 200">${ART.faces[p.face]}</svg><div><b>${p.name}</b><span>${p.desc}</span><i>${p.sample}</i></div></button>`; }).join('');
+  onbStep(0);
+}
+$('o1').onclick = () => onbStep(1);
+$('o2').onclick = () => { S.name = $('onbName').value.trim().slice(0,20); onbStep(2); };
+$('o2b').onclick = () => onbStep(3);
+$('onbName').addEventListener('keydown', e => { if(e.key === 'Enter') $('o2').click(); });
+$('onbChips').onclick = e => {
+  const c = e.target.closest('[data-o]'); if(!c) return;
+  const i = +c.dataset.o;
+  if(onbSel.includes(i)){ onbSel = onbSel.filter(x => x !== i); c.classList.remove('sel'); }
+  else if(onbSel.length < 4){ onbSel.push(i); c.classList.add('sel'); }
+};
+$('o3').onclick = () => {
+  if(!onbSel.length) onbSel = [0,1,2];
+  onbSel.forEach(i => S.items.push({id: S.uid++, t: SUGG[i][1], e: SUGG[i][0]}));
+  S.onboarded = true; save();
+  if(user){ finishOnb(); return; }
+  $('onbArt3').innerHTML = duduSVG('feliz', true, []).replace('<svg ', '<svg class="big" style="width:150px;height:150px" ');
+  mountLogin($('loginOnbBox'), finishOnb);
+  onbStep(4);
+};
+$('o4skip').onclick = finishOnb;
+
+/* ---------- partilhar ---------- */
+let shareFmt = 'post', shareText = '', shareFace = 'feliz', lastBlob = null;
+function svgImg(svg){
+  return new Promise((ok, no) => {
+    const i = new Image();
+    i.onload = () => ok(i); i.onerror = no;
+    i.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg.replace('<svg ', '<svg width="660" height="720" '));
+  });
+}
+function wrap(ctx, text, maxW){
+  const words = text.split(' '), lines = []; let cur = '';
+  for(const w of words){
+    const test = cur ? cur + ' ' + w : w;
+    if(ctx.measureText(test).width > maxW && cur){ lines.push(cur); cur = w; } else cur = test;
+  }
+  if(cur) lines.push(cur);
+  return lines;
+}
+function rrect(ctx, x, y, w, h, r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+async function makeCard(){
+  try{ await document.fonts.load('900 60px Nunito'); await document.fonts.load('800 36px Nunito'); }catch(e){}
+  const W = 1080, H = shareFmt === 'story' ? 1920 : 1350;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  x.fillStyle = '#FBF0B5'; x.fillRect(0,0,W,H);
+  // chão
+  x.fillStyle = '#F3DF8B'; x.beginPath(); x.ellipse(W/2, H - 120, W*0.85, 190, 0, Math.PI, 0); x.fill(); x.fillRect(0, H-120, W, 120);
+  // texto
+  const fs = shareText.length > 90 ? 50 : shareText.length > 55 ? 58 : 66;
+  x.font = `900 ${fs}px Nunito, system-ui, sans-serif`;
+  const lines = wrap(x, shareText, 820), lh = fs * 1.25;
+  const tag = window.ROAST_TAG, top = (shareFmt === 'story' ? 230 : 90) + (tag ? 100 : 0), bh = lines.length * lh + 90;
+  if(tag){ x.font = '900 42px Nunito, system-ui, sans-serif'; const tw = x.measureText(tag).width + 70; x.fillStyle = '#E8665A'; rrect(x, (W - tw)/2, top - 92, tw, 70, 35); x.fill(); x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(tag, W/2, top - 57); x.font = `900 ${fs}px Nunito, system-ui, sans-serif`; }
+  x.fillStyle = '#fff'; rrect(x, 90, top, 900, bh, 48); x.fill();
+  x.beginPath(); x.moveTo(W/2 - 34, top + bh - 1); x.lineTo(W/2 + 34, top + bh - 1); x.lineTo(W/2, top + bh + 40); x.closePath(); x.fill();
+  x.fillStyle = '#6B3420'; x.textAlign = 'center'; x.textBaseline = 'middle';
+  lines.forEach((l, i) => x.fillText(l, W/2, top + 45 + lh/2 + i*lh));
+  // Dudu
+  const img = await svgImg(duduSVG(shareFace, shareFace === 'feliz' || shareFace === 'orgulho'));
+  const footY = H - 70, avail = footY - 90 - (top + bh + 60);
+  const dh = Math.min(shareFmt === 'story' ? 1000 : 860, avail), dw = dh * 330 / 360;
+  x.drawImage(img, (W - dw)/2, footY - 90 - dh, dw, dh);
+  // marca
+  x.font = '900 64px Nunito, system-ui, sans-serif'; x.fillStyle = '#6B3420'; x.textAlign = 'left';
+  x.fillText('cafuné', 90, footY);
+  x.font = '800 34px Nunito, system-ui, sans-serif'; x.textAlign = 'right'; x.fillStyle = '#8A5A3C';
+  x.fillText('@meucafune.app', W - 90, footY);
+  return c;
+}
+async function openShare(){
+  shareText = $('bubble').textContent.trim(); shareFace = curFace || 'feliz';
+  open('mShare'); await renderShot();
+}
+async function renderShot(){
+  const c = window.CARD_OVERRIDE ? await window.CARD_OVERRIDE() : await makeCard();
+  $('shot').src = c.toDataURL('image/png');
+  lastBlob = await new Promise(r => c.toBlob(r, 'image/png'));
+}
+let dl = null;
+try{ if(window.claude && claude.use) claude.use('downloads').then(d => { dl = d; }).catch(() => {}); }catch(e){}
+$('shareBtn').onclick = openShare;
+$('fmtSeg').onclick = e => {
+  const b = e.target.closest('[data-fmt]'); if(!b) return;
+  shareFmt = b.dataset.fmt;
+  document.querySelectorAll('#fmtSeg button').forEach(x => x.classList.toggle('sel', x === b));
+  renderShot();
+};
+$('shareSave').onclick = async () => {
+  if(!dl && lastBlob){
+    const file = new File([lastBlob], `dudu-${shareFmt}.png`, {type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){ try{ await navigator.share({files:[file], text:'O Dudu do Cafuné 🦥 meucafune.app'}); }catch(e){} return; }
+    const a = document.createElement('a'); a.href = URL.createObjectURL(lastBlob); a.download = file.name; document.body.appendChild(a); a.click(); a.remove(); return;
+  }
+  if(!dl || !lastBlob){ $('shareHint').style.display = 'block'; return; }
+  try{ await dl.save({filename: `dudu-${shareFmt}.png`, data: lastBlob}); toast('Imagem pronta 💛'); }
+  catch(err){
+    const code = err && err.code;
+    if(code === 'declined') return;
+    if(code === 'rate_limited'){ toast('Espera um segundinho e tenta de novo'); return; }
+    $('shareHint').style.display = 'block';
+  }
+};
+
+/* ---------- login ---------- */
+function mountLogin(box, onDone){
+  if(!sb){ box.innerHTML = '<p class="msg">Sem conexão com a nuvem agora. Seu Dudu continua salvo neste aparelho.</p>'; return; }
+  box.innerHTML = `<div class="login"><input type="email" class="em" placeholder="seu@email.com" autocomplete="email" inputmode="email"><button class="btn big send">Enviar código</button><p class="msg"></p></div>`;
+  const em = box.querySelector('.em'), msg = box.querySelector('.msg');
+  box.querySelector('.send').onclick = async () => {
+    const email = em.value.trim().toLowerCase();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ msg.textContent = 'Confere o e-mail? Parece que falta alguma coisa.'; msg.className = 'msg err'; return; }
+    msg.className = 'msg'; msg.textContent = 'Enviando…';
+    const {error} = await sb.auth.signInWithOtp({email, options:{emailRedirectTo: location.origin + '/app/'}});
+    if(error){ msg.className = 'msg err'; msg.textContent = /rate|limit|seconds/i.test(error.message) ? 'Calma! Espera um minutinho antes de pedir outro código.' : 'Não deu pra enviar agora. Tenta de novo daqui a pouco.'; return; }
+    box.innerHTML = `<div class="login"><p class="msg">Mandamos um código de 6 dígitos para <b>${esc(email)}</b>. Olha também no spam.</p><input class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"><button class="btn big ok">Entrar</button><p class="msg m2"></p><button class="link again">Usar outro e-mail</button></div>`;
+    const code = box.querySelector('.code'), m2 = box.querySelector('.m2');
+    box.querySelector('.again').onclick = () => mountLogin(box, onDone);
+    const verify = async () => {
+      const token = code.value.replace(/\D/g, '');
+      if(token.length !== 6){ m2.className = 'msg err'; m2.textContent = 'São 6 números.'; return; }
+      m2.className = 'msg'; m2.textContent = 'Conferindo…';
+      const {error: e2} = await sb.auth.verifyOtp({email, token, type:'email'});
+      if(e2){ m2.className = 'msg err'; m2.textContent = 'Código errado ou vencido. Confere ou pede outro.'; return; }
+      track('conta_criada');
+      onDone && onDone();
+    };
+    box.querySelector('.ok').onclick = verify;
+    code.addEventListener('input', () => { if(code.value.replace(/\D/g, '').length === 6) verify(); });
+    code.focus();
+  };
+}
+function renderConta(){
+  const box = $('contaBox');
+  if(user){
+    box.innerHTML = `<p>Dudu salvo na nuvem com <b>${esc(user.email || '')}</b>.</p><button class="btn ghost" id="logout" style="margin-top:10px">Sair desta conta</button><button class="link" id="apagarConta" style="display:block;margin-top:14px;color:var(--coral)">Apagar a minha conta</button>`;
+    $('logout').onclick = async () => { await sb.auth.signOut(); toast('Você saiu. O Dudu continua aqui neste aparelho.'); };
+    $('apagarConta').onclick = () => open('mApagar');
+  } else {
+    box.innerHTML = `<p>Seu Dudu está salvo só neste aparelho. Entre com seu e-mail pra não perder.</p><button class="btn yel" id="openLogin" style="margin-top:10px">Salvar meu Dudu</button>`;
+    $('openLogin').onclick = () => { mountLogin($('loginModalBox'), () => { close('mLogin'); toast('Prontinho! Seu Dudu está salvo 💛'); }); open('mLogin'); };
+  }
+}
+if(sb){
+  sb.auth.onAuthStateChange((ev, session) => {
+    const was = user && user.id; user = session ? session.user : null;
+    if(user && user.id !== was){ pulled = false; pullRemote(); }
+    renderConta(); loadPlus(); loadAmigos();
+  });
+}
+
+/* ---------- Cafuné+ (Stripe) ---------- */
+const PLUS_CFG = {opts:[
+  {k:'anual', t:'Anual', p:'R$ 89,90/ano', n:'7 dias grátis · sai a R$ 7,49/mês', url:'https://buy.stripe.com/bJe3cv7Gr4p81YK2pSbV601', best:true},
+  {k:'mensal', t:'Mensal', p:'R$ 14,90/mês', n:'7 dias grátis · cancela quando quiser', url:'https://buy.stripe.com/7sYaEXe4PaNw6f06G8bV600'},
+  {k:'unico', t:'1 ano no Pix', p:'R$ 89,90', n:'Pagamento único, sem renovação automática', url:'https://buy.stripe.com/28E9AT7GraNwfPA2pSbV605'}
+]};
+var plus = null;
+async function loadPlus(){
+  if(!sb || !user){ plus = null; renderPlus(); return; }
+  try{
+    const {data} = await sb.from('assinaturas').select('plano,valido_ate,stripe_subscription_id').eq('user_id', user.id).maybeSingle();
+    plus = data && data.plano !== 'gratis' && new Date(data.valido_ate) > new Date() ? data : null;
+  }catch(e){ plus = null; }
+  await loadCompras();
+  renderPlus(); render(); renderLemb();
+  try{ renderAlbum(); }catch(e){}
+}
+function renderPlus(){
+  const box = $('plusBox'); if(!box) return;
+  if(plus){
+    const d = new Date(plus.valido_ate);
+    const recorrente = !!plus.stripe_subscription_id;
+    box.innerHTML = `<p><b>Você é Cafuné+ 💛</b> Obrigado por apoiar o Dudu!</p><p class="fine" style="text-align:left;margin-top:6px">${recorrente ? 'Renova em' : 'Válido até'} ${d.toLocaleDateString(document.documentElement.lang)}.${recorrente ? '' : ' Pagamento único, não renova sozinho.'}</p>` +
+      (recorrente ? `<button class="btn ghost big" id="gerirPlus" style="margin-top:10px">Gerir ou cancelar assinatura</button><p class="fine" style="text-align:left;margin-top:6px">Abre a página segura do Stripe. Use o mesmo e-mail da conta. Se cancelar, o Cafuné+ continua até ao fim do período pago.</p>` : '');
+    if(recorrente) $('gerirPlus').onclick = () => { track('cancelar_clique'); location.href = PORTAL_URL + '?prefilled_email=' + encodeURIComponent(user.email || ''); };
+    return;
+  }
+  box.innerHTML = `<p>🎨 Cores exclusivas pro Dudu<br>🎄 Pacotes da época incluídos (o de Natal já está aí)<br>🧣 Todos os mimos do guarda-roupa liberados<br>🔔 Lembrete na hora que você escolher<br>💛 E você ajuda um app feito com carinho.</p>` +
+    PLUS_CFG.opts.map(o => `<button class="btn ${o.best?'':'ghost'} big plusbuy" data-plus="${o.k}" style="margin-top:10px;display:flex;flex-direction:column;align-items:center;width:100%;line-height:1.25;gap:3px"><span>${o.t} · ${o.p}${o.best?' ⭐':''}</span><small style="font-weight:600;opacity:.8;font-size:12px">${o.n}</small></button>`).join('') +
+    `<p class="fine" style="text-align:left;margin-top:10px">Pagamento seguro pelo Stripe. Cancele quando quiser · reembolso total em 14 dias.</p>`;
+  box.querySelectorAll('.plusbuy').forEach(b => b.onclick = () => buyPlus(b.dataset.plus));
+}
+function buyPlus(k){
+  const o = PLUS_CFG.opts.find(x => x.k === k); if(!o) return;
+  if(!user){ toast('Primeiro salve seu Dudu com seu e-mail 💛'); mountLogin($('loginModalBox'), () => { close('mLogin'); buyPlus(k); }); open('mLogin'); return; }
+  track('plus_clique', {plano: k});
+  location.href = o.url + '?client_reference_id=' + encodeURIComponent(user.id) + '&prefilled_email=' + encodeURIComponent(user.email || '');
+}
+if(/[?&]pago=1/.test(location.search)){
+  history.replaceState(null, '', location.pathname);
+  setTimeout(() => toast('Obrigado! Ativando seu Cafuné+ 💛'), 800);
+  [3000, 8000, 15000].forEach(ms => setTimeout(loadPlus, ms));
+}
+renderPlus();
+
+/* ---------- lembretes (web push) ---------- */
+const LEMB_URL = SB_URL + '/functions/v1/lembretes';
+const LANG_CODE = window.CAFUNE_LANG || 'pt-BR';
+function b64ToU8(s){ const p = '='.repeat((4 - s.length % 4) % 4); const b = atob((s + p).replace(/-/g, '+').replace(/_/g, '/')); return Uint8Array.from(b, c => c.charCodeAt(0)); }
+async function pushSub(){ if(!('serviceWorker' in navigator)) return null; const reg = await navigator.serviceWorker.ready; return reg.pushManager.getSubscription(); }
+async function renderLemb(){
+  const box = $('lembBox'); if(!box) return;
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent), standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if(ios && !standalone){ box.innerHTML = '<p>No iPhone, os lembretes só funcionam com o app instalado na tela de início.</p><button class="btn yel big" id="lembInst" style="margin-top:10px">Ver como instalar (1 minuto)</button>'; $('lembInst').onclick = openInstall; return; }
+  if(!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)){ box.innerHTML = '<p>Este navegador não aceita lembretes. Tente pelo Chrome ou instale o app.</p>'; return; }
+  if(!sb || !user){ box.innerHTML = '<p>Entre com seu e-mail pra o Dudu poder te mandar lembretes.</p><button class="btn yel" id="lembLogin" style="margin-top:10px">Salvar meu Dudu</button>'; $('lembLogin').onclick = () => { mountLogin($('loginModalBox'), () => { close('mLogin'); renderLemb(); }); open('mLogin'); }; return; }
+  let sub = null, row = null;
+  try{ sub = await pushSub(); if(sub){ row = (await sb.from('push_subscricoes').select('hora_lembrete').eq('endpoint', sub.endpoint).maybeSingle()).data; } }catch(e){}
+  if(sub && row){
+    const h = String(row.hora_lembrete || '09:00').slice(0, 5);
+    box.innerHTML = `<p>O Dudu vai te lembrar todo dia às <b>${plus ? h : '09:00'}</b>.</p>` +
+      (plus ? `<div class="add" style="margin-top:10px"><input type="time" id="lembHora" value="${h}"><button class="btn yel" id="lembSalvar">Salvar</button></div>` : `<p class="fine" style="text-align:left;margin-top:6px">Escolher o horário é Cafuné+ 💛</p>`) +
+      `<div style="display:flex;gap:8px;margin-top:10px"><button class="btn ghost" id="lembTeste" style="flex:1">Testar agora</button><button class="btn ghost" id="lembOff" style="flex:1">Desligar</button></div>`;
+    if(plus) $('lembSalvar').onclick = async () => { await sb.from('push_subscricoes').update({hora_lembrete: $('lembHora').value || '09:00'}).eq('endpoint', sub.endpoint); toast('Horário salvo 🔔'); renderLemb(); };
+    $('lembTeste').onclick = async () => {
+      const {data} = await sb.auth.getSession();
+      fetch(LEMB_URL, {method:'POST', headers:{'content-type':'application/json', authorization:'Bearer ' + (data.session ? data.session.access_token : '')}, body: JSON.stringify({teste_user_id: user.id})}).catch(() => {});
+      toast('Lá vai um lembrete de teste 🔔');
+    };
+    $('lembOff').onclick = async () => { try{ await sb.from('push_subscricoes').delete().eq('endpoint', sub.endpoint); await sub.unsubscribe(); }catch(e){} toast('Lembretes desligados'); renderLemb(); };
+  } else {
+    box.innerHTML = '<p>Um lembrete por dia, do jeitinho da personalidade do seu Dudu.</p><button class="btn yel big" id="lembOn" style="margin-top:10px">Ativar lembretes 🔔</button>';
+    $('lembOn').onclick = lembOn;
+  }
+}
+async function lembOn(){
+  try{
+    const perm = await Notification.requestPermission();
+    if(perm !== 'granted'){ toast('Sem permissão pra notificações'); return; }
+    const {publicKey} = await fetch(LEMB_URL).then(r => r.json());
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if(!sub) sub = await reg.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: b64ToU8(publicKey)});
+    const j = sub.toJSON();
+    const {error} = await sb.from('push_subscricoes').upsert({user_id: user.id, endpoint: j.endpoint, p256dh: j.keys.p256dh, auth: j.keys.auth, fuso: Intl.DateTimeFormat().resolvedOptions().timeZone, persona: S.persona || 'fofo', lingua: LANG_CODE}, {onConflict: 'endpoint'});
+    if(error) throw error;
+    toast('Lembretes ligados 🔔'); track('lembretes_on');
+  }catch(e){ toast('Não deu pra ligar os lembretes agora'); }
+  renderLemb();
+}
+function syncLemb(){ if(sb && user) sb.from('push_subscricoes').update({persona: S.persona || 'fofo', lingua: LANG_CODE}).eq('user_id', user.id).then(() => {}, () => {}); }
+renderLemb();
+
+/* ---------- amiguinhos ---------- */
+let amigos = [], meuCodigo = null;
+const utcHoje = () => new Date().toISOString().slice(0, 10);
+(function(){ const c = new URLSearchParams(location.search).get('amigo'); if(c){ try{ localStorage.setItem('cafune-convite', c.toUpperCase()); }catch(e){} history.replaceState(null, '', location.pathname); } })();
+const conviteFila = () => { try{ return localStorage.getItem('cafune-convite'); }catch(e){ return null; } };
+async function syncPerfil(){
+  if(!sb || !user) return;
+  const tot = Object.values(S.done || {}).reduce((a, x) => a + (x ? x.length : 0), 0);
+  try{
+    const {data} = await sb.from('perfis').upsert({user_id: user.id, nome: S.name || '', persona: S.persona || 'fofo', acessorios: (S.wearing || []).concat(S.cor && S.cor !== 'caramelo' ? ['cor:' + S.cor] : []), passos_hoje: (S.done[today()] || []).length, passos_total: tot, dia: today(), atualizado_em: new Date().toISOString()}).select('codigo').single();
+    if(data) meuCodigo = data.codigo;
+  }catch(e){}
+  try{ syncDias(); }catch(e){}
+}
+async function aceitarConvite(c){
+  const {data, error} = await sb.rpc('aceitar_convite', {p_codigo: c});
+  if(error || !data){ toast('Não deu pra usar esse código agora'); return false; }
+  if(!data.ok){ toast(data.erro === 'proprio' ? 'Esse é o seu próprio código 😅' : 'Código não encontrado'); return false; }
+  S.coins += 10; save(); render(); hearts(5);
+  toast(`Agora você e ${data.nome || 'seu amigo'} são amiguinhos 💛 +10 cafunés`);
+  return true;
+}
+async function loadAmigos(){
+  if(!sb || !user){ amigos = []; renderAmigos(); return; }
+  await syncPerfil();
+  const fila = conviteFila();
+  if(fila){ try{ localStorage.removeItem('cafune-convite'); }catch(e){} await aceitarConvite(fila); }
+  try{
+    const {data: am} = await sb.from('amizades').select('a,b');
+    const ids = (am || []).map(x => x.a === user.id ? x.b : x.a);
+    if(S.nAmigos !== undefined && ids.length > S.nAmigos){ S.coins += 10 * (ids.length - S.nAmigos); toast('Um amigo aceitou o seu convite 💛 +10 cafunés'); hearts(4); }
+    if(S.nAmigos !== ids.length){ S.nAmigos = ids.length; save(); render(); }
+    const {data: pf} = ids.length ? await sb.from('perfis').select('user_id,nome,persona,acessorios,passos_hoje,dia').in('user_id', ids) : {data: []};
+    const {data: env} = await sb.from('cafunes').select('para').eq('de', user.id).eq('dia', utcHoje());
+    const {data: rec} = await sb.from('cafunes').select('id,de').eq('para', user.id).eq('recebido', false);
+    if(rec && rec.length){
+      await sb.from('cafunes').update({recebido: true}).in('id', rec.map(r => r.id));
+      const quem = (pf || []).find(p => p.user_id === rec[0].de);
+      S.coins += rec.length; save(); render(); hearts(rec.length + 2);
+      toast(rec.length === 1 ? `${(quem && quem.nome) || 'Um amigo'} te mandou um cafuné 💛 +1` : `Você recebeu ${rec.length} cafunés de amigos 💛 +${rec.length}`);
+    }
+    const sent = new Set((env || []).map(x => x.para));
+    amigos = (pf || []).map(p => Object.assign({}, p, {enviado: sent.has(p.user_id)}));
+  }catch(e){}
+  renderAmigos();
+  try{ await amigosExtra(); }catch(e){}
+}
+function renderAmigos(){
+  const cv = $('amigosConvite'), li = $('amigosLista'); if(!cv) return;
+  if(!sb || !user){
+    cv.innerHTML = (conviteFila() ? '<p><b>Você foi convidado! 💛</b></p>' : '') + '<p>Entre com seu e-mail pra ter amiguinhos, ver o Dudu deles e mandar cafunés.</p><button class="btn yel" id="amigosLogin" style="margin-top:10px">Salvar meu Dudu</button>';
+    $('amigosLogin').onclick = () => { mountLogin($('loginModalBox'), () => { close('mLogin'); loadAmigos(); }); open('mLogin'); };
+    li.innerHTML = '<p>Ainda sem amiguinhos.</p>'; return;
+  }
+  cv.innerHTML = `<p>Seu código de amiguinho:</p><div class="codigo">${esc(meuCodigo || '······')}</div>
+    <button class="btn big" id="convidar">Convidar pelo WhatsApp 💬</button>
+    <p class="fine" style="text-align:left;margin-top:8px">Cada amigo que entrar dá +10 cafunés pra vocês dois.</p>
+    <div class="add" style="margin-top:12px"><input id="codigoAmigo" maxlength="6" placeholder="Código de um amigo" autocapitalize="characters"><button class="btn yel" id="addAmigo">Adicionar</button></div>`;
+  $('convidar').onclick = convidar;
+  $('addAmigo').onclick = async () => { const c = $('codigoAmigo').value.trim().toUpperCase(); if(c.length < 4) return; if(await aceitarConvite(c)) loadAmigos(); };
+  if(!amigos.length){ li.innerHTML = '<p>Ainda sem amiguinhos. Convide alguém pra cuidar de si junto com você 🦥</p>'; return; }
+  li.innerHTML = amigos.map(a => {
+    const per = PERS[a.persona] || PERS.fofo;
+    const hoje = a.dia === today() ? (a.passos_hoje || 0) : 0;
+    const txt = hoje ? `${hoje} passinho${hoje > 1 ? 's' : ''} hoje` : 'Ainda nenhum passinho hoje';
+    return `<div class="amigo" data-uid="${a.user_id}"><div class="av">${duduSVG(per.face, false, Array.isArray(a.acessorios) ? a.acessorios : [])}</div><div class="nm"><b>${esc(a.nome || '🦥')}</b><small>Dudu ${per.name} · ${txt}</small></div>` +
+      (a.enviado ? '<button class="btn ghost" disabled>Enviado ✓</button>' : `<button class="btn yel" data-cafune="${a.user_id}">Cafuné 💛</button>`) + '</div>';
+  }).join('');
+  li.querySelectorAll('[data-cafune]').forEach(b => b.onclick = async () => {
+    b.disabled = true;
+    const {error} = await sb.from('cafunes').insert({de: user.id, para: b.dataset.cafune});
+    if(error && !/duplicate/i.test(error.message)){ b.disabled = false; toast('Não deu pra mandar agora'); return; }
+    hearts(4); toast('Cafuné enviado 💛'); loadAmigos();
+  });
+  try{ decorarAmigos(); }catch(e){}
+}
+async function convidar(){
+  track('convite_enviado');
+  const url = `https://meucafune.app${location.pathname}?amigo=${meuCodigo || ''}`;
+  const txt = `Adotei o Dudu, uma preguiça que me ajuda a cuidar de mim um passinho de cada vez 🦥 Vem ser meu amiguinho no Cafuné:`;
+  if(navigator.share){ try{ await navigator.share({text: txt, url}); return; }catch(e){ return; } }
+  location.href = 'https://wa.me/?text=' + encodeURIComponent(txt + ' ' + url);
+}
+renderAmigos();
+
+/* ---------- pacotes (Natal) ---------- */
+var NATAL_CFG = {preco:'R$ 9,90', url:'https://buy.stripe.com/bJe4gz8Kv6xg9rc1lObV607', pag:'Cartão ou Pix'};
+function renderNatal(){
+  const box = $('natalBox'); if(!box) return;
+  if(hasPack('natal')){
+    box.innerHTML = `<p><b>Desbloqueado 🎄</b> ${plus && !compras.includes('natal') ? 'Incluído no seu Cafuné+.' : 'Obrigado pela compra!'} Árvore, presépio, luzinhas, neve e gorro de Natal já estão no cenário e no guarda-roupa.</p>`;
+    return;
+  }
+  box.innerHTML = `<p>Árvore de Natal, presépio, luzinhas, neve caindo e o gorro de Natal do Dudu. É seu pra sempre.</p>
+    <button class="btn big" id="buyNatal" style="margin-top:10px">Comprar por ${NATAL_CFG.preco}</button>
+    <p class="fine" style="text-align:left;margin-top:8px">${NATAL_CFG.pag}. Já vem incluído no Cafuné+ 💛</p>`;
+  $('buyNatal').onclick = () => {
+    if(!user){ toast('Primeiro salve seu Dudu com seu e-mail 💛'); mountLogin($('loginModalBox'), () => { close('mLogin'); $('buyNatal') && $('buyNatal').click(); }); open('mLogin'); return; }
+    track('natal_clique');
+    location.href = NATAL_CFG.url + '?client_reference_id=' + encodeURIComponent(user.id) + '&prefilled_email=' + encodeURIComponent(user.email || '');
+  };
+}
+async function loadCompras(){
+  if(!sb || !user){ compras = []; return; }
+  try{ const {data} = await sb.from('compras').select('item').eq('user_id', user.id); compras = (data || []).map(x => x.item); }catch(e){}
+}
+if(/[?&]pago=natal/.test(location.search)){
+  history.replaceState(null, '', location.pathname);
+  setTimeout(() => toast('Obrigado! Preparando seu Natal 🎄'), 800);
+  [3000, 8000, 15000].forEach(ms => setTimeout(() => loadPlus(), ms));
+}
+
+/* ---------- sons e preguicês (Web Audio, gerado na hora) ---------- */
+const SOM = (() => {
+  let ac = null;
+  const ctx = () => { if(!ac){ try{ ac = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){ return null; } } if(ac.state !== 'running'){ try{ ac.resume(); }catch(e){} } return ac; };
+  // iPhone: o contexto fica "interrupted" ao voltar de outra app; reativa em cada toque
+  ['pointerdown','touchend','keydown'].forEach(ev => window.addEventListener(ev, () => { if(S.som !== false) ctx(); }, {passive:true}));
+  document.addEventListener('visibilitychange', () => { if(!document.hidden && ac && S.som !== false) ctx(); });
+  const on = () => S.som !== false && !!ctx();
+  const go = fn => { if(!on()) return; if(ac.state === 'running') fn(); else ac.resume().then(() => { if(ac.state === 'running') fn(); }).catch(() => {}); };
+  function tone(f, t0, dur, type, vol, f2){
+    const a = ac, o = a.createOscillator(), g = a.createGain();
+    o.type = type || 'sine'; o.frequency.setValueAtTime(f, t0);
+    if(f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol || 0.15, t0 + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g).connect(a.destination); o.start(t0); o.stop(t0 + dur + 0.02);
+  }
+  // vozes mais agudas e fortes: o altifalante do telemóvel quase não toca graves
+  const VOZ = {zen:{b:330, v:0.2, d:0.15, gap:0.05}, fofo:{b:620, v:0.3, d:0.08, gap:0.025}, zoeiro:{b:440, v:0.5, d:0.065, gap:0.018}};
+  return {
+    plim(){ go(() => { const t = ac.currentTime; tone(880, t, 0.18, 'sine', 0.12); tone(1320, t + 0.08, 0.28, 'sine', 0.1); }); },
+    ronrona(){ go(() => {
+      const t = ac.currentTime, n = ac.createBufferSource(), len = ac.sampleRate * 0.9, buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+      let last = 0; for(let i = 0; i < len; i++){ last = (last + 0.04 * (Math.random() * 2 - 1)) / 1.04; d[i] = last * 3.5 * (0.55 + 0.45 * Math.sin(i / ac.sampleRate * 2 * Math.PI * 24)); }
+      n.buffer = buf; const f = ac.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 380; const g = ac.createGain();
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5, t + 0.15); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+      n.connect(f).connect(g).connect(ac.destination); n.start(t); }); },
+    boceja(){ go(() => { const t = ac.currentTime; tone(360, t, 1.1, 'triangle', 0.14, 170); tone(540, t, 0.9, 'sine', 0.05, 260); }); },
+    achado(){ go(() => { const t = ac.currentTime; [523, 659, 784, 1047].forEach((f, i) => tone(f, t + i * 0.12, 0.35, 'triangle', 0.11)); }); },
+    fala(texto){ if(!texto) return; go(() => {
+      const v = VOZ[S.persona] || VOZ.fofo, sil = Math.max(2, Math.min(14, Math.round(String(texto).replace(/[^\p{L}]/gu, '').length / 4)));
+      let t = ac.currentTime + 0.02;
+      for(let i = 0; i < sil; i++){
+        const f = v.b * (1 + (Math.random() * 2 - 1) * v.v * 0.5) * (i === sil - 1 && /\?/.test(texto) ? 1.35 : 1);
+        const o = ac.createOscillator(), g = ac.createGain(), lp = ac.createBiquadFilter();
+        o.type = 'square'; o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(f * (0.85 + Math.random() * 0.3), t + v.d);
+        lp.type = 'lowpass'; lp.frequency.value = 2400; lp.Q.value = 2;
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.16, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + v.d);
+        o.connect(lp).connect(g).connect(ac.destination); o.start(t); o.stop(t + v.d + 0.02);
+        t += v.d + v.gap;
+      }
+    }); }
+  };
+})();
+$('somTog').onclick = () => { S.som = S.som === false; save(); render(); if(S.som !== false){ SOM.fala('Oi!'); if(/iPhone|iPad/.test(navigator.userAgent)) toast('Não está ouvindo? Tire o iPhone do modo silencioso 🔔'); } };
+
+/* ---------- portal Stripe, apagar conta e medição ---------- */
+var PORTAL_URL = 'https://billing.stripe.com/p/login/7sYaEXe4PaNw6f06G8bV600';
+async function apagarConta(forcar){
+  const msg = $('apagarMsg'), btn = $('apagarSim');
+  btn.disabled = true; msg.style.display = 'block'; msg.textContent = 'Apagando…';
+  try{
+    const {data} = await sb.auth.getSession();
+    const r = await fetch(SB_URL + '/functions/v1/apagar-conta', {method:'POST', headers:{'content-type':'application/json', authorization:'Bearer ' + (data.session ? data.session.access_token : '')}, body: JSON.stringify({ja_cancelei: !!forcar})}).then(x => x.json());
+    if(r.ok){
+      track('apagar_conta');
+      try{ await sb.auth.signOut(); }catch(e){}
+      S = fresh(); save(); try{ localStorage.removeItem('cafune-proto-v1'); }catch(e){}
+      close('mApagar'); toast('Conta apagada. Obrigado por ter passado por aqui 💛'); startOnb(); return;
+    }
+    if(r.erro === 'assinatura'){
+      msg.innerHTML = 'Você tem uma assinatura Cafuné+ ativa. Cancele primeiro pra não continuar a ser cobrado: <a href="' + PORTAL_URL + '?prefilled_email=' + encodeURIComponent(user.email || '') + '">cancelar assinatura</a>. Depois volte aqui. <button class="link" id="apagarForcar">Já cancelei, apagar mesmo assim</button>';
+      $('apagarForcar').onclick = () => apagarConta(true);
+    } else msg.textContent = 'Não deu pra apagar agora. Tente de novo ou escreva pra meucafune@gmail.com.';
+  }catch(e){ msg.textContent = 'Não deu pra apagar agora. Tente de novo ou escreva pra meucafune@gmail.com.'; }
+  btn.disabled = false;
+}
+$('apagarSim').onclick = () => apagarConta(false);
+
+const ANON_ID = (() => { let a = null; try{ a = localStorage.getItem('cafune-anon'); if(!a){ a = (crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now()); localStorage.setItem('cafune-anon', a); } }catch(e){ a = 'sem-storage'; } return a; })();
+function track(evento, props){
+  if(!sb) return;
+  try{ sb.from('eventos').insert({anon_id: ANON_ID, user_id: user ? user.id : null, evento, lingua: window.CAFUNE_LANG || 'pt-BR', props: props || {}}).then(() => {}, () => {}); }catch(e){}
+}
+(function(){
+  let ultimo = null; try{ ultimo = localStorage.getItem('cafune-abriu'); }catch(e){}
+  const hoje = new Date().toISOString().slice(0, 10);
+  if(ultimo !== hoje){
+    try{ localStorage.setItem('cafune-abriu', hoje); }catch(e){}
+    setTimeout(() => track('abrir', {instalada: !!IS_STANDALONE, persona: S.persona || null, ios: !!IS_IOS, inapp: !!IN_APP}), 1500);
+  }
+})();
+function finishOnb(){
+  track('onboarding_fim', {persona: S.persona});
+  $('onb').classList.remove('on'); render(); drawDudu(); go('hoje');
+  say(P().start, 7000); hearts(3);
+}
+/* ---------- instalar ---------- */
+const UA = navigator.userAgent;
+const IS_IOS = /iphone|ipad|ipod/i.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const IS_ANDROID = /android/i.test(UA);
+const IN_APP = /Instagram|FBAN|FBAV|FB_IAB|TikTok|musical_ly|BytedanceWebview|Snapchat|Line\/|Twitter/i.test(UA);
+const IS_STANDALONE = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const IOS_OTHER = IS_IOS && /CriOS|FxiOS|EdgiOS/i.test(UA);
+let deferredInstall = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; });
+window.addEventListener('appinstalled', () => { deferredInstall = null; close('mInstall'); toast('O Dudu já está no seu celular 🦥'); });
+const ICO_SHARE = '<svg viewBox="0 0 24 24" fill="none" stroke="#2F7CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
+const ICO_ADD = '<svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>';
+const ICO_MORE = '<svg viewBox="0 0 24 24" fill="#333"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>';
+const ICO_DOTS = '<svg viewBox="0 0 24 24" fill="#333"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>';
+const passo = (n, t) => `<div class="passo"><span class="n">${n}</span><div class="t">${t}</div></div>`;
+function openInstall(){
+  track('instalar_aberto', {ios: IS_IOS, inapp: IN_APP});
+  const b = $('instBody');
+  if(IS_STANDALONE){ b.innerHTML = '<p>O Dudu já está instalado no seu celular 🦥💛</p>'; open('mInstall'); return; }
+  if(IN_APP){
+    $('instTitle').textContent = 'Abra no navegador primeiro';
+    b.innerHTML = '<p>Você abriu o Cafuné dentro do Instagram ou do TikTok. Daqui não dá pra instalar.</p>' +
+      passo(1, `Toque nos três pontinhos <span class="ico">${ICO_MORE}</span> no canto de cima.`) +
+      passo(2, `Escolha <b>Abrir no navegador</b> (ou <b>Abrir no Safari</b>).`) +
+      passo(3, 'Lá, toque de novo em <b>Como?</b> e siga os passos.') +
+      '<button class="btn ghost big" id="instCopy" style="margin-top:6px">Copiar o link</button>';
+    $('instCopy').onclick = () => { try{ navigator.clipboard.writeText(location.href.split('?')[0]); toast('Link copiado 💛'); }catch(e){} };
+  } else if(IS_IOS){
+    $('instTitle').textContent = 'Instalar no iPhone';
+    b.innerHTML = (IOS_OTHER ? '<p class="fine" style="text-align:left">Funciona melhor no <b>Safari</b>. Se não encontrar a opção, abra este endereço no Safari.</p>' : '') +
+      passo(1, `Toque no botão <b>Compartilhar</b> <span class="ico">${ICO_SHARE}</span> na barra do navegador. Se não aparecer, toque primeiro em <span class="ico">${ICO_MORE}</span>.`) +
+      passo(2, `Deslize pra baixo e toque em <b>Adicionar à Tela de Início</b> <span class="ico">${ICO_ADD}</span>.`) +
+      passo(3, 'Toque em <b>Adicionar</b>. Pronto! O Dudu aparece no seu celular como um app 🦥') +
+      passo(4, 'Abra o Cafuné pelo ícone do Dudu e ative os <b>lembretes</b> no Cantinho do Dudu.') +
+      '<div class="seta">👇</div>';
+  } else {
+    $('instTitle').textContent = 'Instalar no celular';
+    b.innerHTML = (deferredInstall ? '<button class="btn big" id="instNow" style="margin:6px 0 10px">Instalar agora 🦥</button><p class="fine">Ou, se preferir fazer à mão:</p>' : '') +
+      passo(1, `No Chrome, toque nos três pontinhos <span class="ico">${ICO_DOTS}</span> no canto de cima.`) +
+      passo(2, `Toque em <b>Instalar app</b> ou <b>Adicionar à tela inicial</b> <span class="ico">${ICO_ADD}</span>.`) +
+      passo(3, 'Confirme. O Dudu aparece no seu celular como um app 🦥') +
+      passo(4, 'Abra o Cafuné pelo ícone e ative os <b>lembretes</b> no Cantinho do Dudu.');
+    if(deferredInstall) $('instNow').onclick = async () => { deferredInstall.prompt(); try{ await deferredInstall.userChoice; }catch(e){} deferredInstall = null; };
+  }
+  open('mInstall');
+}
+(function(){
+  if(IS_STANDALONE) return;
+  $('installCard').style.display = 'block';
+  $('installOpen').onclick = openInstall;
+  $('instBtn').onclick = openInstall;
+  $('instX').onclick = () => { S.instFechado = today(); save(); $('instBanner').style.display = 'none'; };
+  const mostrar = () => { if(S.onboarded && S.instFechado !== today()) $('instBanner').style.display = 'flex'; };
+  mostrar(); setInterval(mostrar, 5000);
+})();
+if('serviceWorker' in navigator){ window.addEventListener('load', () => navigator.serviceWorker.register('/app/sw.js').catch(() => {})); }
+if(location.hash === '#teste') document.body.classList.add('teste');
+
+/* ---------- novidades: recados, roast, preguiça a dois, álbum ---------- */
+const LG = window.CAFUNE_LANG || 'pt-BR';
+const TX = {
+  'pt-BR': {
+    roastBtn: '🔥 Roast', roastTag: '🔥 ROAST DO ZOEIRO', roastLocked: 'O roast sem filtro é do Cafuné+ 💛 Este é o educado.',
+    recadoBtn: '💬', recadoTitulo: 'Mandar um recado para {n}', recadoSub: 'O Dudu entrega com a voz dele.', recadoPlus: 'Cafuné+',
+    recadoEnviado: 'Recado enviado 💬', recadoErro: 'Não deu pra mandar agora', recadoLimite: 'Muitos recados hoje. Amanhã tem mais 😉',
+    recadoSoPlus: 'Esse recado é do Cafuné+ 💛', recadosTit: 'Recados 💬', recadosVazio: 'Nenhum recado ainda. Mande um pra um amigo!',
+    recadoNovo: '{n} te mandou: “{f}”', recadoDe: '{n}', fechar: 'Fechar',
+    vasoTit: 'Preguiça a dois', vasoDias: d => d === 1 ? '1 dia juntos' : `${d} dias juntos`, vasoZero: 'Façam um passinho no mesmo dia pra plantar 🌱',
+    vasoMurcho: 'murchinho, reguem hoje 💧', vasoHoje: (eu, ele, n) => `Hoje: você ${eu ? '✓' : '…'} · ${n} ${ele ? '✓' : '…'}`,
+    cutucar: 'Cutucar', cutucado: 'Cutucada enviada 👉',
+    albumTit: 'Álbum de figurinhas 📒', albumSub: (t, n) => `${t} de ${n} figurinhas. Cada passeio do Dudu traz uma.`,
+    albumPlus: 'No Cafuné+ cada passeio traz 2.', albumRep: n => `x${n}`, albumOferecer: 'Toque numa repetida pra dar a um amigo.',
+    albumCompleto: 'Álbum completo! +100 cafunés 🏆', albumNova: 'E uma figurinha nova: <b>{c}</b>!', albumRepetida: 'E uma figurinha repetida: <b>{c}</b> (dá pra trocar com amigos)',
+    ofertaTit: 'Dar “{c}” a quem?', ofertaSemAmigos: 'Você precisa de amiguinhos pra dar figurinhas.', ofertaEnviada: 'Figurinha enviada 🎁',
+    ofertaRecebida: '{n} te deu a figurinha “{c}” 🎁', raro: 'rara', lendario: 'lendária', vazio: '?'
+  },
+  'pt-PT': {
+    roastBtn: '🔥 Roast', roastTag: '🔥 ROAST DO GOZÃO', roastLocked: 'O roast sem filtro é do Cafuné+ 💛 Este é o educado.',
+    recadoBtn: '💬', recadoTitulo: 'Mandar um recado a {n}', recadoSub: 'O Dudu entrega com a voz dele.', recadoPlus: 'Cafuné+',
+    recadoEnviado: 'Recado enviado 💬', recadoErro: 'Não deu para mandar agora', recadoLimite: 'Muitos recados hoje. Amanhã há mais 😉',
+    recadoSoPlus: 'Esse recado é do Cafuné+ 💛', recadosTit: 'Recados 💬', recadosVazio: 'Ainda não há recados. Manda um a um amigo!',
+    recadoNovo: '{n} mandou-te: “{f}”', recadoDe: '{n}', fechar: 'Fechar',
+    vasoTit: 'Preguiça a dois', vasoDias: d => d === 1 ? '1 dia juntos' : `${d} dias juntos`, vasoZero: 'Façam um passinho no mesmo dia para plantar 🌱',
+    vasoMurcho: 'murchinho, reguem hoje 💧', vasoHoje: (eu, ele, n) => `Hoje: tu ${eu ? '✓' : '…'} · ${n} ${ele ? '✓' : '…'}`,
+    cutucar: 'Dar um toque', cutucado: 'Toque enviado 👉',
+    albumTit: 'Caderneta de cromos 📒', albumSub: (t, n) => `${t} de ${n} cromos. Cada passeio do Dudu traz um.`,
+    albumPlus: 'No Cafuné+ cada passeio traz 2.', albumRep: n => `x${n}`, albumOferecer: 'Toca num repetido para o dares a um amigo.',
+    albumCompleto: 'Caderneta completa! +100 cafunés 🏆', albumNova: 'E um cromo novo: <b>{c}</b>!', albumRepetida: 'E um cromo repetido: <b>{c}</b> (dá para trocar com amigos)',
+    ofertaTit: 'Dar “{c}” a quem?', ofertaSemAmigos: 'Precisas de amiguinhos para dar cromos.', ofertaEnviada: 'Cromo enviado 🎁',
+    ofertaRecebida: '{n} deu-te o cromo “{c}” 🎁', raro: 'raro', lendario: 'lendário', vazio: '?'
+  },
+  'en': {
+    roastBtn: '🔥 Roast', roastTag: '🔥 DUDU ROAST', roastLocked: 'The uncensored roast is Cafuné+ 💛 Here’s the polite one.',
+    recadoBtn: '💬', recadoTitulo: 'Send {n} a note', recadoSub: 'Dudu delivers it in his own voice.', recadoPlus: 'Cafuné+',
+    recadoEnviado: 'Note sent 💬', recadoErro: 'Couldn’t send it right now', recadoLimite: 'Lots of notes today. More tomorrow 😉',
+    recadoSoPlus: 'That note is Cafuné+ 💛', recadosTit: 'Notes 💬', recadosVazio: 'No notes yet. Send one to a friend!',
+    recadoNovo: '{n} sent you: “{f}”', recadoDe: '{n}', fechar: 'Close',
+    vasoTit: 'Slow buddies', vasoDias: d => d === 1 ? '1 day together' : `${d} days together`, vasoZero: 'Both do a step on the same day to plant it 🌱',
+    vasoMurcho: 'a bit droopy, water it today 💧', vasoHoje: (eu, ele, n) => `Today: you ${eu ? '✓' : '…'} · ${n} ${ele ? '✓' : '…'}`,
+    cutucar: 'Nudge', cutucado: 'Nudge sent 👉',
+    albumTit: 'Sticker album 📒', albumSub: (t, n) => `${t} of ${n} stickers. Every walk Dudu takes brings one.`,
+    albumPlus: 'With Cafuné+ every walk brings 2.', albumRep: n => `x${n}`, albumOferecer: 'Tap a duplicate to give it to a friend.',
+    albumCompleto: 'Album complete! +100 cuddles 🏆', albumNova: 'And a new sticker: <b>{c}</b>!', albumRepetida: 'And a duplicate sticker: <b>{c}</b> (you can give it to friends)',
+    ofertaTit: 'Give “{c}” to whom?', ofertaSemAmigos: 'You need buddies to give stickers.', ofertaEnviada: 'Sticker sent 🎁',
+    ofertaRecebida: '{n} gave you the sticker “{c}” 🎁', raro: 'rare', lendario: 'legendary', vazio: '?'
+  }
+}[LG] || null;
+const TT = TX || {};
+
+/* frases prontas (as mesmas chaves que a função do servidor) */
+const FRASES = {"agua": {"plus": false, "pt-BR": "Bebe uma água aí! 💧", "pt-PT": "Bebe água! 💧", "en": "Drink some water! 💧"}, "orgulho": {"plus": false, "pt-BR": "Tô orgulhoso de você 💛", "pt-PT": "Estou orgulhoso de ti 💛", "en": "So proud of you 💛"}, "passinho": {"plus": false, "pt-BR": "Bora dar um passinho?", "pt-PT": "Bora dar um passinho?", "en": "Up for a tiny step?"}, "estou_aqui": {"plus": false, "pt-BR": "Tô aqui com você 🫂", "pt-PT": "Estou aqui contigo 🫂", "en": "I’m here with you 🫂"}, "respira": {"plus": false, "pt-BR": "Respira fundo comigo 🍃", "pt-PT": "Respira fundo comigo 🍃", "en": "Breathe with me 🍃"}, "abraco": {"plus": false, "pt-BR": "Toma um abraço de preguiça 🦥", "pt-PT": "Toma lá um abraço de preguiça 🦥", "en": "Here’s a sloth hug 🦥"}, "levanta": {"plus": true, "pt-BR": "Levanta, criatura! 😏", "pt-PT": "Levanta-te, criatura! 😏", "en": "Get up, you slug! 😏"}, "cafe": {"plus": true, "pt-BR": "Bora um café? ☕", "pt-PT": "Bora um café? ☕", "en": "Coffee? ☕"}, "saudade": {"plus": true, "pt-BR": "Tô com saudade 🥹", "pt-PT": "Tenho saudades tuas 🥹", "en": "I miss you 🥹"}, "boa_noite": {"plus": true, "pt-BR": "Boa noite, dorme bem 🌙", "pt-PT": "Boa noite, dorme bem 🌙", "en": "Good night, sleep well 🌙"}, "conseguiste": {"plus": true, "pt-BR": "Você consegue! 💪", "pt-PT": "Tu consegues! 💪", "en": "You’ve got this! 💪"}, "lenda": {"plus": true, "pt-BR": "Você é uma lenda 🏆", "pt-PT": "És uma lenda 🏆", "en": "You’re a legend 🏆"}};
+const fraseTxt = k => (FRASES[k] && FRASES[k][LG]) || '';
+
+/* ---------- figurinhas ---------- */
+const CROMOS = [
+  ['cristo','🙌','r',{'pt-BR':'Cristo Redentor','pt-PT':'Cristo Redentor','en':'Christ the Redeemer'}],
+  ['pao_acucar','🏔️','c',{'pt-BR':'Pão de Açúcar','pt-PT':'Pão de Açúcar','en':'Sugarloaf'}],
+  ['acai','🍇','c',{'pt-BR':'Açaí','pt-PT':'Açaí','en':'Açaí bowl'}],
+  ['pao_queijo','🧀','c',{'pt-BR':'Pão de queijo','pt-PT':'Pão de queijo','en':'Cheese bread'}],
+  ['arara','🦜','r',{'pt-BR':'Arara-azul','pt-PT':'Arara-azul','en':'Blue macaw'}],
+  ['ipe','🌼','c',{'pt-BR':'Ipê amarelo','pt-PT':'Ipê amarelo','en':'Yellow ipê'}],
+  ['samba','🥁','c',{'pt-BR':'Roda de samba','pt-PT':'Roda de samba','en':'Samba circle'}],
+  ['rede','🛏️','c',{'pt-BR':'Rede na varanda','pt-PT':'Rede na varanda','en':'Porch hammock'}],
+  ['pastel','🥮','c',{'pt-BR':'Pastel de nata','pt-PT':'Pastel de nata','en':'Custard tart'}],
+  ['eletrico','🚋','r',{'pt-BR':'Bondinho 28','pt-PT':'Elétrico 28','en':'Tram 28'}],
+  ['galo','🐓','r',{'pt-BR':'Galo de Barcelos','pt-PT':'Galo de Barcelos','en':'Barcelos rooster'}],
+  ['sardinha','🐟','c',{'pt-BR':'Sardinha assada','pt-PT':'Sardinha assada','en':'Grilled sardine'}],
+  ['azulejo','🔷','c',{'pt-BR':'Azulejo','pt-PT':'Azulejo','en':'Azulejo tile'}],
+  ['funchal','🌺','c',{'pt-BR':'Flores da Madeira','pt-PT':'Flores da Madeira','en':'Madeira flowers'}],
+  ['fado','🎸','c',{'pt-BR':'Guitarra do fado','pt-PT':'Guitarra do fado','en':'Fado guitar'}],
+  ['poncha','🍹','c',{'pt-BR':'Poncha','pt-PT':'Poncha','en':'Poncha'}],
+  ['dudu_bebe','🍼','c',{'pt-BR':'Dudu bebê','pt-PT':'Dudu bebé','en':'Baby Dudu'}],
+  ['dudu_rede','😴','c',{'pt-BR':'Dudu cochilando','pt-PT':'Dudu a dormir a sesta','en':'Napping Dudu'}],
+  ['dudu_chuva','☔','c',{'pt-BR':'Dudu na chuva','pt-PT':'Dudu à chuva','en':'Dudu in the rain'}],
+  ['dudu_praia','🏖️','c',{'pt-BR':'Dudu na praia','pt-PT':'Dudu na praia','en':'Beach Dudu'}],
+  ['dudu_amigo','🫶','r',{'pt-BR':'Dudu e o amiguinho','pt-PT':'Dudu e o amiguinho','en':'Dudu and his buddy'}],
+  ['dudu_estrela','⭐','l',{'pt-BR':'Dudu estrela','pt-PT':'Dudu estrela','en':'Star Dudu'}],
+  ['dudu_coroa','👑','l',{'pt-BR':'Dudu rei','pt-PT':'Dudu rei','en':'King Dudu'}],
+  ['dudu_cafune','💛','l',{'pt-BR':'O cafuné perfeito','pt-PT':'O cafuné perfeito','en':'The perfect cuddle'}],
+];
+const PESO = {c: 8, r: 3, l: 1};
+const cromoNome = id => { const c = CROMOS.find(x => x[0] === id); return c ? c[1] + ' ' + (c[3][LG] || c[3]['pt-BR']) : id; };
+function sortearCromo(){
+  const tot = CROMOS.reduce((a, c) => a + PESO[c[2]], 0); let r = Math.random() * tot;
+  for(const c of CROMOS){ r -= PESO[c[2]]; if(r <= 0) return c[0]; }
+  return CROMOS[0][0];
+}
+function ganharCromo(){
+  S.cromos = S.cromos || {};
+  const id = sortearCromo(), novo = !S.cromos[id];
+  S.cromos[id] = (S.cromos[id] || 0) + 1;
+  checarAlbum();
+  return {id, novo};
+}
+function checarAlbum(){
+  if(!S.albumOk && CROMOS.every(c => (S.cromos || {})[c[0]])){ S.albumOk = true; S.coins += 100; setTimeout(() => { toast(TT.albumCompleto); hearts(8); }, 1200); }
+}
+function cromoNoPasseio(){
+  const n = plus ? 2 : 1, res = [];
+  for(let i = 0; i < n; i++) res.push(ganharCromo());
+  save();
+  const txt = res.map(r => (r.novo ? TT.albumNova : TT.albumRepetida).replace('{c}', esc(cromoNome(r.id)))).join('<br>');
+  const el = $('walkTxt'); if(el) el.insertAdjacentHTML('beforeend', '<br><span style="display:block;margin-top:8px">' + txt + '</span>');
+  renderAlbum();
+}
+function renderAlbum(){
+  const box = $('albumCard'); if(!box) return;
+  const tem = S.cromos || {}, t = CROMOS.filter(c => tem[c[0]]).length;
+  box.innerHTML = `<h2>${TT.albumTit}</h2><p style="margin-bottom:10px">${TT.albumSub(t, CROMOS.length)} ${plus ? '' : TT.albumPlus}</p>
+    <div class="album">${CROMOS.map(c => { const q = tem[c[0]] || 0;
+      return q ? `<button class="cromo ${c[2]}" data-cromo="${c[0]}"><span class="e">${c[1]}</span><span class="n">${esc(c[3][LG] || c[3]['pt-BR'])}</span>${q > 1 ? `<span class="q">${TT.albumRep(q)}</span>` : ''}${c[2] !== 'c' ? `<span class="rr">${c[2] === 'l' ? TT.lendario : TT.raro}</span>` : ''}</button>`
+               : `<div class="cromo off"><span class="e">${TT.vazio}</span></div>`; }).join('')}</div>
+    <p class="fine" style="text-align:left;margin-top:8px">${TT.albumOferecer}</p>`;
+  box.querySelectorAll('[data-cromo]').forEach(b => b.onclick = () => { const id = b.dataset.cromo; if((S.cromos[id] || 0) > 1) oferecerCromo(id); });
+}
+
+/* ---------- modal genérico ---------- */
+(function(){
+  const m = document.createElement('div'); m.className = 'modal'; m.id = 'mNovo';
+  m.innerHTML = '<div class="sheet"><div id="novoBody"></div><button class="link" style="margin-top:12px" id="novoFechar"></button></div>';
+  document.body.appendChild(m);
+  m.addEventListener('click', e => { if(e.target === m) close('mNovo'); });
+  $('novoFechar').textContent = TT.fechar; $('novoFechar').onclick = () => close('mNovo');
+})();
+
+function oferecerCromo(id){
+  if(!sb || !user || !amigos.length){ toast(TT.ofertaSemAmigos); return; }
+  $('novoBody').innerHTML = `<h3>${TT.ofertaTit.replace('{c}', esc(cromoNome(id)))}</h3><div class="escolha">${amigos.map(a => `<button class="btn yel big" data-para="${a.user_id}">${esc(a.nome || '🦥')}</button>`).join('')}</div>`;
+  $('novoBody').querySelectorAll('[data-para]').forEach(b => b.onclick = async () => {
+    b.disabled = true;
+    const {error} = await sb.from('ofertas_cromo').insert({de: user.id, para: b.dataset.para, cromo: id});
+    if(error){ toast(TT.recadoErro); b.disabled = false; return; }
+    S.cromos[id] = Math.max(1, (S.cromos[id] || 1) - 1); save(); renderAlbum();
+    close('mNovo'); toast(TT.ofertaEnviada); hearts(3); track('cromo_oferecido');
+  });
+  open('mNovo');
+}
+
+/* ---------- recados ---------- */
+let recados = [];
+function abrirRecado(uid){
+  const a = amigos.find(x => x.user_id === uid); if(!a) return;
+  $('novoBody').innerHTML = `<h3>${TT.recadoTitulo.replace('{n}', esc(a.nome || '🦥'))}</h3><p>${TT.recadoSub}</p><div class="frases">${Object.keys(FRASES).map(k => {
+    const bloq = FRASES[k].plus && !plus;
+    return `<button class="frase ${bloq ? 'bloq' : ''}" data-frase="${k}">${esc(fraseTxt(k))}${FRASES[k].plus ? `<small>${bloq ? '🔒 ' : ''}${TT.recadoPlus}</small>` : ''}</button>`; }).join('')}</div>`;
+  $('novoBody').querySelectorAll('[data-frase]').forEach(b => b.onclick = () => mandarRecado(uid, b.dataset.frase, b));
+  open('mNovo');
+}
+async function mandarRecado(uid, k, b){
+  if(FRASES[k].plus && !plus){ toast(TT.recadoSoPlus); close('mNovo'); go('dudu'); setTimeout(() => { const c = $('plusCard'); if(c) c.scrollIntoView({behavior:'smooth'}); }, 300); return false; }
+  if(b) b.disabled = true;
+  const {error} = await sb.from('recados').insert({de: user.id, para: uid, frase: k});
+  if(error){ toast(/limite/.test(error.message) ? TT.recadoLimite : TT.recadoErro); if(b) b.disabled = false; return false; }
+  close('mNovo'); toast(TT.recadoEnviado); hearts(2); track('recado_enviado', {frase: k});
+  return true;
+}
+function renderRecados(){
+  const box = $('recadosCard'); if(!box) return;
+  if(!sb || !user){ box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  const nomeDe = id => { const a = amigos.find(x => x.user_id === id); return (a && a.nome) || '🦥'; };
+  box.innerHTML = `<h2>${TT.recadosTit}</h2>` + (recados.length ? recados.map(r => `<div class="recado"><b>${esc(nomeDe(r.de))}</b><span>${esc(fraseTxt(r.frase))}</span></div>`).join('') : `<p>${TT.recadosVazio}</p>`);
+}
+
+/* ---------- preguiça a dois ---------- */
+let diasPorUser = {};
+const VASO = d => d >= 30 ? '🍎' : d >= 14 ? '🌳' : d >= 7 ? '🌷' : d >= 3 ? '🌿' : '🌱';
+function vasoDe(uid){
+  const meus = diasPorUser[user.id] || new Set(), dele = diasPorUser[uid] || new Set();
+  const juntos = [...meus].filter(d => dele.has(d));
+  const hoje = today(), ontem = dkey(-1);
+  return {dias: juntos.length, eu: meus.has(hoje), ele: dele.has(hoje), murcho: juntos.length > 0 && !juntos.includes(hoje) && !juntos.includes(ontem)};
+}
+function decorarAmigos(){
+  if(!sb || !user) return;
+  document.querySelectorAll('#amigosLista .amigo[data-uid]').forEach(row => {
+    const uid = row.dataset.uid, a = amigos.find(x => x.user_id === uid); if(!a || (row.nextElementSibling && row.nextElementSibling.classList.contains('extra'))) return;
+    const v = vasoDe(uid), nome = esc(a.nome || '🦥');
+    const ex = document.createElement('div'); ex.className = 'extra';
+    ex.innerHTML = `<div class="vaso ${v.murcho ? 'murcho' : ''}"><span class="pl">${v.dias ? VASO(v.dias) : '🪴'}</span><div><b>${TT.vasoTit}</b> · ${v.dias ? TT.vasoDias(v.dias) : ''}${v.murcho ? ' · ' + TT.vasoMurcho : ''}<small>${v.dias ? TT.vasoHoje(v.eu, v.ele, nome) : TT.vasoZero}</small></div></div>
+      <div class="acoes"><button class="btn ghost" data-recado="${uid}">${TT.recadoBtn}</button>${!v.ele ? `<button class="btn ghost" data-cutucar="${uid}">👉 ${TT.cutucar}</button>` : ''}</div>`;
+    row.after(ex);
+  });
+  document.querySelectorAll('[data-recado]').forEach(b => b.onclick = () => abrirRecado(b.dataset.recado));
+  document.querySelectorAll('[data-cutucar]').forEach(b => b.onclick = async () => { if(await mandarRecado(b.dataset.cutucar, 'passinho', b)){ b.textContent = TT.cutucado; } });
+}
+async function amigosExtra(){
+  if(!sb || !user) return;
+  const ids = amigos.map(a => a.user_id).concat([user.id]);
+  const desde = dkey(-120);
+  try{
+    const {data: dias} = await sb.from('dias_ativos').select('user_id,dia,passos').in('user_id', ids).gte('dia', desde).gt('passos', 0);
+    diasPorUser = {}; (dias || []).forEach(d => { (diasPorUser[d.user_id] = diasPorUser[d.user_id] || new Set()).add(d.dia); });
+    const {data: rec} = await sb.from('recados').select('id,de,frase,lido,criado_em').eq('para', user.id).order('criado_em', {ascending: false}).limit(10);
+    recados = rec || [];
+    const novos = recados.filter(r => !r.lido);
+    if(novos.length){
+      await sb.from('recados').update({lido: true}).in('id', novos.map(r => r.id));
+      const r = novos[0], a = amigos.find(x => x.user_id === r.de);
+      toast(TT.recadoNovo.replace('{n}', (a && a.nome) || '🦥').replace('{f}', fraseTxt(r.frase)));
+      try{ SOM.fala(fraseTxt(r.frase)); }catch(e){}
+      hearts(3);
+    }
+    const {data: of} = await sb.from('ofertas_cromo').select('id,de,cromo').eq('para', user.id).eq('recebido', false);
+    if(of && of.length){
+      await sb.from('ofertas_cromo').update({recebido: true}).in('id', of.map(o => o.id));
+      S.cromos = S.cromos || {};
+      of.forEach(o => { if(CROMOS.some(c => c[0] === o.cromo)) S.cromos[o.cromo] = (S.cromos[o.cromo] || 0) + 1; });
+      checarAlbum(); save(); renderAlbum();
+      const a = amigos.find(x => x.user_id === of[0].de);
+      setTimeout(() => toast(TT.ofertaRecebida.replace('{n}', (a && a.nome) || '🦥').replace('{c}', cromoNome(of[0].cromo))), novos.length ? 2300 : 0);
+    }
+  }catch(e){}
+  renderRecados(); decorarAmigos();
+}
+async function syncDias(){
+  if(!sb || !user) return;
+  const rows = [];
+  for(let i = 0; i > -60; i--){ const k = dkey(i), n = (S.done[k] || []).length; if(n || i === 0) rows.push({user_id: user.id, dia: k, passos: n}); }
+  try{ await sb.from('dias_ativos').upsert(rows); }catch(e){}
+}
+
+/* ---------- roast ---------- */
+const ROAST = {"pt-BR": {"voce": "você", "n": {"zero": ["{n}, zero passinhos hoje. Até eu, que sou uma preguiça, tô decepcionado 🦥", "Hoje a sua maior atividade física foi abrir este app, criatura.", "Nenhum passinho? Você não é preguiçoso, você é um estilo de vida.", "Se descansar fosse esporte, {n} tava nas Olimpíadas 🥇"], "pouco": ["{d} passinho(s) e já se acha atleta, né {n}? 🙄", "Fez {d} de {t}. O resto vai fazer quando, no Carnaval?", "Bonito, {d} passinho(s). Agora larga o sofá e faz '{p}', molenga.", "{d} de {t}. Tô orgulhoso. Mentira, mas tô quase."], "meio": ["{d} de {t}! Quem é você e o que fez com {n}? 😳", "Metade feita. A outra metade tá te esperando desde o café da manhã.", "{d} passinhos?! Calma, ninguém pediu tanto esforço 😏"], "tudo": ["Todos os {t} passinhos. Tá se exibindo pra quem, {n}? 😏", "Fez tudo! Agora pode voltar a ser uma lesminha, você mereceu 🐌", "{t} de {t}. Vou ter que arrumar outro humano pra zoar."], "baixo": ["Hoje sem zoeira, {n}. Um passinho só já tá ótimo 💛", "Hoje eu fico quietinho do seu lado. Sem roast, só cafuné 💛"], "streak": ["{s} dias seguidos?! Tá doente, {n}? Isso não é normal 😳", "{s} dias de passinho. Já pode tirar foto pro LinkedIn, criatura."]}, "x": {"zero": ["Zero passinhos, caralho. Nem eu, que durmo 20 horas, sou tão parado 🦥", "{n}, levanta essa bunda do sofá, porra.", "Nenhum passinho hoje? Puta merda, você é mais preguiça do que eu."], "pouco": ["{d} passinho(s) e já tá se achando, né porra? 🙄", "Faz '{p}' de uma vez, caralho. Não vou pedir de novo.", "{d} de {t}. Uma merda, mas é a sua merda 💛"], "meio": ["{d} de {t}, porra! Quem é você? 😳", "Metade feita. Bora terminar essa merda, {n}."], "tudo": ["Fez tudo, caralho! Agora some daqui e vai descansar 🏆", "{t} de {t}. Tá de sacanagem? Que orgulho, porra 🥹"], "baixo": ["Hoje sem zoeira, {n}. Um passinho só já tá ótimo 💛", "Hoje eu fico quietinho do seu lado. Sem roast, só cafuné 💛"], "streak": ["{s} dias seguidos, porra?! Quem te ameaçou? 😳"]}}, "pt-PT": {"voce": "tu", "n": {"zero": ["{n}, zero passinhos hoje. Até eu, que sou uma preguiça, estou desiludido 🦥", "Hoje a tua maior atividade física foi abrir esta app, criatura.", "Nenhum passinho? Tu não és preguiçoso, és um estilo de vida.", "Se descansar fosse desporto, {n} ia aos Jogos Olímpicos 🥇"], "pouco": ["{d} passinho(s) e já te achas atleta, não é, {n}? 🙄", "Fizeste {d} de {t}. O resto fazes quando, no Natal?", "Muito bem, {d} passinho(s). Agora larga o sofá e vai '{p}', mandrião.", "{d} de {t}. Estou orgulhoso. Mentira, mas quase."], "meio": ["{d} de {t}! Quem és tu e o que fizeste ao {n}? 😳", "Metade feita. A outra metade está à tua espera desde o pequeno-almoço.", "{d} passinhos?! Calma, ninguém pediu tanto esforço 😏"], "tudo": ["Todos os {t} passinhos. Estás a armar-te para quem, {n}? 😏", "Fizeste tudo! Agora podes voltar a ser uma lesma, mereceste 🐌", "{t} de {t}. Vou ter de arranjar outro humano para gozar."], "baixo": ["Hoje sem gozo, {n}. Um passinho só já é ótimo 💛", "Hoje fico quietinho ao teu lado. Sem roast, só cafuné 💛"], "streak": ["{s} dias seguidos?! Estás doente, {n}? Isto não é normal 😳", "{s} dias de passinho. Já podes pôr isso no LinkedIn, criatura."]}, "x": {"zero": ["Zero passinhos, caralho. Nem eu, que durmo 20 horas, sou tão parado 🦥", "{n}, levanta esse rabo do sofá, porra.", "Nenhum passinho hoje? Foda-se, és mais preguiça do que eu."], "pouco": ["{d} passinho(s) e já te estás a armar, porra? 🙄", "Vai '{p}' de uma vez, caralho. Não peço outra vez.", "{d} de {t}. Uma merda, mas é a tua merda 💛"], "meio": ["{d} de {t}, porra! Quem és tu? 😳", "Metade feita. Bora acabar esta merda, {n}."], "tudo": ["Fizeste tudo, caralho! Agora desaparece e vai descansar 🏆", "{t} de {t}. Estás a gozar? Que orgulho, porra 🥹"], "baixo": ["Hoje sem gozo, {n}. Um passinho só já é ótimo 💛", "Hoje fico quietinho ao teu lado. Sem roast, só cafuné 💛"], "streak": ["{s} dias seguidos, porra?! Quem te ameaçou? 😳"]}}, "en": {"voce": "you", "n": {"zero": ["{n}, zero steps today. Even I’m disappointed, and I’m a sloth 🦥", "Your biggest workout today was opening this app, you creature.", "No steps? You’re not lazy, you’re a lifestyle.", "If resting were a sport, {n} would have Olympic gold 🥇"], "pouco": ["{d} step(s) and you think you’re an athlete, huh {n}? 🙄", "{d} of {t}. Saving the rest for next year?", "Cute, {d} step(s). Now get off the couch and '{p}', lazybones.", "{d} of {t}. I’m proud. Kidding. Almost."], "meio": ["{d} of {t}! Who are you and what did you do with {n}? 😳", "Halfway there. The other half has been waiting since breakfast.", "{d} steps?! Relax, nobody asked for that much effort 😏"], "tudo": ["All {t} steps. Who are you showing off for, {n}? 😏", "You did it all! You may now return to slug mode, you earned it 🐌", "{t} of {t}. I’ll need a new human to roast."], "baixo": ["No roasting today, {n}. One tiny step is plenty 💛", "Today I’ll just sit quietly next to you. No roast, only cuddles 💛"], "streak": ["{s} days in a row?! Are you sick, {n}? This isn’t normal 😳", "{s}-day streak. Put it on your LinkedIn, you creature."]}, "x": {"zero": ["Zero steps, damn it. Even I move more, and I sleep 20 hours 🦥", "{n}, get your ass off the couch.", "No steps today? Holy shit, you’re more sloth than me."], "pouco": ["{d} step(s) and you’re already showing off? 🙄", "Just go '{p}' already, for fuck’s sake.", "{d} of {t}. Crappy, but it’s your crap 💛"], "meio": ["{d} of {t}, damn! Who even are you? 😳", "Halfway. Let’s finish this shit, {n}."], "tudo": ["You did it all, damn it! Now go rest 🏆", "{t} of {t}. Are you kidding me? So fucking proud 🥹"], "baixo": ["No roasting today, {n}. One tiny step is plenty 💛", "Today I’ll just sit quietly next to you. No roast, only cuddles 💛"], "streak": ["{s} days in a row?! Who threatened you? 😳"]}}};
+function roastLinha(){
+  const d = doneToday().length, n = S.items.length, st = streak(), mood = S.moods[today()];
+  const lang = ROAST[LG] || ROAST['pt-BR'];
+  const querX = S.filtro, podeX = querX && !!plus;
+  const set = podeX ? lang.x : lang.n;
+  let k = d === 0 ? 'zero' : d === n ? 'tudo' : d <= 2 ? 'pouco' : 'meio';
+  if(mood === 'baixo') k = 'baixo';
+  let t = pick(set[k]);
+  if(st >= 3 && k !== 'baixo' && Math.random() < 0.5) t = pick(set.streak).replace('{s}', st);
+  const pend = S.items.filter(i => !doneToday().includes(i.id));
+  t = t.replace('{d}', d).replace('{t}', n).replace('{p}', pend.length ? pend[0].t.toLowerCase() : '').replace('{n}', S.name || lang.voce);
+  if(querX && !plus) setTimeout(() => toast(TT.roastLocked), 600);
+  return t;
+}
+async function abrirRoast(){
+  track('roast');
+  window.ROAST_TAG = TT.roastTag;
+  shareText = roastLinha(); shareFace = 'orgulho';
+  open('mShare'); await renderShot();
+}
+(function(){
+  const st = $('stage'); if(st && !$('roastBtn')){ const b = document.createElement('button'); b.className = 'share roast'; b.id = 'roastBtn'; b.textContent = TT.roastBtn; st.appendChild(b); b.onclick = abrirRoast; }
+  const sh = $('shareBtn'); if(sh) sh.addEventListener('click', () => { window.ROAST_TAG = null; }, true);
+})();
+renderAlbum();
+
+/* ---------- novidades 2: postais, retrospetiva, Dudu que cresce, Dudu bebé ---------- */
+const TX2 = {
+  'pt-BR': {
+    postalTag: l => `📮 POSTAL · ${l.toUpperCase()}`, postalBtn: '📮 Compartilhar o postal', postalNovo: 'Postal novo: <b>{l}</b>!',
+    postaisTit: 'Postais do Dudu 📮', postaisSub: (t, n) => `${t} de ${n} lugares visitados. Toque num postal pra compartilhar.`, postaisVazio: 'O Dudu ainda não mandou postais. Faça passinhos pra ele ir passear!',
+    retroTit: 'Sua retrospectiva 🎁', retroSub: 'Seu tempo com o Dudu, em números. Ótima pra Stories.', retroBtn: 'Ver minha retrospectiva', retroDez: 'Chegou dezembro! A sua retrospectiva do ano está pronta 🎁',
+    retroCab: n => `${n} e o Dudu`, retroDias: 'dias juntos', retroPassos: 'passinhos', retroSeq: 'melhor sequência', retroPasseios: 'passeios', retroFav: 'passinho favorito', retroHumor: 'humor mais comum', retroCromos: 'figurinhas', retroPostais: 'postais',
+    retroFim: { zen: 'Um passinho de cada vez. Obrigado por respirar comigo 🍃', fofo: 'Obrigado por cuidar de mim (e de você) 💛', zoeiro: 'Nada mal pra uma criatura molenga 😏' },
+    nivelNomes: ['Recém-chegado', 'Amiguinho', 'Melhor amigo', 'Alma gêmea'], nivel: (i, nmv, d) => `Nível ${i + 1} · ${nmv} · ${d} ${d === 1 ? 'dia' : 'dias'} juntos`,
+    mem: { dias: d => `Já estamos juntos há ${d} dias 🥹`, fav: p => `Reparei que você adora “${p}”. Eu adoro dormir. Cada um com seu talento 😌`, mes: m => `Hoje faz ${m} ${m === 1 ? 'mês' : 'meses'} que você me adotou! 🎂`, cromo: 'Ainda falta figurinha no álbum… bora passear? 📒', amigo: 'Seus amigos sentiram sua falta. Manda um recado pra eles 💬' },
+    bebeTit: 'Convide 3 amigos: Dudu bebê + 1 mês de Cafuné+ 🍼', bebeProg: (n) => `${Math.min(n, 3)} de 3 amigos ativos (contam amigos que já fizeram um passinho)`, bebeGanho: 'Você ganhou o Dudu bebê e 1 mês de Cafuné+! 🍼💛', bebeJa: 'O Dudu bebê já mora com você 🍼'
+  },
+  'pt-PT': {
+    postalTag: l => `📮 POSTAL · ${l.toUpperCase()}`, postalBtn: '📮 Partilhar o postal', postalNovo: 'Postal novo: <b>{l}</b>!',
+    postaisTit: 'Postais do Dudu 📮', postaisSub: (t, n) => `${t} de ${n} sítios visitados. Toca num postal para o partilhares.`, postaisVazio: 'O Dudu ainda não mandou postais. Faz passinhos para ele ir passear!',
+    retroTit: 'A tua retrospetiva 🎁', retroSub: 'O teu tempo com o Dudu, em números. Ótima para Stories.', retroBtn: 'Ver a minha retrospetiva', retroDez: 'Chegou dezembro! A tua retrospetiva do ano está pronta 🎁',
+    retroCab: n => `${n} e o Dudu`, retroDias: 'dias juntos', retroPassos: 'passinhos', retroSeq: 'melhor sequência', retroPasseios: 'passeios', retroFav: 'passinho favorito', retroHumor: 'humor mais comum', retroCromos: 'cromos', retroPostais: 'postais',
+    retroFim: { zen: 'Um passinho de cada vez. Obrigado por respirares comigo 🍃', fofo: 'Obrigado por cuidares de mim (e de ti) 💛', zoeiro: 'Nada mau para uma criatura mandriona 😏' },
+    nivelNomes: ['Recém-chegado', 'Amiguinho', 'Melhor amigo', 'Alma gémea'], nivel: (i, nmv, d) => `Nível ${i + 1} · ${nmv} · ${d} ${d === 1 ? 'dia' : 'dias'} juntos`,
+    mem: { dias: d => `Já estamos juntos há ${d} dias 🥹`, fav: p => `Reparei que adoras “${p}”. Eu adoro dormir. Cada um com o seu talento 😌`, mes: m => `Hoje faz ${m} ${m === 1 ? 'mês' : 'meses'} que me adotaste! 🎂`, cromo: 'Ainda faltam cromos na caderneta… bora passear? 📒', amigo: 'Os teus amigos sentiram a tua falta. Manda-lhes um recado 💬' },
+    bebeTit: 'Convida 3 amigos: Dudu bebé + 1 mês de Cafuné+ 🍼', bebeProg: (n) => `${Math.min(n, 3)} de 3 amigos ativos (contam amigos que já fizeram um passinho)`, bebeGanho: 'Ganhaste o Dudu bebé e 1 mês de Cafuné+! 🍼💛', bebeJa: 'O Dudu bebé já mora contigo 🍼'
+  },
+  'en': {
+    postalTag: l => `📮 POSTCARD FROM ${l.toUpperCase()}`, postalBtn: '📮 Share the postcard', postalNovo: 'New postcard from <b>{l}</b>!',
+    postaisTit: 'Dudu’s postcards 📮', postaisSub: (t, n) => `${t} of ${n} places visited. Tap a postcard to share it.`, postaisVazio: 'No postcards yet. Do some steps so Dudu goes for a walk!',
+    retroTit: 'Your Cafuné recap 🎁', retroSub: 'Your time with Dudu, in numbers. Perfect for Stories.', retroBtn: 'See my recap', retroDez: 'It’s December! Your year recap is ready 🎁',
+    retroCab: n => `${n} & Dudu`, retroDias: 'days together', retroPassos: 'tiny steps', retroSeq: 'best streak', retroPasseios: 'walks', retroFav: 'favourite step', retroHumor: 'most common mood', retroCromos: 'stickers', retroPostais: 'postcards',
+    retroFim: { zen: 'One tiny step at a time. Thanks for breathing with me 🍃', fofo: 'Thanks for taking care of me (and you) 💛', zoeiro: 'Not bad for a lazy little creature 😏' },
+    nivelNomes: ['Newcomer', 'Buddy', 'Best friend', 'Soulmate'], nivel: (i, nmv, d) => `Level ${i + 1} · ${nmv} · ${d} ${d === 1 ? 'day' : 'days'} together`,
+    mem: { dias: d => `We’ve been together for ${d} days 🥹`, fav: p => `I noticed you love “${p}”. I love naps. We all have our talents 😌`, mes: m => `It’s been ${m} ${m === 1 ? 'month' : 'months'} since you adopted me! 🎂`, cromo: 'Still missing stickers in the album… walk time? 📒', amigo: 'Your friends missed you. Send them a note 💬' },
+    bebeTit: 'Invite 3 friends: Baby Dudu + 1 month of Cafuné+ 🍼', bebeProg: (n) => `${Math.min(n, 3)} of 3 active friends (friends who have done at least one step)`, bebeGanho: 'You got Baby Dudu and 1 month of Cafuné+! 🍼💛', bebeJa: 'Baby Dudu already lives with you 🍼'
+  }
+}[LG] || {};
+
+/* ---------- postais ---------- */
+const POSTAIS = [
+  ['rio','🌴',{'pt-BR':'Rio de Janeiro','pt-PT':'Rio de Janeiro','en':'Rio de Janeiro'},{'pt-BR':'Subi o Pão de Açúcar. De bondinho, claro. Não sou maluco.','pt-PT':'Subi ao Pão de Açúcar. De teleférico, claro. Não sou maluco.','en':'Climbed Sugarloaf. By cable car, obviously. I’m not crazy.'}],
+  ['salvador','🥁',{'pt-BR':'Salvador','pt-PT':'Salvador','en':'Salvador'},{'pt-BR':'Pelourinho colorido e um acarajé. Agora preciso de uma soneca de 3 dias.','pt-PT':'Pelourinho colorido e um acarajé. Agora preciso de uma sesta de 3 dias.','en':'Colourful Pelourinho and an acarajé. Now I need a 3-day nap.'}],
+  ['belem','🛶',{'pt-BR':'Belém do Pará','pt-PT':'Belém do Pará','en':'Belém do Pará'},{'pt-BR':'Ver-o-Peso, açaí de verdade e primos meus nas árvores 🦥','pt-PT':'Ver-o-Peso, açaí a sério e primos meus nas árvores 🦥','en':'Ver-o-Peso market, real açaí and my cousins up in the trees 🦥'}],
+  ['sp','🏙️',{'pt-BR':'São Paulo','pt-PT':'São Paulo','en':'São Paulo'},{'pt-BR':'Tentei andar no ritmo de São Paulo. Fui atropelado por um pombo.','pt-PT':'Tentei andar ao ritmo de São Paulo. Fui atropelado por um pombo.','en':'Tried to walk at São Paulo speed. Got overtaken by a pigeon.'}],
+  ['bonito','🐠',{'pt-BR':'Bonito','pt-PT':'Bonito','en':'Bonito'},{'pt-BR':'Boiei no rio mais transparente do mundo. Boiar é meu esporte.','pt-PT':'Boiei no rio mais transparente do mundo. Boiar é o meu desporto.','en':'Floated down the clearest river in the world. Floating is my sport.'}],
+  ['floripa','🏄',{'pt-BR':'Florianópolis','pt-PT':'Florianópolis','en':'Florianópolis'},{'pt-BR':'Aluguei uma prancha. Usei como cama.','pt-PT':'Aluguei uma prancha. Usei-a como cama.','en':'Rented a surfboard. Used it as a bed.'}],
+  ['lisboa','🚋',{'pt-BR':'Lisboa','pt-PT':'Lisboa','en':'Lisbon'},{'pt-BR':'Peguei o bonde 28 e comi um pastel de nata. Ou quatro.','pt-PT':'Apanhei o 28 e comi um pastel de nata. Ou quatro.','en':'Rode tram 28 and ate a pastel de nata. Or four.'}],
+  ['porto','🍷',{'pt-BR':'Porto','pt-PT':'Porto','en':'Porto'},{'pt-BR':'Vista da Ribeira, uma francesinha e zero vontade de subir ladeira.','pt-PT':'Vista da Ribeira, uma francesinha e zero vontade de subir a calçada.','en':'Ribeira views, a francesinha and zero will to climb those hills.'}],
+  ['funchal','🌺',{'pt-BR':'Funchal','pt-PT':'Funchal','en':'Funchal'},{'pt-BR':'Desci de carro de cesto no Monte. Gritei mais que os turistas.','pt-PT':'Desci nos carrinhos de cesto do Monte. Gritei mais do que os turistas.','en':'Rode the Monte toboggan. Screamed louder than the tourists.'}],
+  ['sintra','🏰',{'pt-BR':'Sintra','pt-PT':'Sintra','en':'Sintra'},{'pt-BR':'Visitei um palácio colorido. Pedi pra morar lá. Disseram que não.','pt-PT':'Visitei um palácio colorido. Pedi para morar lá. Disseram que não.','en':'Visited a colourful palace. Asked to move in. They said no.'}],
+  ['algarve','🏖️',{'pt-BR':'Algarve','pt-PT':'Algarve','en':'Algarve'},{'pt-BR':'Benagil é lindo. Fiquei na areia o dia todo, por profissionalismo.','pt-PT':'Benagil é lindo. Fiquei na areia o dia todo, por profissionalismo.','en':'Benagil is gorgeous. I stayed on the sand all day, professionally.'}],
+  ['acores','🌋',{'pt-BR':'Açores','pt-PT':'Açores','en':'Azores'},{'pt-BR':'Lagoas verdes e azuis, vacas felizes. Tô pensando em ficar.','pt-PT':'Lagoas verdes e azuis, vacas felizes. Estou a pensar ficar.','en':'Green and blue lakes, happy cows. Thinking of staying.'}],
+  ['iguacu','💦',{'pt-BR':'Foz do Iguaçu','pt-PT':'Foz do Iguaçu','en':'Iguazu Falls'},{'pt-BR':'Tomei o banho mais barulhento da minha vida.','pt-PT':'Tomei o banho mais barulhento da minha vida.','en':'Had the loudest shower of my life.'}],
+  ['jalapao','🏜️',{'pt-BR':'Jalapão','pt-PT':'Jalapão','en':'Jalapão'},{'pt-BR':'Boiei num fervedouro. Não afundei. Não me mexi. Perfeito.','pt-PT':'Boiei num fervedouro. Não afundei. Não me mexi. Perfeito.','en':'Floated in a natural spring. Didn’t sink. Didn’t move. Perfect.'}],
+];
+const postalNome = p => p[2][LG] || p[2]['pt-BR'];
+const postalFrase = p => p[3][LG] || p[3]['pt-BR'];
+let postalAtual = null;
+function postalNoPasseio(){
+  const p = pick(POSTAIS); postalAtual = p[0];
+  S.postais = S.postais || {}; S.postais[p[0]] = (S.postais[p[0]] || 0) + 1; save();
+  const el = $('walkTxt'); if(!el) return;
+  el.insertAdjacentHTML('beforeend', `<span class="postal"><span class="pe">${p[1]}</span><span><small>${TX2.postalNovo.replace('{l}', esc(postalNome(p)))}</small>${esc(postalFrase(p))}</span></span><button class="btn yel" id="postalShare" style="margin-top:8px">${TX2.postalBtn}</button>`);
+  $('postalShare').onclick = () => { $('walkBtn').click(); partilharPostal(p[0]); };
+  renderPostais();
+}
+async function partilharPostal(id){
+  const p = POSTAIS.find(x => x[0] === id); if(!p) return;
+  track('postal_partilhado', {lugar: id});
+  window.CARD_OVERRIDE = null; window.ROAST_TAG = TX2.postalTag(postalNome(p));
+  shareText = postalFrase(p) + ' ' + p[1]; shareFace = 'feliz';
+  open('mShare'); await renderShot();
+}
+function renderPostais(){
+  const box = $('postaisCard'); if(!box) return;
+  const tem = S.postais || {}, t = POSTAIS.filter(p => tem[p[0]]).length;
+  box.innerHTML = `<h2>${TX2.postaisTit}</h2>` + (t ? `<p style="margin-bottom:10px">${TX2.postaisSub(t, POSTAIS.length)}</p><div class="postais">${POSTAIS.filter(p => tem[p[0]]).map(p => `<button class="pc" data-postal="${p[0]}"><span class="pe">${p[1]}</span><b>${esc(postalNome(p))}</b></button>`).join('')}</div>` : `<p>${TX2.postaisVazio}</p>`);
+  box.querySelectorAll('[data-postal]').forEach(b => b.onclick = () => partilharPostal(b.dataset.postal));
+}
+
+/* ---------- o Dudu cresce ---------- */
+function desde(){
+  if(!S.desde){
+    const ks = Object.keys(S.done || {}).concat(Object.keys(S.moods || {})).filter(k => /^\d{4}-\d{2}-\d{2}$/.test(k)).sort();
+    S.desde = ks[0] || today(); save();
+  }
+  return S.desde;
+}
+function diasJuntos(){ const a = new Date(desde() + 'T12:00:00'), b = new Date(today() + 'T12:00:00'); return Math.max(1, Math.round((b - a) / 86400000) + 1); }
+function nivelIdx(d){ return d >= 90 ? 3 : d >= 30 ? 2 : d >= 7 ? 1 : 0; }
+function passinhoFav(){
+  const c = {}; Object.values(S.done || {}).forEach(a => (a || []).forEach(id => c[id] = (c[id] || 0) + 1));
+  const top = Object.entries(c).sort((a, b) => b[1] - a[1])[0]; if(!top) return null;
+  const it = S.items.find(i => String(i.id) === String(top[0])); return it ? it.t : null;
+}
+function renderNivel(){
+  const el = $('nivelLine'); if(!el) return;
+  const d = diasJuntos(), i = nivelIdx(d);
+  el.innerHTML = `<span class="nv">${'⭐'.repeat(i + 1)}</span> ${TX2.nivel(i, TX2.nivelNomes[i], d)}`;
+}
+const _idleOrig = idleLine;
+idleLine = function(){
+  try{
+    if(S.moods[today()] !== 'baixo' && S.onboarded){
+      const d = diasJuntos();
+      if(d > 1 && d % 30 === 1 && S._aniv !== today()){ S._aniv = today(); save(); hearts(8); return say(TX2.mem.mes(Math.round((d - 1) / 30))); }
+      if(Math.random() < 0.18){
+        const fav = passinhoFav(), op = [];
+        if(d >= 3) op.push(TX2.mem.dias(d));
+        if(fav) op.push(TX2.mem.fav(fav));
+        if(S.cromos && Object.keys(S.cromos).length && Object.keys(S.cromos).length < 24) op.push(TX2.mem.cromo);
+        if(op.length) return say(pick(op));
+      }
+    }
+  }catch(e){}
+  return _idleOrig();
+};
+
+/* ---------- retrospetiva ---------- */
+function retroDados(){
+  const dias = Object.entries(S.done || {}).filter(([k, a]) => a && a.length).map(([k]) => k).sort();
+  let best = 0, cur = 0, prev = null;
+  dias.forEach(k => { const d = new Date(k + 'T12:00:00'); cur = prev && (d - prev) / 86400000 === 1 ? cur + 1 : 1; best = Math.max(best, cur); prev = d; });
+  const hc = {}; Object.values(S.moods || {}).forEach(m => hc[m] = (hc[m] || 0) + 1);
+  const hTop = Object.entries(hc).sort((a, b) => b[1] - a[1])[0];
+  const moodObj = hTop && typeof MOODS !== 'undefined' ? MOODS.find(m => m.k === hTop[0]) : null;
+  return {
+    juntos: diasJuntos(),
+    passos: Object.values(S.done || {}).reduce((a, x) => a + (x ? x.length : 0), 0),
+    seq: best, passeios: (S.finds || []).length,
+    fav: passinhoFav(),
+    humor: moodObj ? (moodObj.e || '') + ' ' + (moodObj.l || '') : null,
+    cromos: Object.keys(S.cromos || {}).length, postais: Object.keys(S.postais || {}).length
+  };
+}
+async function cartaoRetro(){
+  try{ await document.fonts.load('900 60px Nunito'); await document.fonts.load('800 36px Nunito'); }catch(e){}
+  const W = 1080, H = 1920, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d'), r = retroDados();
+  const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#FBF0B5'); g.addColorStop(1, '#F6D9C2'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+  x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = '#6B3420';
+  x.font = '900 46px Nunito, system-ui, sans-serif'; x.fillText(TX2.retroTit.replace(' 🎁', '').toUpperCase(), W/2, 150);
+  x.font = '900 84px Nunito, system-ui, sans-serif'; x.fillText(TX2.retroCab(S.name || '🦥'), W/2, 250);
+  const linhas = [[r.juntos, TX2.retroDias], [r.passos, TX2.retroPassos], [r.seq, TX2.retroSeq], [r.passeios, TX2.retroPasseios], [r.cromos, TX2.retroCromos], [r.postais, TX2.retroPostais]];
+  linhas.forEach((l, i) => {
+    const col = i % 2, row = Math.floor(i / 2), cx = 90 + col * 460, cy = 350 + row * 220;
+    x.fillStyle = '#fff'; rrect(x, cx, cy, 440, 190, 36); x.fill();
+    x.fillStyle = '#E8665A'; x.font = '900 92px Nunito, system-ui, sans-serif'; x.fillText(String(l[0]), cx + 220, cy + 80);
+    x.fillStyle = '#6B3420'; x.font = '800 34px Nunito, system-ui, sans-serif'; x.fillText(l[1], cx + 220, cy + 150);
+  });
+  let y = 1040;
+  [[TX2.retroFav, r.fav], [TX2.retroHumor, r.humor]].forEach(([k, v]) => { if(!v) return;
+    x.fillStyle = 'rgba(255,255,255,.7)'; rrect(x, 90, y, 900, 120, 30); x.fill();
+    x.fillStyle = '#8A5A3C'; x.font = '800 30px Nunito, system-ui, sans-serif'; x.fillText(k, W/2, y + 36);
+    x.fillStyle = '#6B3420'; x.font = '900 42px Nunito, system-ui, sans-serif'; x.fillText(String(v).slice(0, 34), W/2, y + 84); y += 140; });
+  const img = await svgImg(duduSVG('orgulho', true));
+  x.drawImage(img, (W - 340) / 2, y + 10, 340, 371);
+  x.fillStyle = '#6B3420'; x.font = '800 36px Nunito, system-ui, sans-serif';
+  const fim = TX2.retroFim[S.persona] || TX2.retroFim.fofo;
+  wrap(x, fim, 880).forEach((l, i) => x.fillText(l, W/2, y + 420 + i * 46));
+  x.font = '900 64px Nunito, system-ui, sans-serif'; x.textAlign = 'left'; x.fillText('cafuné', 90, H - 80);
+  x.font = '800 34px Nunito, system-ui, sans-serif'; x.textAlign = 'right'; x.fillStyle = '#8A5A3C'; x.fillText('@meucafune.app', W - 90, H - 80);
+  return c;
+}
+async function abrirRetro(){
+  track('retrospetiva');
+  window.ROAST_TAG = null; window.CARD_OVERRIDE = cartaoRetro;
+  open('mShare'); await renderShot();
+}
+function renderRetro(){
+  const box = $('retroCard'); if(!box) return;
+  const dez = new Date().getMonth() === 11;
+  box.innerHTML = `<h2>${TX2.retroTit}</h2><p>${dez ? TX2.retroDez : TX2.retroSub}</p><button class="btn ${dez ? '' : 'yel'} big" id="retroBtn" style="margin-top:10px">${TX2.retroBtn}</button>`;
+  $('retroBtn').onclick = abrirRetro;
+}
+
+/* ---------- Dudu bebé (3 amigos ativos) ---------- */
+const _dsOrig = drawScene;
+drawScene = function(){
+  _dsOrig();
+  const el = $('scene'); if(!el || !S.bebe) return;
+  el.insertAdjacentHTML('beforeend', `<div class="sc bebe">${duduSVG('feliz', false, [], S.cor)}</div>`);
+};
+function amigosAtivos(){ return amigos.filter(a => diasPorUser[a.user_id] && diasPorUser[a.user_id].size).length; }
+async function checarBebe(){
+  if(!sb || !user) return;
+  const n = amigosAtivos();
+  const cv = $('amigosConvite');
+  if(cv && !cv.querySelector('.bebeBox')) cv.insertAdjacentHTML('beforeend', `<div class="bebeBox"><b>${S.bebe ? TX2.bebeJa : TX2.bebeTit}</b>${S.bebe ? '' : `<div class="barra"><i style="width:${Math.min(n, 3) / 3 * 100}%"></i></div><small>${TX2.bebeProg(n)}</small>`}</div>`);
+  if(S.bebe || n < 3) return;
+  try{
+    const {data} = await sb.rpc('premio_convites');
+    if(data && data.ok){
+      S.bebe = true; save(); drawScene();
+      if(data.novo){ toast(TX2.bebeGanho); hearts(10); track('premio_convites'); try{ await loadPlus(); }catch(e){} }
+    }
+  }catch(e){}
+}
+const _decOrig = decorarAmigos;
+decorarAmigos = function(){ _decOrig(); try{ checarBebe(); }catch(e){} };
+
+/* ---------- arranque ---------- */
+(function(){
+  const sw = $('walkTxt');
+  const _walkOrig = cromoNoPasseio;
+  cromoNoPasseio = function(){ _walkOrig(); try{ postalNoPasseio(); }catch(e){} };
+  const _rnd = render;
+  render = function(){ _rnd(); try{ renderNivel(); }catch(e){} };
+  const tb = $('shareBtn'); if(tb) tb.addEventListener('click', () => { window.CARD_OVERRIDE = null; }, true);
+  const rb = $('roastBtn'); if(rb) rb.addEventListener('click', () => { window.CARD_OVERRIDE = null; }, true);
+})();
+renderPostais(); renderRetro(); desde();
+
+/* ---------- boot ---------- */
+render(); drawDudu(); idleLine(); renderConta();
+if(!S.onboarded) startOnb();
+
+document.querySelectorAll('#langSeg button').forEach(b => { b.classList.toggle('sel', b.dataset.lang === window.CAFUNE_LANG); b.onclick = () => { try{ localStorage.setItem('cafune-lang', b.dataset.lang); }catch(e){} location.href = {'pt-BR':'/app/','pt-PT':'/app/pt/','en':'/app/en/'}[b.dataset.lang]; }; });
+</script>
+</body>
+</html>
