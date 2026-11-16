@@ -1918,6 +1918,18 @@ decorarAmigos = function(){ _decOrig(); try{ checarBebe(); }catch(e){} };
 })();
 renderPostais(); renderRetro(); desde();
 
+/* ---------- jingle do Dudu ---------- */
+(function(){
+  var a=null;
+  function tocar(){ if(S.som===false) return; try{ a=a||new Audio('/som/jingle.m4a'); a.volume=0.55; a.currentTime=0; var p=a.play(); if(p&&p.catch) p.catch(function(){}); }catch(e){} }
+  window.JINGLE=tocar;
+  var o1=document.getElementById('o1'); if(o1) o1.addEventListener('click',tocar);
+  var hoje=new Date().toDateString(), k='cafune-jingle';
+  window.addEventListener('pointerdown',function f(){ window.removeEventListener('pointerdown',f);
+    var ult=null; try{ult=localStorage.getItem(k)}catch(e){}
+    if(ult!==hoje && S.onboarded){ try{localStorage.setItem(k,hoje)}catch(e){} tocar(); } },{passive:true});
+})();
+
 /* ---------- idioma no topo ---------- */
 (function(){
   var URLS={'pt-BR':'/app/','pt-PT':'/app/pt/','en':'/app/en/'}, FLAG={'pt-BR':'🇧🇷','pt-PT':'🇵🇹','en':'🌍'};
