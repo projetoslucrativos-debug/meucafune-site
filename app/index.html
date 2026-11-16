@@ -145,6 +145,15 @@ button{cursor:pointer;border:none;background:none}
 .toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%) translateY(-90px);background:var(--ink);color:#fff;font-weight:800;font-size:14.5px;padding:10px 16px;border-radius:999px;z-index:60;transition:transform .3s;white-space:nowrap}
 .toast.on{transform:translateX(-50%) translateY(0)}
 
+.langdd{position:relative}
+#langPill{border:0;cursor:pointer;font:inherit;color:inherit}
+.langmenu{position:absolute;right:0;top:calc(100% + 6px);background:var(--card);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:6px;display:none;z-index:60;min-width:160px}
+.langmenu.on{display:block}
+.langmenu button{display:block;width:100%;text-align:left;border:0;background:none;padding:10px 12px;font:inherit;font-size:15px;font-weight:800;border-radius:10px;color:inherit;cursor:pointer}
+.langmenu button.sel{background:var(--yel2)}
+.onb-lang{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.onb-lang button{border:2px solid #fff;background:#fff;border-radius:999px;padding:6px 12px;font:inherit;font-size:14px;font-weight:800;color:inherit;cursor:pointer}
+.onb-lang button.sel{background:var(--yel);border-color:var(--ink)}
 /* onboarding */
 #onb{position:fixed;inset:0;background:var(--yel2);z-index:40;display:none;overflow:auto}
 #onb.on{display:block}
@@ -253,7 +262,7 @@ body.teste .testonly{display:block}
   <section class="screen on" id="s-hoje">
     <div class="top">
       <div><h1 class="hello" id="hello">Oi!</h1><p class="sub" id="dateLabel"></p></div>
-      <div class="pills"><span class="pill" id="streak" title="Dias seguidos">🌿 0</span><span class="pill" id="coins" title="Cafunés">💛 0</span></div>
+      <div class="pills"><span class="pill" id="streak" title="Dias seguidos">🌿 0</span><span class="pill" id="coins" title="Cafunés">💛 0</span><span class="langdd"><button class="pill" id="langPill" aria-label="Idioma · Language">🌐</button><span class="langmenu" id="langMenu"><button data-lang="pt-BR">🇧🇷 Brasil</button><button data-lang="pt-PT">🇵🇹 Portugal</button><button data-lang="en">🌍 English</button></span></span></div>
     </div>
     <div class="stage" id="stage">
       <div class="bubble" id="bubble">…</div>
@@ -403,6 +412,7 @@ body.teste .testonly{display:block}
 
 <!-- onboarding -->
 <div id="onb"><div class="onb-in">
+  <div class="onb-lang" id="onbLang"><button data-lang="pt-BR">🇧🇷 Brasil</button><button data-lang="pt-PT">🇵🇹 Portugal</button><button data-lang="en">🌍 English</button></div>
   <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i></div>
   <div class="step on" data-step="0">
     <div id="onbArt"></div>
@@ -1907,6 +1917,16 @@ decorarAmigos = function(){ _decOrig(); try{ checarBebe(); }catch(e){} };
   const rb = $('roastBtn'); if(rb) rb.addEventListener('click', () => { window.CARD_OVERRIDE = null; }, true);
 })();
 renderPostais(); renderRetro(); desde();
+
+/* ---------- idioma no topo ---------- */
+(function(){
+  var URLS={'pt-BR':'/app/','pt-PT':'/app/pt/','en':'/app/en/'}, FLAG={'pt-BR':'🇧🇷','pt-PT':'🇵🇹','en':'🌍'};
+  var cur=window.CAFUNE_LANG||'pt-BR', pill=document.getElementById('langPill'), menu=document.getElementById('langMenu');
+  function ir(l){ if(l===cur){ if(menu) menu.classList.remove('on'); return; } try{localStorage.setItem('cafune-lang',l)}catch(e){} location.href=URLS[l]; }
+  document.querySelectorAll('#langMenu button,#onbLang button').forEach(function(b){ b.classList.toggle('sel',b.dataset.lang===cur); b.addEventListener('click',function(e){e.stopPropagation(); ir(b.dataset.lang);}); });
+  if(pill){ pill.textContent=FLAG[cur]||'🌐'; pill.addEventListener('click',function(e){e.stopPropagation(); menu.classList.toggle('on');}); }
+  document.addEventListener('click',function(){ if(menu) menu.classList.remove('on'); });
+})();
 
 /* ---------- boot ---------- */
 render(); drawDudu(); idleLine(); renderConta();
