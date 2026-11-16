@@ -154,6 +154,10 @@ button{cursor:pointer;border:none;background:none}
 .onb-lang{display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
 .onb-lang button{border:2px solid #fff;background:#fff;border-radius:999px;padding:6px 12px;font:inherit;font-size:14px;font-weight:800;color:inherit;cursor:pointer}
 .onb-lang button.sel{background:var(--yel);border-color:var(--ink)}
+.idade18{display:flex;align-items:center;gap:10px;font-weight:800;margin:4px 0 14px;padding:12px;border-radius:14px;background:var(--yel2);cursor:pointer}
+.idade18 input{width:22px;height:22px;accent-color:var(--coral)}
+.idade18.falta{outline:2px solid var(--coral)}
+#filtroYes:disabled{opacity:.45}
 /* onboarding */
 #onb{position:fixed;inset:0;background:var(--yel2);z-index:40;display:none;overflow:auto}
 #onb.on{display:block}
@@ -381,7 +385,8 @@ body.teste .testonly{display:block}
   <div style="display:flex;gap:8px"><button class="btn ghost big" data-close>Cancelar</button><button class="btn big" id="resetYes" style="background:var(--coral)">Apagar</button></div>
 </div></div>
 <div class="modal" id="mFiltro"><div class="sheet">
-  <h3>Liberar os palavrões? 🤬</h3><p>O Dudu Zoeiro vai xingar de verdade. Sempre de brincadeira, mas sem papas na língua. Dá pra desligar quando quiser.</p>
+  <h3>Liberar os palavrões? 🤬</h3><p>Só para maiores de 18 anos. O Dudu Zoeiro vai usar palavrão e linguagem pesada de verdade. É sempre de brincadeira, mas pode ofender. Dá pra desligar quando quiser.</p>
+  <label class="idade18"><input type="checkbox" id="filtro18"> Tenho 18 anos ou mais</label>
   <div style="display:flex;gap:8px"><button class="btn ghost big" data-close>Melhor não</button><button class="btn big" id="filtroYes" style="background:var(--coral)">Pode xingar</button></div>
 </div></div>
 <div class="modal" id="mShare"><div class="sheet">
@@ -933,9 +938,11 @@ $('nameSave').onclick = () => { S.name = $('nameInput').value.trim().slice(0,20)
 $('nextDay').onclick = () => { S.offset++; save(); render(); drawDudu(); idleLine(); go('hoje'); toast('Um novo dia começou ☀️'); };
 $('filtroTog').onclick = () => {
   if(S.filtro){ S.filtro = false; save(); render(); $('miniSay').textContent = 'Tá bom, tá bom. Volto a ser educado. Mais ou menos.'; return; }
+  $('filtro18').checked = false; $('filtro18').parentNode.classList.remove('falta'); $('filtroYes').disabled = true;
   open('mFiltro');
 };
-$('filtroYes').onclick = () => { S.filtro = true; save(); close('mFiltro'); render(); $('miniSay').textContent = 'Finalmente, porra! Agora a gente conversa direito.'; };
+$('filtro18').onchange = () => { $('filtroYes').disabled = !$('filtro18').checked; $('filtro18').parentNode.classList.remove('falta'); };
+$('filtroYes').onclick = () => { if(!$('filtro18').checked){ $('filtro18').parentNode.classList.add('falta'); return; } S.filtro = true; S.idade18 = true; save(); close('mFiltro'); render(); $('miniSay').textContent = 'Finalmente, porra! Agora a gente conversa direito.'; };
 $('gift').onclick = () => { S.coins += 50; save(); render(); toast('+50 cafunés 💛'); };
 $('reset').onclick = () => open('mConfirm');
 $('resetYes').onclick = () => { S = fresh(); save(); if(sb && user){ sb.from('estado').delete().eq('user_id', user.id).then(() => {}); } close('mConfirm'); startOnb(); };
