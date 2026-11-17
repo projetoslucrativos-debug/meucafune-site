@@ -158,6 +158,33 @@ button{cursor:pointer;border:none;background:none}
 .idade18 input{width:22px;height:22px;accent-color:var(--coral)}
 .idade18.falta{outline:2px solid var(--coral)}
 #filtroYes:disabled{opacity:.45}
+#room{position:absolute;inset:0;z-index:0;pointer-events:none}#room svg{width:100%;height:100%;display:block}
+.stage[data-sala=cozinha] .ground{background:#EBD3AE}.stage[data-sala=sala] .ground{background:#E2C39A}.stage[data-sala=quarto] .ground{background:#D7C6EA}
+#scene .sc-tapete{left:50%;bottom:4px;width:330px;height:58px;margin-left:-165px}
+#scene .sc-parede{left:8px;top:104px;width:88px;height:70px}
+.salaBar,.salaRow{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:-6px 0 12px;padding:2px 1px}
+.salaRow{margin:0 0 12px}.salaDica{margin:0 0 8px;font-size:14px}
+.salaB{min-width:0;background:var(--card);border-radius:999px;padding:7px 4px;font-weight:800;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;color:var(--ink);box-shadow:0 1px 0 var(--line);white-space:nowrap}
+.salaB.sel{background:var(--yel);box-shadow:inset 0 0 0 2px var(--ink)}
+#moodFx{position:absolute;left:50%;top:58px;width:120px;height:90px;margin-left:30px;z-index:1;pointer-events:none}
+#moodFx svg{width:100%;height:100%}
+#moodFx .gota{animation:gota 1s linear infinite}#moodFx .g2{animation-delay:.33s}#moodFx .g3{animation-delay:.66s}
+@keyframes gota{0%{transform:translateY(-4px);opacity:0}30%{opacity:1}100%{transform:translateY(14px);opacity:0}}
+#moodFx.mfx-radiante{left:0;right:0;width:auto;margin:0;top:70px;height:180px}
+#moodFx.mfx-radiante span{position:absolute;font-size:26px;animation:brilha 1.8s ease-in-out infinite}
+#moodFx.mfx-radiante span:nth-child(1){left:16%;top:30px}#moodFx.mfx-radiante span:nth-child(2){right:16%;top:6px;animation-delay:.6s}#moodFx.mfx-radiante span:nth-child(3){right:22%;top:110px;animation-delay:1.2s}
+@keyframes brilha{0%,100%{transform:scale(.6);opacity:.3}50%{transform:scale(1.1);opacity:1}}
+.dudu-wrap svg g[class^=pr-]{transform-box:fill-box;transform-origin:center}
+.pr-mastiga{animation:mastiga .45s ease-in-out infinite}@keyframes mastiga{50%{transform:translate(-3px,-5px) rotate(-6deg)}}
+.pr-migalha{animation:migalha .9s ease-in infinite}@keyframes migalha{0%{transform:translateY(0);opacity:1}100%{transform:translateY(40px);opacity:0}}
+.pr-gole{animation:gole 1.2s ease-in-out infinite}@keyframes gole{50%{transform:rotate(-14deg) translateY(-3px)}}
+.pr-livro{animation:livro 2s ease-in-out infinite}@keyframes livro{50%{transform:rotate(3deg)}}
+.pr-almofada{animation:almofada .7s ease-in-out infinite}@keyframes almofada{50%{transform:translateY(-8px) scale(1.04)}}
+.pr-sobe{animation:sobe 1s ease-in-out infinite}@keyframes sobe{50%{transform:translateY(-10px) rotate(8deg)}}
+.dudu-wrap.acao-alongar svg{animation:estica 1.3s ease-in-out infinite;transform-origin:50% 95%}@keyframes estica{50%{transform:scale(.95,1.09)}}
+.dudu-wrap.acao-dormir svg{animation:respira 2.4s ease-in-out infinite;transform-origin:50% 95%}@keyframes respira{50%{transform:scale(1.02,.98)}}
+.dudu-wrap.acao-arrumar svg{animation:arruma .7s ease-in-out infinite;transform-origin:50% 95%}@keyframes arruma{25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+@media (prefers-reduced-motion:reduce){.dudu-wrap svg *,.dudu-wrap svg,#moodFx *{animation:none!important}}
 /* onboarding */
 #onb{position:fixed;inset:0;background:var(--yel2);z-index:40;display:none;overflow:auto}
 #onb.on{display:block}
@@ -270,11 +297,13 @@ body.teste .testonly{display:block}
     </div>
     <div class="stage" id="stage">
       <div class="bubble" id="bubble">…</div>
+      <div id="room"></div>
       <div class="ground"></div>
       <div id="scene"></div>
       <button class="dudu-wrap" id="dudu" aria-label="Fazer cafuné no Dudu"></button>
       <button class="share" id="shareBtn">📸 Compartilhar</button>
     </div>
+    <div class="salaBar" id="salaBar"></div>
     <div class="instb" id="instBanner" style="display:none"><span class="ic">📲</span><p><b>Coloque o Dudu na tela do celular</b><br>Assim ele pode te mandar lembretes.</p><button class="btn yel" id="instBtn">Como?</button><button class="x" id="instX" aria-label="Fechar">×</button></div>
     <div class="energy">
       <div><b>Energia pro passeio</b><small id="energyTxt">Cada passinho dá uma folhinha</small></div>
@@ -331,7 +360,7 @@ body.teste .testonly{display:block}
       <p class="lbl" style="margin-bottom:8px">Acessórios</p>
       <div class="grid" id="shop"></div>
     </div>
-    <div class="card"><h2>Cenário 🏡</h2><p style="margin-bottom:12px">Decore o cantinho do Dudu. Aparece na tela de hoje.</p><div class="grid" id="cenario"></div></div>
+    <div class="card"><h2>Cenário 🏡</h2><p style="margin-bottom:12px">Decore o cantinho do Dudu. Aparece na tela de hoje.</p><div id="salaTabs"></div><div class="grid" id="cenario"></div></div>
     <div class="card" id="natalCard"><h2>Pacote de Natal 🎄</h2><div id="natalBox"></div></div>
     <div class="card" id="retroCard"></div>
     <div class="card" id="albumCard"></div>
@@ -664,6 +693,8 @@ function baseFace(){
   const m = S.moods[today()];
   if(m === 'baixo') return 'triste';
   if(m === 'cansado') return 'sono';
+  if(m === 'meh') return 'meh';
+  if(m === 'radiante') return 'radiante';
   const h = new Date().getHours();
   if(h >= 23 || h < 5) return 'sono';
   return 'feliz';
@@ -679,15 +710,17 @@ function duduSVG(face, wave, wearing, cor){
 }
 function drawScene(){
   const el = $('scene'); if(!el) return;
-  const sc = S.scene || {};
-  el.innerHTML = ['ceu','esq','dir','chao'].map(slot => { const k = sc[slot], it = SCN[k]; if(!it) return ''; if(it.pack && !hasPack(it.pack)) return '';
-    return `<div class="sc sc-${slot}"><svg viewBox="${it.vb}" preserveAspectRatio="${slot === 'chao' ? 'none' : 'xMidYMax meet'}">${it.svg}</svg></div>`; }).join('');
+  const sala = salaAtual(), sc = cenaDe(sala), st = $('stage'), rm = $('room');
+  if(st) st.dataset.sala = sala;
+  if(rm) rm.innerHTML = ROOM[sala] ? `<svg viewBox="0 0 360 318" preserveAspectRatio="xMidYMid slice">${ROOM[sala]}</svg>` : '';
+  el.innerHTML = ['ceu','parede','esq','dir','chao','tapete'].map(slot => { const k = sc[slot], it = SCN[k]; if(!it) return ''; if(it.pack && !hasPack(it.pack)) return '';
+    return `<div class="sc sc-${slot}"><svg viewBox="${it.vb}" preserveAspectRatio="${slot === 'chao' ? 'none' : slot === 'tapete' ? 'xMidYMid meet' : 'xMidYMax meet'}">${it.svg}</svg></div>`; }).join('');
 }
 let reactTimer = null, curFace = null, petTimes = [];
 function drawDudu(face){
   face = face || baseFace();
   curFace = face;
-  const wave = face === 'feliz' || face === 'orgulho';
+  const wave = face === 'feliz' || face === 'orgulho' || face === 'radiante';
   $('dudu').innerHTML = duduSVG(face, wave);
 }
 function react(face, ms){
@@ -760,9 +793,7 @@ function renderShop(){
   $('mini').innerHTML = `<div class="mini">${duduSVG('feliz', true)}</div>`;
   $('cores').innerHTML = Object.keys(CORES).map(k => { const c = CORES[k], lock = c.plus && !plus;
     return `<button class="cor ${(S.cor||'caramelo')===k?'sel':''}" data-cor="${k}" title="${c.n}" style="background:${c.f}">${lock?'<i>💛</i>':''}</button>`; }).join('');
-  $('cenario').innerHTML = SCN_ORDER.map(k => { const it = SCN[k], sc = S.scene || {}, on = sc[it.slot] === k, own = S.owned.includes(k), lock = it.pack && !hasPack(it.pack);
-    const tag = on ? 'No cenário ✓' : it.pack ? (lock ? '🎄 Pacote de Natal' : 'Toque pra pôr') : own ? 'Toque pra pôr' : plus ? 'Grátis no Cafuné+' : '💛 ' + it.price;
-    return `<button class="item ${on?'wear':''} ${lock?'lock':''}" data-scn="${k}"><svg viewBox="${it.tvb || it.vb}">${it.svg}</svg>${it.name}<small>${tag}</small></button>`; }).join('');
+  renderCenario();
   renderNatal(); drawScene();
   $('shop').innerHTML = ACC_ORDER.map(k => {
     const a = ACC[k], own = S.owned.includes(k), wear = S.wearing.includes(k);
@@ -792,7 +823,7 @@ function toggle(id){
   track('passo');
   try{ SOM.plim(); }catch(e){}
   save(); render();
-  react('orgulho'); hearts(3);
+  fazerAcao(S.items.find(i => i.id === id)); hearts(3);
   const all = arr.length === S.items.length;
   const it = S.items.find(i => i.id === id), pend = S.items.filter(i => !arr.includes(i.id));
   say(S.persona === 'zoeiro' ? zoeiraLine(it, pend, all) : (all ? P().all : pick(P().done)), S.persona === 'zoeiro' ? 6000 : 3500);
@@ -895,14 +926,15 @@ document.addEventListener('click', e => {
     S.cor = t.dataset.cor; save(); render(); drawDudu(); $('miniSay').textContent = ACCX[S.persona] || ACCX.fofo; return;
   }
   if(t.dataset.scn){
-    const k = t.dataset.scn, it = SCN[k]; S.scene = S.scene || {};
+    const k = t.dataset.scn, it = SCN[k], CS = cenaDe(S.sala || 'cantinho');
+    if(it.plus && !plus && !S.owned.includes(k)){ $('plusCard').scrollIntoView({behavior:'smooth', block:'center'}); toast(TXC.soPlusT); return; }
     if(it.pack && !hasPack(it.pack)){ $('natalCard').scrollIntoView({behavior:'smooth', block:'center'}); toast('Faz parte do Pacote de Natal 🎄'); return; }
-    if(S.scene[it.slot] === k){ S.scene[it.slot] = null; }
-    else if(S.owned.includes(k) || it.pack){ S.scene[it.slot] = k; }
-    else if(plus){ S.owned.push(k); S.scene[it.slot] = k; }
-    else if(S.coins >= it.price){ S.coins -= it.price; S.owned.push(k); S.scene[it.slot] = k; }
+    if(CS[it.slot] === k){ CS[it.slot] = null; }
+    else if(S.owned.includes(k) || it.pack){ CS[it.slot] = k; }
+    else if(plus){ S.owned.push(k); CS[it.slot] = k; }
+    else if(S.coins >= it.price){ S.coins -= it.price; S.owned.push(k); CS[it.slot] = k; }
     else { toast(`Faltam ${it.price - S.coins} cafunés 💛`); return; }
-    save(); render(); toast(S.scene[it.slot] === k ? 'Pronto! Veja na tela de hoje 🏡' : 'Tirado do cenário'); return;
+    save(); render(); toast(CS[it.slot] === k ? 'Pronto! Veja na tela de hoje 🏡' : 'Tirado do cenário'); return;
   }
   if(t.dataset.acc){
     const k = t.dataset.acc, a = ACC[k];
@@ -1946,6 +1978,135 @@ renderPostais(); renderRetro(); desde();
   if(pill){ pill.textContent=FLAG[cur]||'🌐'; pill.addEventListener('click',function(e){e.stopPropagation(); menu.classList.toggle('on');}); }
   document.addEventListener('click',function(){ if(menu) menu.classList.remove('on'); });
 })();
+
+/* ---------- casa do Dudu: divisões, ações e humor ---------- */
+const TXC = ({
+  'pt-BR':{salas:{cantinho:'Cantinho',cozinha:'Cozinha',sala:'Sala',quarto:'Quarto'}, dica:'Escolha o cômodo e decore. O Dudu vai até lá quando faz um passinho.', soPlus:'💛 Só no Cafuné+', soPlusT:'Esse é exclusivo do Cafuné+ 💛', tg:['No cenário ✓','Toque pra pôr','Grátis no Cafuné+','🎄 Pacote de Natal'], qualquer:'Qualquer cômodo',
+    n:{fruteira:'Fruteira',fogao:'Fogãozinho',potes:'Prateleira de potes',xadrez:'Tapete xadrez',candeeiro:'Luminária',poltrona:'Poltrona',quadros:'Quadrinhos',ioga:'Tapete de ioga',abajur:'Criado-mudo',ursinho:'Ursinho',mobile:'Móbile de estrelas',fofo:'Tapete fofinho'}},
+  'pt-PT':{salas:{cantinho:'Cantinho',cozinha:'Cozinha',sala:'Sala',quarto:'Quarto'}, dica:'Escolhe a divisão e decora. O Dudu vai até lá quando faz um passinho.', soPlus:'💛 Só no Cafuné+', soPlusT:'Este é exclusivo do Cafuné+ 💛', tg:['No cenário ✓','Toca para pôr','Grátis no Cafuné+','🎄 Pacote de Natal'], qualquer:'Qualquer divisão',
+    n:{fruteira:'Fruteira',fogao:'Fogãozinho',potes:'Prateleira de frascos',xadrez:'Tapete aos quadrados',candeeiro:'Candeeiro',poltrona:'Poltrona',quadros:'Quadrinhos',ioga:'Tapete de ioga',abajur:'Mesa de cabeceira',ursinho:'Ursinho',mobile:'Móbile de estrelas',fofo:'Tapete fofinho'}},
+  'en':{salas:{cantinho:'Nook',cozinha:'Kitchen',sala:'Lounge',quarto:'Bedroom'}, dica:'Pick a room and decorate it. Dudu goes there when he does a step.', soPlus:'💛 Cafuné+ only', soPlusT:'This one is Cafuné+ only 💛', tg:['In scene ✓','Tap to place','Free with Cafuné+','🎄 Christmas pack'], qualquer:'Any room',
+    n:{fruteira:'Fruit bowl',fogao:'Little stove',potes:'Jar shelf',xadrez:'Checkered rug',candeeiro:'Floor lamp',poltrona:'Armchair',quadros:'Little frames',ioga:'Yoga mat',abajur:'Bedside table',ursinho:'Teddy bear',mobile:'Star mobile',fofo:'Fluffy rug'}}
+})[window.CAFUNE_LANG || 'pt-BR'];
+const SALAS = ['cantinho','cozinha','sala','quarto'], SALA_IC = {cantinho:'🌼', cozinha:'🍳', sala:'🛋️', quarto:'🛏️'};
+let SALA_VER = null;
+function salaAtual(){ return SALA_VER || S.sala || 'cantinho'; }
+function cenaDe(r){ if(!r || r === 'cantinho'){ S.scene = S.scene || {}; return S.scene; } S.cenas = S.cenas || {}; return S.cenas[r] = S.cenas[r] || {}; }
+
+/* fundos das divisões (viewBox 0 0 360 318) */
+const ROOM = {
+  cozinha:`<rect width="360" height="318" fill="#FFF3DA"/><g opacity=".9">${Array.from({length:10},(_,i)=>Array.from({length:3},(_,j)=>`<rect x="${i*36+2}" y="${150+j*30}" width="32" height="26" rx="4" fill="#E4F2F6" stroke="#CFE3EA" stroke-width="2"/>`).join('')).join('')}</g><rect x="22" y="22" width="70" height="58" rx="8" fill="#CFE9F7" stroke="${OL}" stroke-width="3.5"/><path d="M57 22 V80 M22 51 H92" stroke="${OL}" stroke-width="3"/>`,
+  sala:`<rect width="360" height="318" fill="#EAF4E4"/><g stroke="#D5E8CC" stroke-width="6">${Array.from({length:13},(_,i)=>`<path d="M${i*30+8} 0 V318"/>`).join('')}</g><rect x="0" y="196" width="360" height="12" fill="#D9C2A0"/><rect x="262" y="24" width="74" height="62" rx="8" fill="#CFE9F7" stroke="${OL}" stroke-width="3.5"/><path d="M299 24 V86" stroke="${OL}" stroke-width="3"/><path d="M256 20 Q270 60 258 92 L250 92 L250 20 Z M342 20 Q328 60 340 92 L348 92 L348 20 Z" fill="#E8665A" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/>`,
+  quarto:`<rect width="360" height="318" fill="#E8E2F6"/><g fill="#D9D0EF">${Array.from({length:40},(_,i)=>`<circle cx="${(i*47)%360+10}" cy="${Math.floor(i/8)*42+20}" r="4"/>`).join('')}</g><rect x="20" y="24" width="72" height="60" rx="30" fill="#3E4A7A" stroke="${OL}" stroke-width="3.5"/><path d="M62 36 A12 12 0 1 0 72 58 A9 9 0 1 1 62 36 Z" fill="#F7D04A"/><circle cx="36" cy="46" r="2.5" fill="#fff"/><circle cx="46" cy="66" r="2" fill="#fff"/>`
+};
+const ROOM_CHAO = {cozinha:'#EBD3AE', sala:'#E2C39A', quarto:'#D7C6EA'};
+
+/* objetos novos por divisão */
+const SCN_NOVOS = {
+  fruteira:{sala:'cozinha', slot:'esq', price:10, vb:'0 0 100 120', svg:`<path d="M14 84 Q50 122 86 84 Z" fill="#8FC1E3" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><circle cx="36" cy="74" r="13" fill="#E8665A" stroke="${OL}" stroke-width="3.5"/><circle cx="62" cy="72" r="13" fill="#F7B24A" stroke="${OL}" stroke-width="3.5"/><path d="M42 64 Q50 46 66 50 Q58 62 46 66 Z" fill="#F7D04A" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/><path d="M36 61 q2 -8 7 -9" stroke="${OL}" stroke-width="3" fill="none"/>`},
+  fogao:{sala:'cozinha', slot:'dir', price:20, vb:'0 0 100 140', svg:`<rect x="12" y="70" width="76" height="66" rx="8" fill="#fff" stroke="${OL}" stroke-width="4"/><rect x="22" y="94" width="56" height="32" rx="5" fill="#3B1D12" opacity=".85"/><circle cx="30" cy="80" r="4" fill="${OL}"/><circle cx="44" cy="80" r="4" fill="${OL}"/><path d="M28 70 V54 Q28 46 36 46 H66 Q74 46 74 54 V70 Z" fill="#E8665A" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><path d="M22 52 H80" stroke="${OL}" stroke-width="4" stroke-linecap="round"/><path d="M42 38 q-6 -8 0 -16 M54 38 q-6 -8 0 -16" stroke="#C9B8A6" stroke-width="3" fill="none" stroke-linecap="round"/>`},
+  potes:{sala:'cozinha', slot:'parede', price:15, vb:'0 0 100 80', svg:`<rect x="4" y="66" width="92" height="8" rx="3" fill="#B97A4C" stroke="${OL}" stroke-width="3"/>${[[20,'#F7B24A'],[50,'#E8665A'],[80,'#7DB87A']].map(([x,c])=>`<rect x="${x-12}" y="34" width="24" height="32" rx="6" fill="#fff" stroke="${OL}" stroke-width="3"/><rect x="${x-10}" y="46" width="20" height="18" rx="4" fill="${c}"/><rect x="${x-13}" y="27" width="26" height="9" rx="3" fill="${c}" stroke="${OL}" stroke-width="2.5"/>`).join('')}`},
+  xadrez:{sala:'cozinha', slot:'tapete', price:10, vb:'0 0 300 60', svg:`<defs><pattern id="xz" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="#fff"/><rect width="10" height="10" fill="#E8665A"/><rect x="10" y="10" width="10" height="10" fill="#E8665A"/></pattern></defs><ellipse cx="150" cy="32" rx="140" ry="24" fill="url(#xz)" stroke="${OL}" stroke-width="4"/>`},
+  candeeiro:{sala:'sala', slot:'esq', price:15, vb:'0 0 100 120', svg:`<path d="M26 10 H74 L84 40 H16 Z" fill="#F7D04A" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><path d="M50 40 V108" stroke="${OL}" stroke-width="5"/><ellipse cx="50" cy="112" rx="22" ry="6" fill="#B97A4C" stroke="${OL}" stroke-width="4"/><path d="M30 46 L20 70 M70 46 L80 70" stroke="#F7D04A" stroke-width="3" opacity=".6" stroke-linecap="round"/>`},
+  poltrona:{sala:'sala', slot:'dir', price:25, plus:true, vb:'0 0 100 140', svg:`<path d="M18 64 Q18 40 50 40 Q82 40 82 64 V96 H18 Z" fill="#7DB87A" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><rect x="8" y="78" width="20" height="40" rx="9" fill="#7DB87A" stroke="${OL}" stroke-width="4"/><rect x="72" y="78" width="20" height="40" rx="9" fill="#7DB87A" stroke="${OL}" stroke-width="4"/><rect x="24" y="92" width="52" height="24" rx="8" fill="#9ED3BD" stroke="${OL}" stroke-width="4"/><path d="M18 118 V132 M82 118 V132" stroke="${OL}" stroke-width="5" stroke-linecap="round"/>`},
+  quadros:{sala:'sala', slot:'parede', price:10, vb:'0 0 100 80', svg:`<rect x="4" y="18" width="50" height="40" rx="4" fill="#FBF0B5" stroke="${OL}" stroke-width="4"/><path d="M10 52 L24 34 L34 46 L40 40 L50 52 Z" fill="#7DB87A"/><circle cx="42" cy="28" r="5" fill="#F7B24A"/><rect x="62" y="10" width="34" height="46" rx="17" fill="#F2A7B5" stroke="${OL}" stroke-width="4"/><path d="M79 44 C69 36 71 26 79 31 C87 26 89 36 79 44 Z" fill="#E8665A"/>`},
+  ioga:{sala:'sala', slot:'tapete', price:10, vb:'0 0 300 60', svg:`<rect x="20" y="16" width="260" height="30" rx="15" fill="#B59AD8" stroke="${OL}" stroke-width="4"/><path d="M40 31 H260" stroke="#9C7FC6" stroke-width="3" stroke-dasharray="8 8"/>`},
+  abajur:{sala:'quarto', slot:'esq', price:15, vb:'0 0 100 120', svg:`<rect x="16" y="70" width="68" height="44" rx="6" fill="#C79A6E" stroke="${OL}" stroke-width="4"/><path d="M16 90 H84" stroke="${OL}" stroke-width="3"/><circle cx="50" cy="80" r="3" fill="${OL}"/><path d="M50 70 V50" stroke="${OL}" stroke-width="4"/><path d="M32 50 L40 22 H60 L68 50 Z" fill="#F2A7B5" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/>`},
+  ursinho:{sala:'quarto', slot:'dir', price:25, plus:true, vb:'0 0 100 140', svg:`<circle cx="30" cy="62" r="11" fill="#C79A6E" stroke="${OL}" stroke-width="4"/><circle cx="70" cy="62" r="11" fill="#C79A6E" stroke="${OL}" stroke-width="4"/><ellipse cx="50" cy="112" rx="30" ry="24" fill="#C79A6E" stroke="${OL}" stroke-width="4"/><circle cx="50" cy="78" r="24" fill="#C79A6E" stroke="${OL}" stroke-width="4"/><ellipse cx="50" cy="86" rx="10" ry="7" fill="#F1DCC4"/><circle cx="50" cy="83" r="3" fill="${OL}"/><circle cx="42" cy="74" r="3" fill="${OL}"/><circle cx="58" cy="74" r="3" fill="${OL}"/><path d="M40 100 L50 108 L60 100 L50 96 Z" fill="#E8665A" stroke="${OL}" stroke-width="2.5"/>`},
+  mobile:{sala:'quarto', slot:'parede', price:15, vb:'0 0 100 80', svg:`<path d="M10 8 H90" stroke="${OL}" stroke-width="4" stroke-linecap="round"/>${[[20,40],[50,62],[80,36]].map(([x,y])=>`<path d="M${x} 8 V${y-12}" stroke="${OL}" stroke-width="2"/><path d="M${x} ${y-14} l4 8 9 1 -7 6 2 9 -8 -5 -8 5 2 -9 -7 -6 9 -1 Z" fill="#F7D04A" stroke="${OL}" stroke-width="2.5" stroke-linejoin="round"/>`).join('')}`},
+  fofo:{sala:'quarto', slot:'tapete', price:10, vb:'0 0 300 60', svg:`<ellipse cx="150" cy="32" rx="130" ry="24" fill="#F2A7B5" stroke="${OL}" stroke-width="4"/><ellipse cx="150" cy="32" rx="100" ry="15" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>`}
+};
+Object.keys(SCN_NOVOS).forEach(k => { SCN[k] = Object.assign({name: TXC.n[k]}, SCN_NOVOS[k]); if(!SCN_ORDER.includes(k)) SCN_ORDER.push(k); });
+
+/* caras novas do humor */
+(function(){
+  const F = ART.faces.feliz;
+  const olhos = '<circle cx="169" cy="161" r="14" fill="#3B1D12"/><circle cx="252" cy="148" r="13" fill="#3B1D12"/><circle cx="174" cy="156" r="5" fill="#fff"/><circle cx="165" cy="167" r="2.4" fill="#fff"/><circle cx="257" cy="143" r="4.6" fill="#fff"/><circle cx="248" cy="154" r="2.2" fill="#fff"/>';
+  const boca = /<path d="M203 171 Q218 198 234 168 Z"[^>]*\/><path d="M211 184[^>]*\/>/;
+  const est = (cx, cy, r) => { let p = ''; for(let i = 0; i < 10; i++){ const a = -Math.PI/2 + i*Math.PI/5, rr = i % 2 ? r*0.45 : r; p += (i ? 'L' : 'M') + (cx + rr*Math.cos(a)).toFixed(1) + ' ' + (cy + rr*Math.sin(a)).toFixed(1); } return `<path d="${p}Z" fill="#3B1D12" stroke="#3B1D12" stroke-width="2" stroke-linejoin="round"/>`; };
+  if(F.includes(olhos)){
+    ART.faces.radiante = F.replace(olhos, est(169, 161, 17) + est(252, 148, 16) + '<circle cx="165" cy="155" r="3" fill="#fff"/><circle cx="248" cy="142" r="3" fill="#fff"/>');
+    ART.faces.meh = F.replace(olhos, olhos + '<path d="M152 160 A17 17 0 0 1 186 160 Z" fill="#B9693F"/><path d="M236 147 A16 16 0 0 1 268 147 Z" fill="#B9693F"/><path d="M152 160 H186 M236 147 H268" stroke="#3B1D12" stroke-width="3.5" stroke-linecap="round"/>').replace(boca, '<path d="M207 184 Q219 181 231 183" stroke="#6B3420" stroke-width="4.5" fill="none" stroke-linecap="round"/>');
+  }
+  if(!ART.faces.triste.includes('lagrima')) ART.faces.triste += '<path class="lagrima" d="M150 180 q-7 12 0 17 q7 -5 0 -17z" fill="#8FC1E3" stroke="#6B3420" stroke-width="2.5"/>';
+})();
+
+/* que ação é cada passinho */
+function acaoDe(it){
+  const t = ((it && it.t) || '').toLowerCase(), e = (it && it.e) || '';
+  const tem = (re, em) => re.test(t) || em.some(x => e.includes(x));
+  if(tem(/arrum|fazer a cama|make (the|my) bed/, [])) return {tipo:'arrumar', sala:'quarto'};
+  if(tem(/dorm|deitar|sono|soneca|cochil|sleep|nap|bed|antes de dormir/, ['🛏','😴','💤','📵'])) return {tipo:'dormir', sala:'quarto'};
+  if(tem(/comer|fruta|maçã|maca|banana|almo|jant|lanche|salada|pequeno-almo|café da manhã|refei|eat|fruit|apple|breakfast|lunch|dinner|meal|snack/, ['🍎','🍏','🍌','🥗','🍽','🥑','🍊','🍐','🥕','🍓','🍇','🥪'])) return {tipo:'comer', sala:'cozinha'};
+  if(tem(/água|agua|beber|chá\b|cha\b|water|drink|tea\b|copo|hidrat/, ['💧','🥤','☕','🍵','🫖'])) return {tipo:'beber', sala:'sala'};
+  if(tem(/along|ioga|yoga|medit|exerc|stretch|treino|workout|pilates|respir/, ['🧘','🤸','🏋','💪'])) return {tipo:'alongar', sala:'sala'};
+  if(tem(/\bler\b|livro|leitura|p[áa]gina|read|book|estud/, ['📖','📚'])) return {tipo:'ler', sala:'sala'};
+  return {tipo:'outro', sala:null};
+}
+function corDudu(str){ const c = CORES[S.cor || 'caramelo']; return c && c.f !== '#E59E72' ? str.split('#E59E72').join(c.f).split('#D4875C').join(c.s).split('#B9693F').join(c.p) : str; }
+const PATA = (x, y, r) => `<ellipse cx="${x}" cy="${y}" rx="17" ry="14" fill="#E59E72" stroke="${OL}" stroke-width="4" transform="rotate(${r || 0} ${x} ${y})"/>`;
+function duduAcao(a, emoji){
+  const P2 = {
+    comer:{face:'feliz', over:`<g transform="translate(240 196)"><g class="pr-mastiga"><circle r="19" fill="#E8665A" stroke="${OL}" stroke-width="4"/><path d="M0 -18 q2 -10 8 -12" stroke="${OL}" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M4 -24 q10 -6 16 2 q-8 6 -16 -2z" fill="#7DB87A" stroke="${OL}" stroke-width="2.5"/><path d="M-19 -6 a8 8 0 0 0 2 14 a7 7 0 0 1 -2 -14z" fill="#FCEBDF"/><circle cx="-6" cy="-7" r="4" fill="#fff" opacity=".5"/></g></g>${PATA(254, 218, -20)}<g class="pr-migalha"><circle cx="226" cy="230" r="3" fill="#F3DF8B"/><circle cx="236" cy="238" r="2.4" fill="#F3DF8B"/></g>`},
+    beber:{face:'orgulho', over:`<g transform="translate(244 194) rotate(-28)"><g class="pr-gole"><path d="M-13 -24 L13 -24 L10 20 L-10 20 Z" fill="#E6F4FB" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><path d="M-11.6 -6 L11.6 -6 L10 20 L-10 20 Z" fill="#8FC1E3"/><path d="M-6 -18 V12" stroke="#fff" stroke-width="3" opacity=".7" stroke-linecap="round"/></g></g>${PATA(250, 222, -20)}`},
+    alongar:{face:'orgulho', wave:true, under:`<rect x="66" y="326" width="256" height="22" rx="11" fill="#B59AD8" stroke="${OL}" stroke-width="4"/>`, over:`<text x="88" y="120" font-size="30" class="pr-brilho">✨</text>`},
+    ler:{face:'feliz', over:`<g transform="translate(212 270)"><g class="pr-livro"><path d="M-50 -24 L0 -16 L50 -24 L50 22 L0 30 L-50 22 Z" fill="#fff" stroke="${OL}" stroke-width="4" stroke-linejoin="round"/><path d="M0 -16 V30" stroke="${OL}" stroke-width="3"/><path d="M-40 -8 L-10 -4 M-40 2 L-10 6 M-40 12 L-10 16 M10 -4 L40 -8 M10 6 L40 2 M10 16 L40 12" stroke="#C9B8A6" stroke-width="2.5" stroke-linecap="round"/><path d="M-54 -20 V28 L0 36 L54 28 V-20" fill="none" stroke="#E8665A" stroke-width="6" stroke-linejoin="round"/></g></g>${PATA(156, 276, 20)}${PATA(268, 270, -20)}`},
+    dormir:{face:'sono', over:`<path d="M100 266 C150 242 262 240 304 262 L308 344 C232 358 150 358 96 344 Z" fill="#8FC1E3" stroke="${OL}" stroke-width="5" stroke-linejoin="round"/><path d="M104 286 C160 270 250 268 304 284" stroke="#fff" stroke-width="10" fill="none" opacity=".7"/><g fill="#fff" opacity=".8"><circle cx="150" cy="316" r="5"/><circle cx="200" cy="326" r="5"/><circle cx="250" cy="314" r="5"/><circle cx="176" cy="300" r="4"/><circle cx="228" cy="300" r="4"/></g>`},
+    arrumar:{face:'orgulho', over:`<g transform="translate(212 272) rotate(-6)"><g class="pr-almofada"><rect x="-50" y="-27" width="100" height="54" rx="24" fill="#fff" stroke="${OL}" stroke-width="4"/><path d="M-32 -8 q9 4 0 9 M32 -8 q-9 4 0 9" stroke="#E6D8C8" stroke-width="3" fill="none"/></g></g>${PATA(158, 276, 20)}${PATA(266, 268, -20)}`},
+    outro:{face:'orgulho', wave:true, over:`<g transform="translate(304 128)"><g class="pr-sobe"><text x="0" y="0" font-size="56" text-anchor="middle" dominant-baseline="middle">${esc(emoji || '🌱')}</text></g></g>`}
+  }[a.tipo];
+  let svg = duduSVG(P2.face, !!P2.wave);
+  const i = svg.indexOf('>') + 1;
+  svg = svg.slice(0, i) + (P2.under || '') + svg.slice(i);
+  return svg.replace(/<\/svg>$/, corDudu(P2.over || '') + '</svg>');
+}
+let acaoTimer = null;
+function fazerAcao(it){
+  const a = acaoDe(it), w = $('dudu');
+  clearTimeout(reactTimer); clearTimeout(acaoTimer);
+  SALA_VER = a.sala; drawScene(); moodFx(true);
+  w.className = 'dudu-wrap acao acao-' + a.tipo;
+  w.innerHTML = duduAcao(a, it && it.e);
+  curFace = 'orgulho';
+  acaoTimer = setTimeout(() => drawDudu(), a.tipo === 'outro' ? 2600 : 4200);
+  return true;
+}
+/* efeitos do humor à volta do Dudu */
+function moodFx(off){
+  const st = $('stage'); if(!st) return;
+  let fx = $('moodFx'); if(!fx){ fx = document.createElement('div'); fx.id = 'moodFx'; st.insertBefore(fx, $('dudu')); }
+  const m = S.moods[today()];
+  fx.className = off ? '' : 'mfx-' + (m || '');
+  fx.innerHTML = off ? '' : m === 'baixo' ? `<svg viewBox="0 0 120 90"><path d="M24 50 Q8 50 10 36 Q12 24 26 26 Q30 8 52 10 Q70 4 80 22 Q100 20 104 36 Q108 52 90 52 Z" fill="#B8C4D6" stroke="${OL}" stroke-width="3.5" stroke-linejoin="round"/><g stroke="#8FC1E3" stroke-width="4" stroke-linecap="round"><path class="gota" d="M34 60 v10"/><path class="gota g2" d="M58 62 v10"/><path class="gota g3" d="M82 60 v10"/></g></svg>`
+    : m === 'radiante' ? '<span>✨</span><span>⭐</span><span>✨</span>' : '';
+}
+const _ddCasa = drawDudu;
+drawDudu = function(face){
+  const w = $('dudu');
+  if(!face){ clearTimeout(acaoTimer); if(SALA_VER){ SALA_VER = null; drawScene(); } }
+  if(w && w.classList.contains('acao')) w.className = 'dudu-wrap';
+  _ddCasa(face);
+  moodFx(!!face && face !== baseFace());
+};
+/* barra de divisões no ecrã Hoje */
+function renderSalaBar(){
+  const bar = $('salaBar'); if(!bar) return;
+  const cur = S.sala || 'cantinho';
+  bar.innerHTML = SALAS.map(r => `<button class="salaB ${cur === r ? 'sel' : ''}" data-sala="${r}">${SALA_IC[r]} ${TXC.salas[r]}</button>`).join('');
+  const tabs = $('salaTabs');
+  if(tabs) tabs.innerHTML = `<div class="salaRow">` + SALAS.map(r => `<button class="salaB ${cur === r ? 'sel' : ''}" data-sala="${r}">${SALA_IC[r]} ${TXC.salas[r]}</button>`).join('') + '</div>';
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-sala]'); if(!b) return;
+  S.sala = b.dataset.sala; save(); render(); drawDudu();
+});
+function renderCenario(){
+  const sala = S.sala || 'cantinho', sc = cenaDe(sala);
+  $('cenario').innerHTML = SCN_ORDER.filter(k => !SCN[k].sala || SCN[k].sala === sala).map(k => { const it = SCN[k], on = sc[it.slot] === k, own = S.owned.includes(k), lock = (it.pack && !hasPack(it.pack)) || (it.plus && !plus);
+    const G = TXC.tg, tag = on ? G[0] : it.pack ? (lock ? G[3] : G[1]) : it.plus ? (lock ? TXC.soPlus : G[1]) : own ? G[1] : plus ? G[2] : '💛 ' + it.price;
+    return `<button class="item ${on?'wear':''} ${lock?'lock':''}" data-scn="${k}"><svg viewBox="${it.tvb || it.vb}">${it.svg}</svg>${it.name}<small>${tag}</small></button>`; }).join('');
+  renderSalaBar();
+}
 
 /* ---------- boot ---------- */
 render(); drawDudu(); idleLine(); renderConta();
