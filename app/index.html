@@ -185,6 +185,59 @@ button{cursor:pointer;border:none;background:none}
 .dudu-wrap.acao-dormir svg{animation:respira 2.4s ease-in-out infinite;transform-origin:50% 95%}@keyframes respira{50%{transform:scale(1.02,.98)}}
 .dudu-wrap.acao-arrumar svg{animation:arruma .7s ease-in-out infinite;transform-origin:50% 95%}@keyframes arruma{25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
 @media (prefers-reduced-motion:reduce){.dudu-wrap svg *,.dudu-wrap svg,#moodFx *{animation:none!important}}
+#jogos{position:fixed;inset:0;z-index:55;background:var(--bg);display:none;flex-direction:column;padding:calc(env(safe-area-inset-top) + 8px) 14px calc(env(safe-area-inset-bottom) + 10px);overflow-y:auto}
+#jogos.on{display:flex}body.jg-on{overflow:hidden}
+.jg-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}.jg-top b{flex:1;font-size:19px;font-weight:900}
+.jg-x{width:38px;height:38px;border-radius:50%;background:var(--card);font-size:24px;font-weight:900;color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.jg-pill{background:var(--card);border-radius:999px;padding:6px 11px;font-weight:900;font-size:13.5px;box-shadow:0 1px 0 var(--line)}
+.jg-menu{display:flex;flex-direction:column;gap:10px}
+.jg-tile{display:flex;align-items:center;gap:12px;text-align:left;background:var(--card);border-radius:20px;padding:14px;box-shadow:0 2px 0 var(--line);color:var(--ink)}
+.jg-tile b{display:block;font-size:16px;font-weight:900}.jg-tile small{display:block;font-size:13.5px;color:var(--ink2);font-weight:700}
+.jg-tile i{margin-left:auto;font-style:normal;background:var(--yel2);border-radius:999px;padding:3px 9px;font-size:12px;font-weight:900}
+.jg-ic{position:relative;width:52px;height:52px;flex:none;border-radius:16px;display:grid;place-items:center;font-size:28px;background:var(--yel2)}
+.jg-lianas .jg-ic{background:#CDEBC8}.jg-fruta .jg-ic{background:#FFE1D6}.jg-memoria .jg-ic{background:#E3E1F7}.jg-duelos .jg-ic{background:#FBEFB5}
+.jg-ic em{position:absolute;top:-6px;right:-6px;background:#E8665A;color:#fff;font-style:normal;font-size:12px;font-weight:900;border-radius:999px;padding:2px 7px}
+.jg-aviso{background:var(--card);border-radius:20px;padding:16px;margin-top:12px;text-align:center;display:flex;flex-direction:column;gap:8px}
+.jg-area{position:relative;flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+#jgCv{border-radius:22px;touch-action:none;box-shadow:0 2px 0 var(--line)}
+.jg-msg{position:absolute;left:50%;top:62%;transform:translateX(-50%);background:#fff;border-radius:999px;padding:9px 16px;font-weight:900;pointer-events:none;box-shadow:0 2px 0 rgba(107,52,32,.1);white-space:nowrap}
+.jg-desafio{background:var(--yel);border-radius:14px;padding:8px 12px;font-weight:900;text-align:center;margin-bottom:8px}
+.jg-fim{position:absolute;inset:0;background:rgba(250,246,238,.92);display:flex;align-items:center;justify-content:center;z-index:3;border-radius:22px}
+.jg-fim-in{background:var(--card);border-radius:24px;padding:16px;width:min(330px,94%);text-align:center;box-shadow:0 6px 24px rgba(107,52,32,.15)}
+.jg-fim-in h3{margin:0 0 4px;font-size:19px}.jg-fim-in p{margin:4px 0;font-weight:800}
+.jg-fim-dudu{width:96px;height:96px;margin:0 auto}.jg-fim-dudu svg{width:100%;height:100%}
+.jg-big{font-size:46px;font-weight:900;line-height:1.1}.jg-big small{font-size:16px}
+.jg-ganho{color:#3E8E5E}.jg-cromo{background:var(--yel2);border-radius:12px;padding:6px}.jg-duel{background:#FFE1D6;border-radius:12px;padding:6px}.jg-duel.ok{background:#CDEBC8}
+.jg-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.jg-btns .btn{padding:11px 6px;font-size:14px}.jg-btns .btn:first-child{grid-column:1/-1}
+.jg-amigos{display:flex;flex-direction:column;gap:6px;margin-top:8px}.jg-amigo{background:var(--yel2);border-radius:12px;padding:10px;font-weight:900;color:var(--ink)}
+.jg-nota{font-size:14px;color:var(--ink2);font-weight:700}.jg-sub{color:var(--ink2)}
+.jg-mem{position:relative;flex:1;display:flex;align-items:center;justify-content:center}
+.jg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(360px,100%)}
+.jg-carta{position:relative;aspect-ratio:3/4;border-radius:14px;perspective:600px;background:none}
+.jg-carta span{position:absolute;inset:0;border-radius:14px;display:grid;place-items:center;font-size:34px;backface-visibility:hidden;transition:transform .35s}
+.jg-carta .v{background:var(--yel);box-shadow:inset 0 0 0 3px var(--ink)}.jg-carta .f{background:#fff;box-shadow:inset 0 0 0 3px var(--line);transform:rotateY(180deg)}
+.jg-carta.on .v{transform:rotateY(180deg)}.jg-carta.on .f{transform:rotateY(360deg)}.jg-carta.par .f{box-shadow:inset 0 0 0 3px #7DB87A;background:#EAF7E6}
+.jg-brinca{flex:1;display:flex;flex-direction:column;gap:10px;min-height:0}
+.jg-fala{background:#fff;border-radius:18px;padding:10px 14px;font-weight:900;text-align:center;min-height:44px;box-shadow:0 2px 0 rgba(107,52,32,.08)}
+.jg-palco{position:relative;flex:1;min-height:300px;background:var(--yel2);border-radius:26px;overflow:hidden;touch-action:none}
+.jg-bdudu{position:absolute;left:50%;bottom:10px;width:min(300px,82%);aspect-ratio:330/360;transform:translateX(-50%);pointer-events:none}.jg-bdudu svg{width:100%;height:100%}
+.jg-bdudu.ri{animation:ri .5s}@keyframes ri{25%{transform:translateX(-52%) rotate(-4deg)}75%{transform:translateX(-48%) rotate(4deg)}}
+.jg-bdudu.espuma::after{content:'🫧🫧🫧';position:absolute;left:18%;top:8%;font-size:40px;opacity:.7}
+.jg-modos{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.jg-modo{background:var(--card);border-radius:16px;padding:10px 2px;font-weight:900;font-size:13px;color:var(--ink);box-shadow:0 1px 0 var(--line)}.jg-modo.sel{background:var(--yel);box-shadow:inset 0 0 0 2px var(--ink)}
+.jg-bolha{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff 0 18%,rgba(190,225,245,.55) 40%,rgba(160,205,235,.35) 70%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.8);animation:flutua 3s ease-in-out infinite;z-index:2}
+@keyframes flutua{50%{transform:translateY(-10px)}}
+.jg-bola{position:absolute;left:50%;bottom:14px;margin-left:-26px;width:52px;height:52px;font-size:44px;line-height:52px;z-index:2;background:none}
+.jg-bola.voa.pega{animation:pega .7s ease-out forwards}.jg-bola.voa.falha{animation:falha .7s ease-out forwards}
+@keyframes pega{50%{transform:translate(40px,-200px) rotate(300deg)}100%{transform:translate(70px,-150px) rotate(540deg) scale(.7)}}
+@keyframes falha{100%{transform:translate(-160px,-340px) rotate(540deg);opacity:0}}
+.jg-pop{position:absolute;transform:translate(-50%,-50%);font-size:26px;pointer-events:none;animation:popf .9s ease-out forwards;z-index:3}@keyframes popf{100%{transform:translate(-50%,-140%) scale(1.3);opacity:0}}
+.jg-duelos-in h4{margin:14px 0 6px;font-size:16px}.jg-linha{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border-radius:14px;padding:10px 12px;margin-bottom:6px}
+.jg-linha small{display:block;color:var(--ink2);font-weight:700}.jg-linha i{font-style:normal;font-weight:900}.jg-linha.eu{background:var(--yel2)}.jg-linha .btn{padding:8px 14px}
+.jg-abas{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.jogosCard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:linear-gradient(135deg,#CDEBC8,#FBEFB5);border-radius:22px;padding:12px 14px;margin:0 0 14px;box-shadow:0 2px 0 var(--line);color:var(--ink)}
+.jogosCard b{display:block;font-size:16px;font-weight:900}.jogosCard small{display:block;font-size:12.5px;font-weight:800;color:var(--ink2)}
+.jc-ic{font-size:30px}.jc-go{margin-left:auto;background:var(--ink);color:#fff;border-radius:999px;padding:8px 12px;font-weight:900;font-size:13.5px;white-space:nowrap}
 /* onboarding */
 #onb{position:fixed;inset:0;background:var(--yel2);z-index:40;display:none;overflow:auto}
 #onb.on{display:block}
@@ -2107,6 +2160,301 @@ function renderCenario(){
     return `<button class="item ${on?'wear':''} ${lock?'lock':''}" data-scn="${k}"><svg viewBox="${it.tvb || it.vb}">${it.svg}</svg>${it.name}<small>${tag}</small></button>`; }).join('');
   renderSalaBar();
 }
+
+/* ---------- jogos do Dudu ---------- */
+const TXJ = ({
+  'pt-BR':{titulo:'Jogos do Dudu', sub:'Cada passinho de hoje dá +1 jogada', btn:'🎮 Jogar', jogadas:n => n === Infinity ? '∞ jogadas (Cafuné+)' : `🎟️ ${n} jogada${n === 1 ? '' : 's'} hoje`,
+    semJog:'Acabaram as jogadas de hoje. Cada passinho dá mais uma 💛', irPassinho:'Fazer um passinho', plusIlim:'Jogadas ilimitadas no Cafuné+',
+    nomes:{lianas:'Dudu nas Lianas', fruta:'Pega a Fruta', memoria:'Memória de Cromos', brincar:'Brincar com o Dudu', duelos:'Duelos e ranking'},
+    desc:{lianas:'Toque pra saltar entre as lianas', fruta:'Arraste o Dudu e pegue a fruta', memoria:'Encontre os pares de cromos', brincar:'Cócegas, banho, bola e escova', duelos:'Desafie amigos e veja o ranking'},
+    gratis:'Grátis', toque:'Toque pra começar', arraste:'Arraste pra mover o Dudu', pontos:'pontos', recorde:'Novo recorde! 🏆', melhor:'Seu recorde', ganhou:n => `+${n} cafunés 💛`, cromo:'Ganhou um cromo: ', denovo:'Jogar de novo', sair:'Sair', desafiar:'Desafiar amigo', partilhar:'Compartilhar',
+    fim:{lianas:'Bateu na árvore!', fruta:'Acabaram as vidas!', memoria:'Todos os pares!'}, erros:'erros', tempo:'tempo',
+    partTxt:(j, p, c) => `Fiz ${p} pontos no ${j} 🦥 Bate isso? ${c}`, escolheAmigo:'Desafiar quem?', semAmigos:'Adicione amigos na aba Amigos pra desafiar.', desafioEnviado:'Desafio enviado! 🏆', jaPend:'Esse amigo já tem um desafio seu pendente.',
+    precisaConta:'Salve seu Dudu (crie uma conta) pra jogar duelos e ver o ranking.', irConta:'Criar conta', pendentes:'Desafios pra você', semPend:'Nenhum desafio agora.', aceitar:'Aceitar', bate:p => `Bater ${p} pontos`, resultados:'Seus desafios', venceu:'Você ganhou 🏆', perdeu:'Você perdeu 😅', ranking:'Ranking da semana (amigos)', semRank:'Ninguém jogou esta semana. Seja o primeiro!', eu:'você',
+    duelGanhou:p => `Você bateu ${p} pontos! Vitória 🏆`, duelPerdeu:p => `Faltou pouco pra ${p} pontos 😅`,
+    brincar:{coc:'Cócegas', banho:'Banho', bola:'Bola', escova:'Escova'}, dicas:{coc:'Faça cócegas na barriga do Dudu', banho:'Estoure as bolhas de sabão', bola:'Toque na bola pra jogar', escova:'Passe o dedo no pelo do Dudu'},
+    falas:{coc:['Hihihi! 🤭','Para, para! 😂','Aí não! Hahaha','Cócegas não vale! 🤣'], banho:['Cheirosinho! 🫧','Que banho bom 🛁','Agora tô limpinho ✨'], pegou:['Peguei! ⚽','Defesa da preguiça! 🧤','Mais uma!'], errou:['Ops, devagar demais 🦥','Essa passou…','Fui tirar uma soneca no meio 😴'], escova:['Que brilho! ✨','Pelo de comercial 💇','Tô um gato. Digo, uma preguiça.']},
+    pegadas:'pegou', vidas:'vidas'},
+  'pt-PT':{titulo:'Jogos do Dudu', sub:'Cada passinho de hoje dá +1 jogada', btn:'🎮 Jogar', jogadas:n => n === Infinity ? '∞ jogadas (Cafuné+)' : `🎟️ ${n} jogada${n === 1 ? '' : 's'} hoje`,
+    semJog:'Acabaram as jogadas de hoje. Cada passinho dá mais uma 💛', irPassinho:'Fazer um passinho', plusIlim:'Jogadas ilimitadas no Cafuné+',
+    nomes:{lianas:'Dudu nas Lianas', fruta:'Apanha a Fruta', memoria:'Memória de Cromos', brincar:'Brincar com o Dudu', duelos:'Duelos e ranking'},
+    desc:{lianas:'Toca para saltar entre as lianas', fruta:'Arrasta o Dudu e apanha a fruta', memoria:'Encontra os pares de cromos', brincar:'Cócegas, banho, bola e escova', duelos:'Desafia amigos e vê o ranking'},
+    gratis:'Grátis', toque:'Toca para começar', arraste:'Arrasta para mover o Dudu', pontos:'pontos', recorde:'Novo recorde! 🏆', melhor:'O teu recorde', ganhou:n => `+${n} cafunés 💛`, cromo:'Ganhaste um cromo: ', denovo:'Jogar outra vez', sair:'Sair', desafiar:'Desafiar amigo', partilhar:'Partilhar',
+    fim:{lianas:'Bateste na árvore!', fruta:'Acabaram as vidas!', memoria:'Todos os pares!'}, erros:'erros', tempo:'tempo',
+    partTxt:(j, p, c) => `Fiz ${p} pontos no ${j} 🦥 Consegues bater? ${c}`, escolheAmigo:'Desafiar quem?', semAmigos:'Adiciona amigos no separador Amigos para desafiar.', desafioEnviado:'Desafio enviado! 🏆', jaPend:'Esse amigo já tem um desafio teu pendente.',
+    precisaConta:'Guarda o teu Dudu (cria uma conta) para jogares duelos e veres o ranking.', irConta:'Criar conta', pendentes:'Desafios para ti', semPend:'Nenhum desafio agora.', aceitar:'Aceitar', bate:p => `Bater ${p} pontos`, resultados:'Os teus desafios', venceu:'Ganhaste 🏆', perdeu:'Perdeste 😅', ranking:'Ranking da semana (amigos)', semRank:'Ninguém jogou esta semana. Sê o primeiro!', eu:'tu',
+    duelGanhou:p => `Bateste os ${p} pontos! Vitória 🏆`, duelPerdeu:p => `Faltou pouco para os ${p} pontos 😅`,
+    brincar:{coc:'Cócegas', banho:'Banho', bola:'Bola', escova:'Escova'}, dicas:{coc:'Faz cócegas na barriga do Dudu', banho:'Rebenta as bolhas de sabão', bola:'Toca na bola para a atirar', escova:'Passa o dedo no pelo do Dudu'},
+    falas:{coc:['Hihihi! 🤭','Pára, pára! 😂','Aí não! Hahaha','Cócegas não vale! 🤣'], banho:['Cheirosinho! 🫧','Que banho tão bom 🛁','Agora estou limpinho ✨'], pegou:['Apanhei! ⚽','Defesa da preguiça! 🧤','Mais uma!'], errou:['Ops, devagar demais 🦥','Essa passou…','Fui fazer uma sesta a meio 😴'], escova:['Que brilho! ✨','Pelo de anúncio 💇','Estou um gato. Quer dizer, uma preguiça.']},
+    pegadas:'apanhadas', vidas:'vidas'},
+  'en':{titulo:'Dudu’s Games', sub:'Each step today gives +1 play', btn:'🎮 Play', jogadas:n => n === Infinity ? '∞ plays (Cafuné+)' : `🎟️ ${n} play${n === 1 ? '' : 's'} today`,
+    semJog:'No plays left today. Each step gives you one more 💛', irPassinho:'Do a step', plusIlim:'Unlimited plays with Cafuné+',
+    nomes:{lianas:'Vine Swing', fruta:'Fruit Catch', memoria:'Sticker Memory', brincar:'Play with Dudu', duelos:'Duels & ranking'},
+    desc:{lianas:'Tap to jump between the vines', fruta:'Drag Dudu and catch the fruit', memoria:'Find the sticker pairs', brincar:'Tickles, bath, ball and brush', duelos:'Challenge friends and see the ranking'},
+    gratis:'Free', toque:'Tap to start', arraste:'Drag to move Dudu', pontos:'points', recorde:'New record! 🏆', melhor:'Your best', ganhou:n => `+${n} cuddles 💛`, cromo:'You got a sticker: ', denovo:'Play again', sair:'Exit', desafiar:'Challenge a friend', partilhar:'Share',
+    fim:{lianas:'You hit a tree!', fruta:'Out of lives!', memoria:'All pairs found!'}, erros:'misses', tempo:'time',
+    partTxt:(j, p, c) => `I scored ${p} in ${j} 🦥 Can you beat it? ${c}`, escolheAmigo:'Challenge who?', semAmigos:'Add friends in the Friends tab to challenge them.', desafioEnviado:'Challenge sent! 🏆', jaPend:'That friend already has a pending challenge from you.',
+    precisaConta:'Save your Dudu (create an account) to play duels and see the ranking.', irConta:'Create account', pendentes:'Challenges for you', semPend:'No challenges right now.', aceitar:'Accept', bate:p => `Beat ${p} points`, resultados:'Your challenges', venceu:'You won 🏆', perdeu:'You lost 😅', ranking:'This week’s ranking (friends)', semRank:'Nobody played this week. Be the first!', eu:'you',
+    duelGanhou:p => `You beat ${p} points! Victory 🏆`, duelPerdeu:p => `So close to ${p} points 😅`,
+    brincar:{coc:'Tickles', banho:'Bath', bola:'Ball', escova:'Brush'}, dicas:{coc:'Tickle Dudu’s tummy', banho:'Pop the soap bubbles', bola:'Tap the ball to throw it', escova:'Run your finger over Dudu’s fur'},
+    falas:{coc:['Hehehe! 🤭','Stop, stop! 😂','Not there! Haha','No tickling allowed! 🤣'], banho:['So fresh! 🫧','What a nice bath 🛁','All clean now ✨'], pegou:['Got it! ⚽','Sloth save! 🧤','Again!'], errou:['Oops, too slow 🦥','Missed that one…','I napped halfway 😴'], escova:['So shiny! ✨','Shampoo-ad fur 💇','Looking good. Very sloth.']},
+    pegadas:'caught', vidas:'lives'}
+})[window.CAFUNE_LANG || 'pt-BR'];
+
+const JG = {jogo:null, raf:0, desafio:null};
+function jgEstado(){ if(!S.jg || S.jg.d !== today()) S.jg = {d:today(), n:0, c:0, cromo:false, banho:false}; return S.jg; }
+function jogadasRest(){ if(plus) return Infinity; const j = jgEstado(); return Math.max(0, 3 + Math.min(7, doneToday().length) - j.n); }
+function gastarJogada(){ if(plus) return true; if(jogadasRest() <= 0) return false; jgEstado().n++; save(); return true; }
+function premioJogo(pts, base){ const j = jgEstado(), c = Math.max(0, Math.min(5, Math.floor(pts / base), 20 - j.c)); j.c += c; S.coins += c; return c; }
+function duduImg(face, wave){
+  const im = new Image(); let s = duduSVG(face || 'feliz', !!wave).replace('<svg ', '<svg width="330" height="360" ');
+  im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s); return im;
+}
+
+/* ---- ecrã ---- */
+function jgShell(html){
+  let o = $('jogos');
+  if(!o){ o = document.createElement('div'); o.id = 'jogos'; document.body.appendChild(o); }
+  o.innerHTML = html; o.classList.add('on'); document.body.classList.add('jg-on');
+  return o;
+}
+function jgFechar(){ cancelAnimationFrame(JG.raf); JG.jogo = null; JG.desafio = null; const o = $('jogos'); if(o){ o.classList.remove('on'); o.innerHTML = ''; } document.body.classList.remove('jg-on'); render(); }
+function jgMenu(){
+  cancelAnimationFrame(JG.raf); JG.jogo = null;
+  const r = jogadasRest(), ic = {lianas:'🌿', fruta:'🍎', memoria:'🃏', brincar:'🤗', duelos:'🏆'};
+  const o = jgShell(`<div class="jg-top"><button class="jg-x" data-jg="fechar">×</button><b>${TXJ.titulo}</b><span class="jg-pill">${TXJ.jogadas(r)}</span></div>
+  <div class="jg-menu">${['lianas','fruta','memoria','brincar','duelos'].map(k => `<button class="jg-tile jg-${k}" data-jg="${k}"><span class="jg-ic">${ic[k]}</span><span><b>${TXJ.nomes[k]}</b><small>${TXJ.desc[k]}</small></span>${k === 'brincar' ? `<i>${TXJ.gratis}</i>` : ''}</button>`).join('')}</div>
+  ${r === 0 ? `<div class="jg-aviso"><p>${TXJ.semJog}</p><button class="btn" data-jg="passinho">${TXJ.irPassinho}</button>${plus ? '' : `<button class="btn ghost" data-jg="plus">${TXJ.plusIlim}</button>`}</div>` : ''}`);
+  if(sb && user) carregarDuelosBadge();
+}
+async function carregarDuelosBadge(){
+  try{ const {data} = await sb.rpc('meus_desafios'); const n = (data && data.pendentes || []).length; const t = document.querySelector('.jg-duelos .jg-ic'); if(t && n) t.insertAdjacentHTML('beforeend', `<em>${n}</em>`); JG.cacheDuelos = data; }catch(e){}
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-jg]'); if(!b) return;
+  const k = b.dataset.jg;
+  if(k === 'abrir') return jgMenu();
+  if(k === 'fechar') return jgFechar();
+  if(k === 'menu') return jgMenu();
+  if(k === 'passinho'){ jgFechar(); go('hoje'); $('listCard') && $('listCard').scrollIntoView({behavior:'smooth', block:'center'}); return; }
+  if(k === 'plus'){ jgFechar(); go('dudu'); setTimeout(() => $('plusCard') && $('plusCard').scrollIntoView({behavior:'smooth', block:'center'}), 200); return; }
+  if(k === 'brincar') return jgBrincar();
+  if(k === 'duelos') return jgDuelos();
+  if(k === 'conta'){ jgFechar(); go('amigos'); return; }
+  if(['lianas','fruta','memoria'].includes(k)) return jgComecar(k, b.dataset.des ? JSON.parse(b.dataset.des) : null);
+  if(k === 'denovo') return jgComecar(JG.ultimo, null);
+  if(k === 'desafiar') return jgEscolherAmigo();
+  if(k === 'partilhar') return jgPartilhar();
+  if(k === 'des-amigo') return jgDesafiar(b.dataset.u);
+});
+function jgComecar(jogo, desafio){
+  if(!desafio && !gastarJogada()){ jgMenu(); return; }
+  JG.ultimo = jogo; JG.desafio = desafio; JG.jogo = jogo; track('jogo', {jogo, desafio: !!desafio});
+  if(jogo === 'memoria') return jgMemoria();
+  const o = jgShell(`<div class="jg-top"><button class="jg-x" data-jg="menu">×</button><b>${TXJ.nomes[jogo]}</b><span class="jg-pill" id="jgPts">0</span></div>
+  ${desafio ? `<div class="jg-desafio">🏆 ${TXJ.bate(desafio.pontos_de)}</div>` : ''}<div class="jg-area"><canvas id="jgCv"></canvas><div class="jg-msg" id="jgMsg">${jogo === 'lianas' ? TXJ.toque : TXJ.arraste}</div></div>`);
+  const cv = $('jgCv'), area = o.querySelector('.jg-area'), dpr = Math.min(2, window.devicePixelRatio || 1);
+  const W = 360, H = 560, sc = Math.min(area.clientWidth / W, area.clientHeight / H);
+  cv.style.width = W * sc + 'px'; cv.style.height = H * sc + 'px'; cv.width = W * dpr; cv.height = H * dpr;
+  const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  (jogo === 'lianas' ? jgLianas : jgFruta)(cv, ctx, W, H, sc);
+}
+async function jgFim(pts, extra){
+  cancelAnimationFrame(JG.raf);
+  const jogo = JG.jogo; if(!jogo) return; JG.jogo = null;
+  S.recordes = S.recordes || {}; const antes = S.recordes[jogo] || 0, rec = pts > antes;
+  if(rec) S.recordes[jogo] = pts;
+  const c = premioJogo(pts, jogo === 'memoria' ? 20 : jogo === 'lianas' ? 3 : 8);
+  let cromoTxt = '';
+  if(jogo === 'memoria' && !jgEstado().cromo){ jgEstado().cromo = true; const g = ganharCromo(); cromoTxt = `<p class="jg-cromo">${TXJ.cromo}${cromoNome(g.id)}</p>`; }
+  save(); try{ SOM.achado(); }catch(e){}
+  let duel = '';
+  if(JG.desafio && sb && user){
+    try{ const {data} = await sb.rpc('responder_desafio', {p_id: JG.desafio.id, p_pontos: pts}); if(data && data.ok) duel = `<p class="jg-duel ${data.venceu ? 'ok' : ''}">${data.venceu ? TXJ.duelGanhou(data.alvo) : TXJ.duelPerdeu(data.alvo)}</p>`; }catch(e){}
+  }
+  if(sb && user){ try{ await sb.rpc('registar_pontos', {p_jogo: jogo, p_pontos: pts}); }catch(e){} }
+  JG.ultPts = pts; JG.ultJogo = jogo;
+  const area = document.querySelector('#jogos .jg-area') || document.querySelector('#jogos .jg-mem');
+  const box = document.createElement('div'); box.className = 'jg-fim';
+  box.innerHTML = `<div class="jg-fim-in"><div class="jg-fim-dudu">${duduSVG(rec ? 'radiante' : 'orgulho', true)}</div><h3>${TXJ.fim[jogo]}</h3>
+    <div class="jg-big">${pts} <small>${TXJ.pontos}</small></div>${extra || ''}
+    <p>${rec && antes ? TXJ.recorde : `${TXJ.melhor}: ${Math.max(antes, pts)}`}</p>${c ? `<p class="jg-ganho">${TXJ.ganhou(c)}</p>` : ''}${cromoTxt}${duel}
+    <div class="jg-btns"><button class="btn" data-jg="denovo">${TXJ.denovo}</button><button class="btn ghost" data-jg="desafiar">🏆 ${TXJ.desafiar}</button><button class="btn ghost" data-jg="partilhar">📤 ${TXJ.partilhar}</button><button class="btn ghost" data-jg="menu">${TXJ.sair}</button></div></div>`;
+  (area || $('jogos')).appendChild(box);
+  if(jogadasRest() === 0) box.querySelector('[data-jg=denovo]').style.display = 'none';
+}
+function jgPartilhar(){
+  const link = location.origin + (location.pathname.includes('/app/') ? location.pathname.replace(/[^/]*$/, '') : '/app/') + (meuCodigo ? '?amigo=' + meuCodigo : '');
+  const t = TXJ.partTxt(TXJ.nomes[JG.ultJogo], JG.ultPts, link);
+  track('jogo_partilha', {jogo: JG.ultJogo});
+  if(navigator.share) navigator.share({text: t}).catch(() => {}); else { try{ navigator.clipboard.writeText(t); toast('📋 ' + t.slice(0, 30) + '…'); }catch(e){} }
+}
+async function jgEscolherAmigo(){
+  const box = document.querySelector('#jogos .jg-fim-in'); if(!box) return;
+  if(!sb || !user){ box.querySelector('.jg-btns').insertAdjacentHTML('beforebegin', `<p class="jg-nota">${TXJ.precisaConta}</p>`); return; }
+  if(!amigos.length){ try{ await loadAmigos(); }catch(e){} }
+  const l = amigos.length ? amigos.map(a => `<button class="jg-amigo" data-jg="des-amigo" data-u="${a.user_id}">🦥 ${esc(a.nome || '?')}</button>`).join('') : `<p class="jg-nota">${TXJ.semAmigos}</p>`;
+  const old = box.querySelector('.jg-amigos'); if(old) old.remove();
+  box.querySelector('.jg-btns').insertAdjacentHTML('beforebegin', `<div class="jg-amigos"><b>${TXJ.escolheAmigo}</b>${l}</div>`);
+}
+async function jgDesafiar(uid){
+  try{
+    const {data, error} = await sb.rpc('desafiar', {p_para: uid, p_jogo: JG.ultJogo, p_pontos: JG.ultPts});
+    if(error) throw error;
+    toast(data && data.ok ? TXJ.desafioEnviado : TXJ.jaPend); track('desafio_enviado', {jogo: JG.ultJogo});
+    const a = document.querySelector('#jogos .jg-amigos'); if(a) a.remove();
+  }catch(e){ toast('⚠️ ' + (e.message || e)); }
+}
+
+/* ---- 1. Dudu nas Lianas ---- */
+function jgLianas(cv, ctx, W, H){
+  if(!ctx.roundRect) ctx.roundRect = function(x, y, w, h){ this.rect(x, y, w, h); };
+  const img = duduImg('orgulho', false), imgS = duduImg('feliz', true);
+  let y = H/2, vy = 0, x = 90, pts = 0, vel = 2.3, gap = 175, tubos = [], estado = 'espera', t = 0, ult = performance.now(), salto = 0;
+  const folhas = Array.from({length:14}, (_, i) => ({x: Math.random()*W, y: Math.random()*H, r: 10 + Math.random()*16, v: .3 + Math.random()*.6}));
+  function novo(){ const g = Math.max(128, gap - pts*2.2), cy = 110 + Math.random()*(H - 220); tubos.push({x: W + 40, top: cy - g/2, bot: cy + g/2, ok:false}); }
+  function saltar(){ if(estado === 'fim') return; if(estado === 'espera'){ estado = 'jogo'; $('jgMsg').style.display = 'none'; novo(); } vy = -7.4; salto = 8; try{ SOM.plim(); }catch(e){} }
+  cv.onpointerdown = e => { e.preventDefault(); saltar(); };
+  function tronco(xx, y0, y1){
+    ctx.fillStyle = '#8A5A3C'; ctx.strokeStyle = OL; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.roundRect(xx - 24, y0, 48, y1 - y0, 10); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = '#6E4429'; ctx.lineWidth = 2; for(let k = y0 + 18; k < y1 - 8; k += 26){ ctx.beginPath(); ctx.moveTo(xx - 14, k); ctx.quadraticCurveTo(xx, k + 6, xx + 14, k); ctx.stroke(); }
+  }
+  function liana(xx, ytop, yb){
+    ctx.strokeStyle = '#4E9A5C'; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(xx, ytop); ctx.quadraticCurveTo(xx + 10, (ytop + yb)/2, xx - 4, yb); ctx.stroke();
+    ctx.fillStyle = '#7DB87A'; for(let k = ytop + 14; k < yb; k += 22){ ctx.beginPath(); ctx.ellipse(xx + (k % 44 ? 8 : -8), k, 8, 4, k % 44 ? .5 : -.5, 0, 7); ctx.fill(); }
+  }
+  function loop(now){
+    const dt = Math.min(2.5, (now - ult) / 16.67); ult = now; t += dt;
+    const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#CDEBC8'); g.addColorStop(1, '#9ED3BD'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    folhas.forEach(f => { if(estado === 'jogo') f.x -= f.v * dt * vel * .5; if(f.x < -30) f.x = W + 30; ctx.fillStyle = 'rgba(78,154,92,.25)'; ctx.beginPath(); ctx.ellipse(f.x, f.y, f.r, f.r*.55, .6, 0, 7); ctx.fill(); });
+    ctx.fillStyle = '#7DB87A'; ctx.fillRect(0, H - 26, W, 26); ctx.fillStyle = '#4E9A5C'; for(let k = (-(t*vel) % 30); k < W; k += 30){ ctx.beginPath(); ctx.moveTo(k, H - 26); ctx.lineTo(k + 8, H - 38); ctx.lineTo(k + 16, H - 26); ctx.fill(); }
+    if(estado === 'jogo'){
+      vy += .42 * dt; y += vy * dt; vel = 2.3 + Math.min(2.2, pts * .06);
+      tubos.forEach(p => { p.x -= vel * dt; if(!p.ok && p.x < x - 24){ p.ok = true; pts++; $('jgPts').textContent = pts; } });
+      if(!tubos.length || tubos[tubos.length - 1].x < W - 190) novo();
+      tubos = tubos.filter(p => p.x > -60);
+      const r = 20;
+      if(y + r > H - 26 || y - r < 0 || tubos.some(p => Math.abs(p.x - x) < 24 + r - 4 && (y - r + 4 < p.top || y + r - 4 > p.bot))){
+        estado = 'fim'; try{ SOM.boceja(); }catch(e){} setTimeout(() => jgFim(pts), 450);
+      }
+    } else if(estado === 'espera'){ y = H/2 + Math.sin(t / 10) * 10; }
+    tubos.forEach(p => { tronco(p.x, -10, p.top); tronco(p.x, p.bot, H - 20); liana(p.x + 26, 0, p.top - 6); });
+    ctx.save(); ctx.translate(x, y); ctx.rotate(Math.max(-.5, Math.min(.9, vy * .06))); if(salto > 0) salto -= dt;
+    ctx.drawImage(salto > 0 ? imgS : img, -30, -33, 60, 66); ctx.restore();
+    JG.raf = requestAnimationFrame(loop);
+  }
+  JG.raf = requestAnimationFrame(loop);
+}
+
+/* ---- 2. Pega a Fruta ---- */
+function jgFruta(cv, ctx, W, H, sc){
+  const img = duduImg('feliz', true);
+  const BOAS = ['🍎','🍌','🍓','🍇','🥭','🍊'], MAS = ['🪨','🐝'];
+  let x = W/2, alvo = W/2, pts = 0, vidas = 3, itens = [], estado = 'espera', ult = performance.now(), t = 0, prox = 0, fx = [];
+  const pos = e => { const r = cv.getBoundingClientRect(); return (e.clientX - r.left) / sc; };
+  cv.onpointerdown = e => { e.preventDefault(); if(estado === 'espera'){ estado = 'jogo'; $('jgMsg').style.display = 'none'; } alvo = pos(e); cv.setPointerCapture && cv.setPointerCapture(e.pointerId); };
+  cv.onpointermove = e => { if(e.buttons || e.pointerType === 'touch') alvo = pos(e); };
+  function loop(now){
+    const dt = Math.min(2.5, (now - ult) / 16.67); ult = now; t += dt;
+    ctx.fillStyle = '#FFF3DA'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#E4F2F6'; for(let i = 0; i < 10; i++) for(let j = 0; j < 4; j++){ ctx.fillRect(i*36 + 2, 120 + j*30, 32, 26); }
+    ctx.fillStyle = '#EBD3AE'; ctx.fillRect(0, H - 60, W, 60);
+    for(let i = 0; i < vidas; i++){ ctx.font = '20px system-ui'; ctx.fillText('💛', 10 + i*24, 30); }
+    if(estado === 'jogo'){
+      x += (alvo - x) * Math.min(1, .25 * dt); x = Math.max(36, Math.min(W - 36, x));
+      prox -= dt; const vel = 2.2 + Math.min(4, pts * .05);
+      if(prox <= 0){ const m = Math.random() < Math.min(.32, .12 + pts*.005), estrela = !m && Math.random() < .06; itens.push({x: 24 + Math.random()*(W - 48), y: -20, e: estrela ? '⭐' : m ? MAS[Math.floor(Math.random()*MAS.length)] : BOAS[Math.floor(Math.random()*BOAS.length)], m, estrela, v: vel * (.8 + Math.random()*.5)}); prox = Math.max(16, 48 - pts*.6); }
+      itens.forEach(it => { it.y += it.v * dt; });
+      itens = itens.filter(it => {
+        if(it.y > H - 120 && it.y < H - 60 && Math.abs(it.x - x) < 40){
+          if(it.m){ vidas--; fx.push({x: it.x, y: it.y, s:'💥', t:30}); try{ SOM.boceja(); }catch(e){} }
+          else { const p = it.estrela ? 5 : 1; pts += p; fx.push({x: it.x, y: it.y, s:'+' + p, t:30}); try{ SOM.plim(); }catch(e){} }
+          $('jgPts').textContent = pts; return false;
+        }
+        if(it.y > H){ if(!it.m && !it.estrela){ /* fruta perdida não tira vida */ } return false; }
+        return true;
+      });
+      if(vidas <= 0){ estado = 'fim'; setTimeout(() => jgFim(pts), 400); }
+    }
+    ctx.font = '34px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    itens.forEach(it => ctx.fillText(it.e, it.x, it.y));
+    ctx.drawImage(img, x - 45, H - 150, 90, 98);
+    fx = fx.filter(f => (f.t -= dt) > 0); fx.forEach(f => { ctx.globalAlpha = f.t/30; ctx.font = 'bold 22px system-ui'; ctx.fillStyle = OL; ctx.fillText(f.s, f.x, f.y - (30 - f.t)); ctx.globalAlpha = 1; });
+    ctx.textAlign = 'start'; ctx.textBaseline = 'alphabetic';
+    JG.raf = requestAnimationFrame(loop);
+  }
+  JG.raf = requestAnimationFrame(loop);
+}
+
+/* ---- 3. Memória de cromos ---- */
+function jgMemoria(){
+  const tem = Object.keys(S.cromos || {}), base = CROMOS.slice().sort((a, b) => (tem.includes(b[0]) - tem.includes(a[0])) || Math.random() - .5).slice(0, 8);
+  const cartas = base.concat(base).map((c, i) => ({k: c[0], e: c[1], i})).sort(() => Math.random() - .5);
+  const o = jgShell(`<div class="jg-top"><button class="jg-x" data-jg="menu">×</button><b>${TXJ.nomes.memoria}</b><span class="jg-pill" id="jgPts">0:00</span></div>
+  ${JG.desafio ? `<div class="jg-desafio">🏆 ${TXJ.bate(JG.desafio.pontos_de)}</div>` : ''}<div class="jg-mem"><div class="jg-grid">${cartas.map((c, i) => `<button class="jg-carta" data-i="${i}"><span class="f">${c.e}</span><span class="v">🦥</span></button>`).join('')}</div></div>`);
+  let abertas = [], feitos = 0, erros = 0, t0 = Date.now(), bloq = false;
+  const tick = setInterval(() => { if(JG.jogo !== 'memoria'){ clearInterval(tick); return; } const s = Math.floor((Date.now() - t0)/1000); $('jgPts').textContent = Math.floor(s/60) + ':' + String(s % 60).padStart(2, '0'); }, 500);
+  o.querySelectorAll('.jg-carta').forEach(b => b.onclick = () => {
+    if(bloq || b.classList.contains('on')) return;
+    b.classList.add('on'); abertas.push(b);
+    if(abertas.length < 2) return;
+    const [a, c] = abertas, ok = cartas[a.dataset.i].k === cartas[c.dataset.i].k;
+    if(ok){ a.classList.add('par'); c.classList.add('par'); feitos++; abertas = []; try{ SOM.plim(); }catch(e){}
+      if(feitos === 8){ clearInterval(tick); const s = Math.floor((Date.now() - t0)/1000), pts = Math.max(10, 150 - erros*4 - s); setTimeout(() => jgFim(pts, `<p class="jg-sub">${erros} ${TXJ.erros} · ${s}s</p>`), 500); }
+    } else { erros++; bloq = true; setTimeout(() => { a.classList.remove('on'); c.classList.remove('on'); abertas = []; bloq = false; }, 750); }
+  });
+}
+
+/* ---- 4. Brincar com o Dudu ---- */
+function jgBrincar(){
+  const o = jgShell(`<div class="jg-top"><button class="jg-x" data-jg="menu">×</button><b>${TXJ.nomes.brincar}</b><span class="jg-pill">${TXJ.gratis}</span></div>
+  <div class="jg-brinca"><div class="jg-fala" id="bFala">${TXJ.dicas.coc}</div><div class="jg-palco" id="bPalco"><div class="jg-bdudu" id="bDudu">${duduSVG('feliz', false)}</div></div>
+  <div class="jg-modos">${['coc','banho','bola','escova'].map((k, i) => `<button class="jg-modo ${i ? '' : 'sel'}" data-modo="${k}">${{coc:'🤭', banho:'🛁', bola:'⚽', escova:'🪮'}[k]} ${TXJ.brincar[k]}</button>`).join('')}</div></div>`);
+  const palco = $('bPalco'), dd = $('bDudu'), fala = $('bFala');
+  let modo = 'coc', contador = 0, tmr = null, dist = 0, lastP = null;
+  const dizer = (t, ms) => { fala.textContent = t; clearTimeout(tmr); tmr = setTimeout(() => fala.textContent = TXJ.dicas[modo], ms || 1800); try{ SOM.fala(t); }catch(e){} };
+  const cara = (f, w, ms) => { dd.innerHTML = duduSVG(f, w); clearTimeout(dd._t); dd._t = setTimeout(() => dd.innerHTML = duduSVG('feliz', false), ms || 900); };
+  const pop = (x, y, s) => { const el = document.createElement('span'); el.className = 'jg-pop'; el.textContent = s; el.style.left = x + 'px'; el.style.top = y + 'px'; palco.appendChild(el); setTimeout(() => el.remove(), 900); };
+  function limpar(){ palco.querySelectorAll('.jg-bolha,.jg-bola').forEach(b => b.remove()); dd.className = 'jg-bdudu'; }
+  function bolhas(){ const r = palco.getBoundingClientRect(); for(let i = 0; i < 12; i++){ const b = document.createElement('button'); b.className = 'jg-bolha'; const s = 26 + Math.random()*30; Object.assign(b.style, {width: s + 'px', height: s + 'px', left: (r.width*.2 + Math.random()*r.width*.6 - s/2) + 'px', top: (r.height*.2 + Math.random()*r.height*.6 - s/2) + 'px', animationDelay: (Math.random()*2) + 's'}); b.onpointerdown = ev => { ev.stopPropagation(); pop(b.offsetLeft + s/2, b.offsetTop + s/2, '🫧'); b.remove(); try{ SOM.plim(); }catch(e){} if(!palco.querySelector('.jg-bolha')){ dizer(pick(TXJ.falas.banho), 2400); cara('radiante', true, 1600); hearts(4); const j = jgEstado(); if(!j.banho){ j.banho = true; S.coins++; save(); toast(TXJ.ganhou(1)); } setTimeout(() => modo === 'banho' && bolhas(), 2200); } }; palco.appendChild(b); } }
+  function bola(){ const b = document.createElement('button'); b.className = 'jg-bola'; b.textContent = '⚽'; palco.appendChild(b);
+    b.onpointerdown = ev => { ev.stopPropagation(); if(b.classList.contains('voa')) return; const pega = Math.random() < .7; b.classList.add('voa', pega ? 'pega' : 'falha'); try{ SOM.plim(); }catch(e){}
+      setTimeout(() => { if(pega){ contador++; cara('orgulho', true, 1200); dizer(pick(TXJ.falas.pegou) + ` (${contador})`); hearts(2); } else { cara('sono', false, 1200); dizer(pick(TXJ.falas.errou)); } b.remove(); setTimeout(() => modo === 'bola' && bola(), 500); }, 700); }; }
+  o.querySelectorAll('.jg-modo').forEach(m => m.onclick = () => { o.querySelectorAll('.jg-modo').forEach(x => x.classList.remove('sel')); m.classList.add('sel'); modo = m.dataset.modo; limpar(); contador = 0; dist = 0; fala.textContent = TXJ.dicas[modo]; if(modo === 'banho'){ dd.classList.add('espuma'); bolhas(); } if(modo === 'bola') bola(); });
+  palco.onpointerdown = e => { const r = palco.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    if(modo === 'coc'){ dd.classList.remove('ri'); void dd.offsetWidth; dd.classList.add('ri'); cara('orgulho', true, 700); pop(x, y, pick(['💛','😂','✨'])); contador++; if(contador % 3 === 1) dizer(pick(TXJ.falas.coc)); try{ SOM.ronrona(); }catch(e){} }
+    if(modo === 'escova') lastP = {x, y}; };
+  palco.onpointermove = e => { if(modo !== 'escova' || !(e.buttons || e.pointerType === 'touch')) return; const r = palco.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    if(lastP){ dist += Math.hypot(x - lastP.x, y - lastP.y); if(Math.random() < .25) pop(x, y, '✨'); } lastP = {x, y};
+    if(dist > 900){ dist = 0; dizer(pick(TXJ.falas.escova), 2200); cara('radiante', true, 1500); hearts(3); } };
+  palco.onpointerup = () => { lastP = null; };
+}
+
+/* ---- 5. Duelos e ranking ---- */
+async function jgDuelos(aba){
+  aba = aba || 'lianas';
+  if(!sb || !user){ jgShell(`<div class="jg-top"><button class="jg-x" data-jg="menu">×</button><b>${TXJ.nomes.duelos}</b><span></span></div><div class="jg-aviso"><p>${TXJ.precisaConta}</p><button class="btn" data-jg="conta">${TXJ.irConta}</button></div>`); return; }
+  const o = jgShell(`<div class="jg-top"><button class="jg-x" data-jg="menu">×</button><b>${TXJ.nomes.duelos}</b><span></span></div><div class="jg-duelos-in" id="jgDu"><p class="jg-nota">…</p></div>`);
+  let d = {pendentes:[], resultados:[]}, rk = [];
+  try{ const r1 = await sb.rpc('meus_desafios'); d = r1.data || d; const r2 = await sb.rpc('ranking_amigos', {p_jogo: aba}); rk = r2.data || []; }catch(e){}
+  const el = $('jgDu'); if(!el) return;
+  el.innerHTML = `<h4>${TXJ.pendentes}</h4>${d.pendentes.length ? d.pendentes.map(p => `<div class="jg-linha"><span>🦥 <b>${esc(p.nome)}</b><small>${TXJ.nomes[p.jogo]} · ${p.pontos_de} ${TXJ.pontos}</small></span><button class="btn" data-jg="${p.jogo}" data-des='${JSON.stringify({id:p.id, pontos_de:p.pontos_de})}'>${TXJ.aceitar}</button></div>`).join('') : `<p class="jg-nota">${TXJ.semPend}</p>`}
+  ${d.resultados.length ? `<h4>${TXJ.resultados}</h4>` + d.resultados.map(r => `<div class="jg-linha"><span>🦥 <b>${esc(r.nome)}</b><small>${TXJ.nomes[r.jogo]} · ${r.pontos_de} × ${r.pontos_para}</small></span><i>${r.pontos_para > r.pontos_de ? TXJ.perdeu : TXJ.venceu}</i></div>`).join('') : ''}
+  <h4>${TXJ.ranking}</h4><div class="jg-abas">${['lianas','fruta','memoria'].map(k => `<button class="salaB ${k === aba ? 'sel' : ''}" data-rk="${k}">${TXJ.nomes[k]}</button>`).join('')}</div>
+  ${rk.length ? rk.map((r, i) => `<div class="jg-linha ${r.eu ? 'eu' : ''}"><span><b>${['🥇','🥈','🥉'][i] || (i + 1) + '.'} ${r.eu ? TXJ.eu : esc(r.nome)}</b></span><i>${r.pontos}</i></div>`).join('') : `<p class="jg-nota">${TXJ.semRank}</p>`}`;
+  el.querySelectorAll('[data-rk]').forEach(b => b.onclick = () => jgDuelos(b.dataset.rk));
+}
+
+/* ---- cartão no ecrã Hoje ---- */
+function renderJogosCard(){
+  let c = $('jogosCard');
+  if(!c){ const bar = $('salaBar'); if(!bar) return; bar.insertAdjacentHTML('afterend', `<button class="jogosCard" id="jogosCard" data-jg="abrir"></button>`); c = $('jogosCard'); }
+  c.innerHTML = `<span class="jc-ic">🎮</span><span><b>${TXJ.titulo}</b><small>${TXJ.jogadas(jogadasRest())} · ${TXJ.sub}</small></span><span class="jc-go">${TXJ.btn}</span>`;
+}
+document.addEventListener('visibilitychange', () => { if(document.hidden && JG.jogo && JG.jogo !== 'memoria'){ /* pausa simples: termina o frame loop até voltar */ } });
+const _renderJg = render;
+render = function(){ _renderJg(); try{ renderJogosCard(); }catch(e){} };
 
 /* ---------- boot ---------- */
 render(); drawDudu(); idleLine(); renderConta();
