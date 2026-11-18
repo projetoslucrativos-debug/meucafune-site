@@ -9,6 +9,10 @@ if(n.indexOf('pt')===0){l=(n==='pt-br'||/^America\//.test(tz))?'pt-BR':(n==='pt-
 try{localStorage.setItem('cafune-lang',l)}catch(e){}}
 window.CAFUNE_LANG=cur;if(l!==cur&&!/[?&]nolang/.test(location.search)){location.replace({'pt-BR':'/app/','pt-PT':'/app/pt/','en':'/app/en/'}[l]+location.search+location.hash)}})();</script>
 <meta charset="utf-8">
+<link rel="alternate" hreflang="pt-BR" href="https://meucafune.app/app/">
+<link rel="alternate" hreflang="pt-PT" href="https://meucafune.app/app/pt/">
+<link rel="alternate" hreflang="en" href="https://meucafune.app/app/en/">
+<link rel="alternate" hreflang="x-default" href="https://meucafune.app/app/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1118,7 +1122,7 @@ $('o3').onclick = () => {
   mountLogin($('loginOnbBox'), finishOnb);
   onbStep(4);
 };
-$('o4skip').onclick = finishOnb;
+$('o4skip').onclick = () => finishOnb();
 
 /* ---------- partilhar ---------- */
 let shareFmt = 'post', shareText = '', shareFace = 'feliz', lastBlob = null;
@@ -2919,7 +2923,7 @@ render = function(){ _renderRoupa(); try{ renderLojaTabs(); }catch(e){} };
 
 /* ---------- jogos de puzzle: Bloco da Selva, Setas do Dudu, Sucos em Ordem ---------- */
 const TXN = ({
-  'pt-BR':{nomes:{bloco:'Bloco da Selva', setas:'Setas do Dudu', sucos:'Sucos em Ordem'}, desc:{bloco:'Encaixe as peças e limpe linhas', setas:'Tire os bichos da selva sem bater', sucos:'Separe os sucos por cor'}, semEspaco:'Sem espaço!', nivel:'Nível', vidas:'vidas', bateu:'Opa, bateu! 💥', passou:'Nível completo! 🎉', perdeu:'Acabaram as vidas 😅', denovo:'Tentar de novo', proximo:'Próximo nível', desfazer:'Desfazer', recomecar:'Recomeçar', perfeito:'Perfeito! 🧃', dicaBloco:'Arraste as peças para a grelha', dicaSetas:'Toque num bicho: ele sai na direção da seta', dicaSucos:'Toque num copo e depois noutro para despejar', linhas:n => `${n} linha${n > 1 ? 's' : ''}! 🍃`},
+  'pt-BR':{nomes:{bloco:'Bloco da Selva', setas:'Setas do Dudu', sucos:'Sucos em Ordem'}, desc:{bloco:'Encaixe as peças e limpe linhas', setas:'Tire os bichos da selva sem bater', sucos:'Separe os sucos por cor'}, semEspaco:'Sem espaço!', nivel:'Nível', vidas:'vidas', bateu:'Opa, bateu! 💥', passou:'Nível completo! 🎉', perdeu:'Acabaram as vidas 😅', denovo:'Tentar de novo', proximo:'Próximo nível', desfazer:'Desfazer', recomecar:'Recomeçar', perfeito:'Perfeito! 🧃', dicaBloco:'Arraste as peças para a grade', dicaSetas:'Toque em um bicho: ele sai na direção da seta', dicaSucos:'Toque em um copo e depois em outro para despejar', linhas:n => `${n} linha${n > 1 ? 's' : ''}! 🍃`},
   'pt-PT':{nomes:{bloco:'Bloco da Selva', setas:'Setas do Dudu', sucos:'Sumos em Ordem'}, desc:{bloco:'Encaixa as peças e limpa linhas', setas:'Tira os bichos da selva sem chocar', sucos:'Separa os sumos por cor'}, semEspaco:'Sem espaço!', nivel:'Nível', vidas:'vidas', bateu:'Ups, chocou! 💥', passou:'Nível concluído! 🎉', perdeu:'Acabaram as vidas 😅', denovo:'Tentar outra vez', proximo:'Nível seguinte', desfazer:'Desfazer', recomecar:'Recomeçar', perfeito:'Perfeito! 🧃', dicaBloco:'Arrasta as peças para a grelha', dicaSetas:'Toca num bicho: ele sai na direção da seta', dicaSucos:'Toca num copo e depois noutro para despejar', linhas:n => `${n} linha${n > 1 ? 's' : ''}! 🍃`},
   'en':{nomes:{bloco:'Jungle Blocks', setas:'Dudu’s Arrows', sucos:'Juice Sort'}, desc:{bloco:'Fit the pieces and clear lines', setas:'Get the animals out without bumping', sucos:'Sort the juices by colour'}, semEspaco:'No room left!', nivel:'Level', vidas:'lives', bateu:'Oops, bump! 💥', passou:'Level complete! 🎉', perdeu:'Out of lives 😅', denovo:'Try again', proximo:'Next level', desfazer:'Undo', recomecar:'Restart', perfeito:'Perfect! 🧃', dicaBloco:'Drag the pieces onto the grid', dicaSetas:'Tap an animal: it leaves in the arrow’s direction', dicaSucos:'Tap a cup, then another to pour', linhas:n => `${n} line${n > 1 ? 's' : ''}! 🍃`}
 })[window.CAFUNE_LANG || 'pt-BR'];
@@ -3127,9 +3131,18 @@ multCaf = function(){ return _multBase() * (S.bonusX2 && S.bonusX2 > Date.now() 
 const _renderPac = render;
 render = function(){ _renderPac(); try{ renderPacotes(); presentesChecar(); }catch(e){} };
 
+/* ---------- link direto para um jogo (?jogo=) ---------- */
+(function(){ try{ const j = new URLSearchParams(location.search).get('jogo'); if(j && /^(bloco|setas|sucos|xadrez|pong|lianas|fruta|memoria)$/.test(j)){ localStorage.setItem('cafune-jogo', j); history.replaceState(null, '', location.pathname + location.hash); } }catch(e){} })();
+function abrirJogoPendente(){
+  let j = null; try{ j = localStorage.getItem('cafune-jogo'); localStorage.removeItem('cafune-jogo'); }catch(e){}
+  if(!j) return; track('jogo_link', {jogo: j}); jgMenu();
+  setTimeout(() => { const b = document.querySelector('#jogos [data-jg="' + j + '"]'); if(b) b.click(); }, 120);
+}
+{ const _fimOnb = finishOnb; finishOnb = function(){ _fimOnb.apply(this, arguments); setTimeout(abrirJogoPendente, 1500); }; }
+
 /* ---------- boot ---------- */
 render(); drawDudu(); idleLine(); renderConta();
-if(!S.onboarded) startOnb();
+if(!S.onboarded) startOnb(); else setTimeout(abrirJogoPendente, 400);
 
 document.querySelectorAll('#langSeg button').forEach(b => { b.classList.toggle('sel', b.dataset.lang === window.CAFUNE_LANG); b.onclick = () => { try{ localStorage.setItem('cafune-lang', b.dataset.lang); }catch(e){} location.href = {'pt-BR':'/app/','pt-PT':'/app/pt/','en':'/app/en/'}[b.dataset.lang]; }; });
 </script>

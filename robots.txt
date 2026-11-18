@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dono/
+Disallow: /obrigado.html
+
+Sitemap: https://meucafune.app/sitemap.xml
