@@ -196,7 +196,7 @@ button{cursor:pointer;border:none;background:none}
 .jg-tile b{display:block;font-size:16px;font-weight:900}.jg-tile small{display:block;font-size:13.5px;color:var(--ink2);font-weight:700}
 .jg-tile i{margin-left:auto;font-style:normal;background:var(--yel2);border-radius:999px;padding:3px 9px;font-size:12px;font-weight:900}
 .jg-ic{position:relative;width:52px;height:52px;flex:none;border-radius:16px;display:grid;place-items:center;font-size:28px;background:var(--yel2)}
-.jg-lianas .jg-ic{background:#CDEBC8}.jg-pong .jg-ic{background:#FFE7C2}.jg-xadrez .jg-ic{background:#E9F4E4}.jg-fruta .jg-ic{background:#FFE1D6}.jg-memoria .jg-ic{background:#E3E1F7}.jg-duelos .jg-ic{background:#FBEFB5}
+.jg-lianas .jg-ic{background:#CDEBC8}.jg-pong .jg-ic{background:#FFE7C2}.jg-bloco .jg-ic{background:#D7EFD2}.jg-setas .jg-ic{background:#FFF0C9}.jg-sucos .jg-ic{background:#FBDDE6}.jg-xadrez .jg-ic{background:#E9F4E4}.jg-fruta .jg-ic{background:#FFE1D6}.jg-memoria .jg-ic{background:#E3E1F7}.jg-duelos .jg-ic{background:#FBEFB5}
 .jg-ic em{position:absolute;top:-6px;right:-6px;background:#E8665A;color:#fff;font-style:normal;font-size:12px;font-weight:900;border-radius:999px;padding:2px 7px}
 .jg-aviso{background:var(--card);border-radius:20px;padding:16px;margin-top:12px;text-align:center;display:flex;flex-direction:column;gap:8px}
 .jg-area{position:relative;flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
@@ -257,6 +257,37 @@ button{cursor:pointer;border:none;background:none}
 .xz-c em{position:absolute;font-style:normal;font-size:9px;font-weight:900;opacity:.55;pointer-events:none}.xz-c .rk{left:2px;top:1px}.xz-c .fl{right:3px;bottom:0}
 .xz-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.xz-btns .btn{padding:9px 14px;font-size:14px}
 .lojaTabs{grid-template-columns:repeat(3,1fr)!important}
+.pz-info{background:#fff;border-radius:999px;padding:7px 14px;font-weight:900;text-align:center;align-self:center;margin:0 auto 8px;width:max-content;max-width:100%}
+.jg-mem.pz-bloco,.jg-mem.pz-setas,.jg-mem.pz-sucos{flex-direction:column;justify-content:flex-start;gap:12px}
+.pz-toast{position:absolute;left:50%;top:40%;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:999px;padding:8px 16px;font-weight:900;z-index:4;animation:pzt 1.2s forwards;pointer-events:none;white-space:nowrap}
+@keyframes pzt{0%{opacity:0;transform:translate(-50%,10px)}15%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-20px)}}
+.pz-dica{text-align:center;margin:0}
+.bl-grade{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;width:min(100%,380px);aspect-ratio:1;background:#8A5A3C;padding:5px;border-radius:16px;touch-action:none}
+.bl-c{background:#F6EACB;border-radius:5px;transition:transform .2s}.bl-c.on{box-shadow:inset 0 -4px 0 rgba(0,0,0,.15),inset 0 3px 0 rgba(255,255,255,.35)}
+.bl-c.prev{background:rgba(125,184,122,.55)!important}.bl-c.limpa{animation:limpa .45s}@keyframes limpa{50%{transform:scale(.4) rotate(20deg);background:#F7D04A}}
+.bl-band{display:flex;justify-content:space-around;align-items:center;width:min(100%,380px);min-height:110px;touch-action:none}
+.bl-peca{display:grid;gap:2px;touch-action:none;cursor:grab}.bl-peca i,.bl-ghost i{border-radius:4px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}.bl-peca.vazia{width:60px}
+.bl-ghost{position:fixed;display:grid;gap:3px;pointer-events:none;z-index:80;opacity:.9}
+.se-grade{display:grid;gap:6px;width:min(100%,380px);aspect-ratio:1;background:#CDEBC8;padding:8px;border-radius:18px}
+.se-c{position:relative;background:rgba(255,255,255,.35);border-radius:12px;padding:0;overflow:visible}
+.se-b{position:absolute;inset:0;display:grid;place-items:center;background:#fff;border-radius:12px;box-shadow:0 2px 0 rgba(107,52,32,.2);font-size:min(7vw,28px);transition:transform .45s ease-in,opacity .45s}
+.se-b i{position:absolute;right:-2px;top:-6px;font-style:normal;font-size:16px;color:var(--ink);transform:rotate(var(--r));background:#F7D04A;border-radius:50%;width:22px;height:22px;line-height:22px;text-align:center}
+.se-bate{animation:bate .35s}@keyframes bate{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.su-copos{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 10px;max-width:380px}
+.su-copo{width:52px;height:150px;display:flex;flex-direction:column-reverse;gap:2px;padding:4px 4px 6px;background:rgba(255,255,255,.6);border:3px solid var(--ink);border-top:0;border-radius:0 0 22px 22px;transition:transform .15s}
+.su-copo.sel{transform:translateY(-14px)}.su-copo i{height:31px;border-radius:6px}.su-copo i:first-child{border-radius:6px 6px 16px 16px}
+.pk-sub{margin:-4px 0 10px;font-size:14px}.pk{background:var(--yel2);border-radius:18px;padding:12px;margin-bottom:10px}.pk b{display:block;margin-bottom:8px}
+.pk-itens{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}.pk-itens span{background:#fff;border-radius:12px;padding:4px;text-align:center;font-size:10.5px;font-weight:800;line-height:1.15}
+.pk-itens span.tem{opacity:.55}.pk-itens svg{width:100%;height:40px}.pk-itens small{display:block}.pk-btn{width:100%}.pk-btn s{opacity:.6;font-weight:700}.pk-tem{margin:0;font-weight:900;text-align:center}
+.presenteCard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:linear-gradient(135deg,#FBDDE6,#FBEFB5);border-radius:22px;padding:12px 14px;margin:0 0 10px;box-shadow:0 2px 0 var(--line);color:var(--ink);animation:prPulse 1.6s ease-in-out infinite}
+.presenteCard b{display:block;font-size:15.5px;font-weight:900}.presenteCard small{display:block;font-size:12.5px;font-weight:800;color:var(--ink2)}.pr-caixa{font-size:30px}
+@keyframes prPulse{50%{transform:scale(1.02)}}
+.pr-modal{position:fixed;inset:0;z-index:70;background:rgba(59,29,18,.45);display:grid;place-items:center;padding:20px}
+.pr-in{background:var(--card);border-radius:26px;padding:20px;width:min(340px,100%);text-align:center}.pr-mot{font-weight:900;margin:0 0 6px}
+.pr-box{font-size:110px;line-height:1;background:none;animation:prShake 1s ease-in-out infinite}.pr-box.abre{animation:prOpen .7s forwards}
+@keyframes prShake{20%{transform:rotate(-8deg)}40%{transform:rotate(8deg)}60%{transform:rotate(-4deg)}80%{transform:rotate(0)}}
+@keyframes prOpen{60%{transform:scale(1.4) rotate(10deg)}100%{transform:scale(0);opacity:0}}
+.pr-g{display:flex;align-items:center;gap:10px;background:var(--yel2);border-radius:14px;padding:8px;margin:8px 0;text-align:left;font-weight:800}.pr-g svg{width:56px;height:44px;flex:none}.pr-em{font-size:34px;width:56px;text-align:center;flex:none}
 /* onboarding */
 #onb{position:fixed;inset:0;background:var(--yel2);z-index:40;display:none;overflow:auto}
 #onb.on{display:block}
@@ -1248,7 +1279,7 @@ function renderPlus(){
   }
   box.innerHTML = `<p>🎨 Cores exclusivas para o Dudu<br>🎄 Pacotes da época incluídos (o de Natal já cá está)<br>🧣 Todos os mimos do guarda-roupa desbloqueados<br>🔔 Lembrete à hora que escolheres<br>💛 E ajudas uma app feita com carinho.</p>` +
     PLUS_CFG.opts.map(o => `<button class="btn ${o.best?'':'ghost'} big plusbuy" data-plus="${o.k}" style="margin-top:10px;display:flex;flex-direction:column;align-items:center;width:100%;line-height:1.25;gap:3px"><span>${o.t} · ${o.p}${o.best?' ⭐':''}</span><small style="font-weight:600;opacity:.8;font-size:12px">${o.n}</small></button>`).join('') +
-    `<p class="fine" style="text-align:left;margin-top:10px">Pagamento seguro pelo Stripe. Cancelas quando quiseres · reembolso total em 14 dias.</p>`;
+    `<p class="fine" style="text-align:left;margin-top:10px">Pagamento seguro pelo Stripe. Cancelas quando quiseres · reembolso total em 14 dias. Menores de 18 anos: só com autorização dos pais.</p>`;
   box.querySelectorAll('.plusbuy').forEach(b => b.onclick = () => buyPlus(b.dataset.plus));
 }
 function buyPlus(k){
@@ -2245,9 +2276,9 @@ function jgShell(html){
 function jgFechar(){ cancelAnimationFrame(JG.raf); JG.jogo = null; JG.desafio = null; const o = $('jogos'); if(o){ o.classList.remove('on'); o.innerHTML = ''; } document.body.classList.remove('jg-on'); render(); }
 function jgMenu(){
   cancelAnimationFrame(JG.raf); JG.jogo = null;
-  const ic = {lianas:'🌿', fruta:'🍎', pong:'🏓', memoria:'🃏', xadrez:'♟️', brincar:'🤗', duelos:'🏆'};
+  const ic = {bloco:'🧩', setas:'🏹', sucos:'🧃', lianas:'🌿', fruta:'🍎', pong:'🏓', memoria:'🃏', xadrez:'♟️', brincar:'🤗', duelos:'🏆'};
   const o = jgShell(`<div class="jg-top"><button class="jg-x" data-jg="fechar">×</button><b>${TXJ.titulo}</b><span class="jg-pill">${cafPill()}</span></div>
-  <div class="jg-menu">${['lianas','fruta','pong','memoria','xadrez','brincar','duelos'].map(k => `<button class="jg-tile jg-${k}" data-jg="${k}"><span class="jg-ic">${ic[k]}</span><span><b>${TXJ.nomes[k]}</b><small>${TXJ.desc[k]}</small></span>${k === 'brincar' ? `<i>${TXJ.gratis}</i>` : ''}</button>`).join('')}</div>
+  <div class="jg-menu">${['bloco','setas','sucos','lianas','fruta','pong','memoria','xadrez','brincar','duelos'].map(k => `<button class="jg-tile jg-${k}" data-jg="${k}"><span class="jg-ic">${ic[k]}</span><span><b>${TXJ.nomes[k]}</b><small>${TXJ.desc[k]}</small></span>${k === 'brincar' ? `<i>${TXJ.gratis}</i>` : ''}</button>`).join('')}</div>
   ${jgEstado().c >= tetoCaf() ? `<div class="jg-aviso"><p>${TXJ.tetoMsg}</p>${plus ? '' : `<button class="btn ghost" data-jg="plus">${TXJ.plusIlim}</button>`}</div>` : ''}`);
   if(sb && user) carregarDuelosBadge();
 }
@@ -2266,8 +2297,11 @@ document.addEventListener('click', e => {
   if(k === 'xadrez') return xzMenu();
   if(k === 'duelos') return jgDuelos();
   if(k === 'conta'){ jgFechar(); go('amigos'); return; }
+  if(k === 'bloco') return jgBloco(b.dataset.des ? JSON.parse(b.dataset.des) : null);
+  if(k === 'setas') return jgSetas();
+  if(k === 'sucos') return jgSucos();
   if(['lianas','fruta','pong','memoria'].includes(k)) return jgComecar(k, b.dataset.des ? JSON.parse(b.dataset.des) : null);
-  if(k === 'denovo') return jgComecar(JG.ultimo, null);
+  if(k === 'denovo') return JG.ultimo === 'bloco' ? jgBloco() : jgComecar(JG.ultimo, null);
   if(k === 'desafiar') return jgEscolherAmigo();
   if(k === 'partilhar') return jgPartilhar();
   if(k === 'des-amigo') return jgDesafiar(b.dataset.u);
@@ -2289,7 +2323,7 @@ async function jgFim(pts, extra){
   const jogo = JG.jogo; if(!jogo) return; JG.jogo = null;
   S.recordes = S.recordes || {}; const antes = S.recordes[jogo] || 0, rec = pts > antes;
   if(rec) S.recordes[jogo] = pts;
-  const c = premioJogo(pts, jogo === 'memoria' ? 20 : jogo === 'lianas' ? 3 : jogo === 'pong' ? 15 : 8);
+  const c = premioJogo(pts, jogo === 'memoria' ? 20 : jogo === 'lianas' ? 3 : jogo === 'pong' ? 15 : jogo === 'bloco' ? 40 : 8);
   let cromoTxt = '';
   if(jogo === 'memoria' && !jgEstado().cromo){ jgEstado().cromo = true; const g = ganharCromo(); cromoTxt = `<p class="jg-cromo">${TXJ.cromo}${cromoNome(g.id)}</p>`; }
   save(); try{ SOM.achado(); }catch(e){} { const pl = document.querySelector('#jogos .jg-pill'); if(pl) pl.textContent = cafPill(); }
@@ -2529,7 +2563,7 @@ async function jgDuelos(aba){
   const el = $('jgDu'); if(!el) return;
   el.innerHTML = `<h4>${TXJ.pendentes}</h4>${d.pendentes.length ? d.pendentes.map(p => `<div class="jg-linha"><span>🦥 <b>${esc(p.nome)}</b><small>${TXJ.nomes[p.jogo]} · ${p.pontos_de} ${TXJ.pontos}</small></span><button class="btn" data-jg="${p.jogo}" data-des='${JSON.stringify({id:p.id, pontos_de:p.pontos_de})}'>${TXJ.aceitar}</button></div>`).join('') : `<p class="jg-nota">${TXJ.semPend}</p>`}
   ${d.resultados.length ? `<h4>${TXJ.resultados}</h4>` + d.resultados.map(r => `<div class="jg-linha"><span>🦥 <b>${esc(r.nome)}</b><small>${TXJ.nomes[r.jogo]} · ${r.pontos_de} × ${r.pontos_para}</small></span><i>${r.pontos_para > r.pontos_de ? TXJ.perdeu : TXJ.venceu}</i></div>`).join('') : ''}
-  <h4>${TXJ.ranking}</h4><div class="jg-abas">${['lianas','fruta','pong','memoria'].map(k => `<button class="salaB ${k === aba ? 'sel' : ''}" data-rk="${k}">${TXJ.nomes[k]}</button>`).join('')}</div>
+  <h4>${TXJ.ranking}</h4><div class="jg-abas">${['bloco','lianas','fruta','pong','memoria'].map(k => `<button class="salaB ${k === aba ? 'sel' : ''}" data-rk="${k}">${TXJ.nomes[k]}</button>`).join('')}</div>
   ${rk.length ? rk.map((r, i) => `<div class="jg-linha ${r.eu ? 'eu' : ''}"><span><b>${['🥇','🥈','🥉'][i] || (i + 1) + '.'} ${r.eu ? TXJ.eu : esc(r.nome)}</b></span><i>${r.pontos}</i></div>`).join('') : `<p class="jg-nota">${TXJ.semRank}</p>`}`;
   el.querySelectorAll('[data-rk]').forEach(b => b.onclick = () => jgDuelos(b.dataset.rk));
 }
@@ -2882,6 +2916,216 @@ function renderLojaTabs(){
 document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-lcat]'); if(!b) return; S.lojaCat = b.dataset.lcat; renderLojaTabs(); });
 const _renderRoupa = render;
 render = function(){ _renderRoupa(); try{ renderLojaTabs(); }catch(e){} };
+
+/* ---------- jogos de puzzle: Bloco da Selva, Setas do Dudu, Sucos em Ordem ---------- */
+const TXN = ({
+  'pt-BR':{nomes:{bloco:'Bloco da Selva', setas:'Setas do Dudu', sucos:'Sucos em Ordem'}, desc:{bloco:'Encaixe as peças e limpe linhas', setas:'Tire os bichos da selva sem bater', sucos:'Separe os sucos por cor'}, semEspaco:'Sem espaço!', nivel:'Nível', vidas:'vidas', bateu:'Opa, bateu! 💥', passou:'Nível completo! 🎉', perdeu:'Acabaram as vidas 😅', denovo:'Tentar de novo', proximo:'Próximo nível', desfazer:'Desfazer', recomecar:'Recomeçar', perfeito:'Perfeito! 🧃', dicaBloco:'Arraste as peças para a grelha', dicaSetas:'Toque num bicho: ele sai na direção da seta', dicaSucos:'Toque num copo e depois noutro para despejar', linhas:n => `${n} linha${n > 1 ? 's' : ''}! 🍃`},
+  'pt-PT':{nomes:{bloco:'Bloco da Selva', setas:'Setas do Dudu', sucos:'Sumos em Ordem'}, desc:{bloco:'Encaixa as peças e limpa linhas', setas:'Tira os bichos da selva sem chocar', sucos:'Separa os sumos por cor'}, semEspaco:'Sem espaço!', nivel:'Nível', vidas:'vidas', bateu:'Ups, chocou! 💥', passou:'Nível concluído! 🎉', perdeu:'Acabaram as vidas 😅', denovo:'Tentar outra vez', proximo:'Nível seguinte', desfazer:'Desfazer', recomecar:'Recomeçar', perfeito:'Perfeito! 🧃', dicaBloco:'Arrasta as peças para a grelha', dicaSetas:'Toca num bicho: ele sai na direção da seta', dicaSucos:'Toca num copo e depois noutro para despejar', linhas:n => `${n} linha${n > 1 ? 's' : ''}! 🍃`},
+  'en':{nomes:{bloco:'Jungle Blocks', setas:'Dudu’s Arrows', sucos:'Juice Sort'}, desc:{bloco:'Fit the pieces and clear lines', setas:'Get the animals out without bumping', sucos:'Sort the juices by colour'}, semEspaco:'No room left!', nivel:'Level', vidas:'lives', bateu:'Oops, bump! 💥', passou:'Level complete! 🎉', perdeu:'Out of lives 😅', denovo:'Try again', proximo:'Next level', desfazer:'Undo', recomecar:'Restart', perfeito:'Perfect! 🧃', dicaBloco:'Drag the pieces onto the grid', dicaSetas:'Tap an animal: it leaves in the arrow’s direction', dicaSucos:'Tap a cup, then another to pour', linhas:n => `${n} line${n > 1 ? 's' : ''}! 🍃`}
+})[window.CAFUNE_LANG || 'pt-BR'];
+Object.assign(TXJ.nomes, TXN.nomes); Object.assign(TXJ.desc, TXN.desc);
+TXJ.fim.bloco = TXN.semEspaco;
+const SUCOS_LV = ["2012,0012,2011,,", "1021,1122,0200,,", "2111,0120,2020,,", "1002,1122,0201,,", "0012,0122,0121,,", "1020,2120,1102,,", "0201,2120,1102,,", "2021,1001,1220,,", "0100,2123,2311,3302,,", "2000,3223,1311,0213,,", "2123,1030,3012,0123,,", "3102,2221,1330,3010,,", "1132,0322,3102,3010,,", "0121,0132,1320,2033,,", "1302,1013,2310,2230,,", "0303,1033,1102,2221,,", "1033,2021,1320,0231,,", "3201,2110,2332,0130,,", "4431,0143,1023,1432,0220,,", "2124,2443,3004,1031,3102,,", "4003,2102,3113,1442,4023,,", "3200,2142,3043,1023,4114,,", "3313,1100,2021,0424,3244,,", "1412,3413,2230,0024,1034,,", "0144,3132,1242,2133,0040,,", "1302,2144,2002,0313,4134,,", "2143,1034,4004,1321,3202,,", "4024,1421,4103,3032,2103,,", "3440,1433,2255,2142,0503,1051,,", "5551,2442,1030,3143,4103,2052,,", "2153,3400,3522,0254,1411,5043,,", "4540,5100,5134,3302,3142,2215,,", "3041,2552,0414,0534,5323,0112,,", "3450,2511,0453,1201,2534,2403,,", "2312,2024,1444,1050,3531,5305,,", "4254,0051,3415,2400,3121,2533,,", "3544,1013,2315,4250,5230,4201,,", "2450,4150,5015,0133,2142,4233,,", "0153,4310,3242,2552,1414,0350,,", "0540,4043,0551,1512,3222,1343,,", "0310,2663,5611,2434,0505,2423,4165,,", "4145,0603,1462,3201,3540,6526,3125,,", "1613,6405,2354,6230,3225,4401,0516,,", "4220,5603,3064,3464,5625,5131,0211,,", "3501,6451,2021,4361,4406,5263,0352,,", "0401,6623,1314,5631,5043,6225,5240,,", "5622,2104,1143,3654,6453,6200,5103,,", "2141,4610,2042,5552,3136,5060,3436,,", "2656,5114,5032,3011,6460,2430,4325,,", "3235,4014,3115,2103,4620,0562,4566,,"];
+function puzShell(jogo, extra){
+  return jgShell(`<div class="jg-top"><button class="jg-x" data-jg="menu">×</button><b>${TXN.nomes[jogo]}</b><span class="jg-pill" id="jgPts">${cafPill()}</span></div>${extra || ''}<div class="jg-mem pz-${jogo}" id="pzArea"></div>`);
+}
+function pzToast(t){ const a = $('pzArea'); if(!a) return; const el = document.createElement('div'); el.className = 'pz-toast'; el.textContent = t; a.appendChild(el); setTimeout(() => el.remove(), 1200); }
+function pzPill(){ const p = document.querySelector('#jogos .jg-pill'); if(p) p.textContent = cafPill(); }
+
+/* ---- Bloco da Selva ---- */
+const BL_FORMAS = [[[0,0]],[[0,0],[0,1]],[[0,0],[1,0]],[[0,0],[0,1],[0,2]],[[0,0],[1,0],[2,0]],[[0,0],[0,1],[0,2],[0,3]],[[0,0],[1,0],[2,0],[3,0]],[[0,0],[0,1],[1,0],[1,1]],
+  [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]],[[0,0],[1,0],[1,1]],[[0,1],[1,0],[1,1]],[[0,0],[0,1],[1,0]],[[0,0],[0,1],[1,1]],[[0,0],[1,0],[2,0],[2,1]],[[0,1],[1,1],[2,1],[2,0]],[[0,0],[0,1],[0,2],[1,1]],[[0,0],[0,1],[0,2],[0,3],[0,4]],[[0,0],[1,0],[2,0],[3,0],[4,0]]];
+const BL_COR = ['#7DB87A','#F7B24A','#E8665A','#8FC1E3','#B59AD8','#F28CA8'];
+function jgBloco(des){
+  JG.jogo = 'bloco'; JG.ultimo = 'bloco'; JG.desafio = des || null; track('jogo', {jogo:'bloco'});
+  puzShell('bloco', `${des ? `<div class="jg-desafio">🏆 ${TXJ.bate(des.pontos_de)}</div>` : ''}<div class="pz-info" id="pzInfo">${TXN.dicaBloco}</div>`);
+  const A = $('pzArea'); A.innerHTML = `<div class="bl-grade" id="blG"></div><div class="bl-band" id="blB"></div>`;
+  const G = Array(64).fill(null); let pts = 0, mao = [], drag = null;
+  const grade = $('blG'); grade.innerHTML = Array.from({length:64}, (_, i) => `<div class="bl-c" data-i="${i}"></div>`).join('');
+  const cel = [...grade.children];
+  const cabe = (f, r0, c0) => f.every(([r, c]) => r0 + r < 8 && c0 + c < 8 && r0 + r >= 0 && c0 + c >= 0 && !G[(r0 + r) * 8 + c0 + c]);
+  const algumCabe = f => { for(let r = 0; r < 8; r++) for(let c = 0; c < 8; c++) if(cabe(f, r, c)) return true; return false; };
+  function pinta(){ cel.forEach((d, i) => { d.style.background = G[i] || ''; d.classList.toggle('on', !!G[i]); d.classList.remove('prev'); }); $('jgPts').textContent = '⭐ ' + pts; }
+  function novaMao(){ mao = [0,1,2].map(() => ({f: BL_FORMAS[Math.floor(Math.random() * BL_FORMAS.length)], cor: BL_COR[Math.floor(Math.random() * BL_COR.length)]})); desenhaMao(); }
+  function desenhaMao(){
+    $('blB').innerHTML = mao.map((p, k) => { if(!p) return '<div class="bl-peca vazia"></div>'; const h = Math.max(...p.f.map(x => x[0])) + 1, w = Math.max(...p.f.map(x => x[1])) + 1;
+      return `<div class="bl-peca" data-k="${k}" style="grid-template-columns:repeat(${w},1fr);grid-template-rows:repeat(${h},1fr);aspect-ratio:${w}/${h};width:${w * 20}px">${p.f.map(([r, c]) => `<i style="grid-row:${r + 1};grid-column:${c + 1};background:${p.cor}"></i>`).join('')}</div>`; }).join('');
+    $('blB').querySelectorAll('.bl-peca[data-k]').forEach(el => el.onpointerdown = e => iniciar(e, +el.dataset.k));
+  }
+  function alvoDe(e){ const r = grade.getBoundingClientRect(), s = r.width / 8, p = mao[drag.k], h = Math.max(...p.f.map(x => x[0])) + 1, w = Math.max(...p.f.map(x => x[1])) + 1;
+    const x = e.clientX - r.left - (w * s) / 2, y = e.clientY - r.top - h * s - s * 1.2; return [Math.round(y / s), Math.round(x / s)]; }
+  function iniciar(e, k){
+    e.preventDefault(); const p = mao[k]; if(!p) return;
+    const s = grade.getBoundingClientRect().width / 8, h = Math.max(...p.f.map(x => x[0])) + 1, w = Math.max(...p.f.map(x => x[1])) + 1;
+    const g = document.createElement('div'); g.className = 'bl-ghost'; g.style.cssText = `width:${w * s}px;height:${h * s}px;grid-template-columns:repeat(${w},1fr);grid-template-rows:repeat(${h},1fr)`;
+    g.innerHTML = p.f.map(([r, c]) => `<i style="grid-row:${r + 1};grid-column:${c + 1};background:${p.cor}"></i>`).join(''); document.body.appendChild(g);
+    drag = {k, g, w, h, s}; mover(e);
+    window.addEventListener('pointermove', mover); window.addEventListener('pointerup', soltar, {once:true});
+  }
+  function mover(e){ if(!drag) return; drag.g.style.left = (e.clientX - drag.w * drag.s / 2) + 'px'; drag.g.style.top = (e.clientY - drag.h * drag.s - drag.s * 1.2) + 'px';
+    const [r0, c0] = alvoDe(e), p = mao[drag.k]; cel.forEach(d => d.classList.remove('prev'));
+    if(cabe(p.f, r0, c0)) p.f.forEach(([r, c]) => cel[(r0 + r) * 8 + c0 + c].classList.add('prev')); drag.alvo = cabe(p.f, r0, c0) ? [r0, c0] : null; }
+  function soltar(){
+    window.removeEventListener('pointermove', mover); if(!drag) return; drag.g.remove(); const d = drag; drag = null;
+    if(!d.alvo){ pinta(); return; }
+    const p = mao[d.k], [r0, c0] = d.alvo; p.f.forEach(([r, c]) => G[(r0 + r) * 8 + c0 + c] = p.cor); pts += p.f.length; mao[d.k] = null; try{ SOM.plim(); }catch(e){}
+    const linhas = [], cols = [];
+    for(let r = 0; r < 8; r++) if([0,1,2,3,4,5,6,7].every(c => G[r * 8 + c])) linhas.push(r);
+    for(let c = 0; c < 8; c++) if([0,1,2,3,4,5,6,7].every(r => G[r * 8 + c])) cols.push(c);
+    const n = linhas.length + cols.length;
+    if(n){ linhas.forEach(r => { for(let c = 0; c < 8; c++){ G[r * 8 + c] = null; cel[r * 8 + c].classList.add('limpa'); } }); cols.forEach(c => { for(let r = 0; r < 8; r++){ G[r * 8 + c] = null; cel[r * 8 + c].classList.add('limpa'); } });
+      pts += 10 * n * n; pzToast(TXN.linhas(n)); setTimeout(() => cel.forEach(x => x.classList.remove('limpa')), 450); try{ SOM.achado(); }catch(e){} }
+    if(mao.every(x => !x)) novaMao(); else desenhaMao();
+    pinta();
+    if(!mao.some(p => p && algumCabe(p.f))) setTimeout(() => jgFim(pts), 600);
+  }
+  novaMao(); pinta();
+}
+
+/* ---- Setas do Dudu ---- */
+const SE_BICHOS = ['🐒','🦜','🐸','🐢','🦥','🐆','🦋','🐌'];
+function seGerar(nivel){
+  const N = Math.min(8, 4 + Math.floor(nivel / 3)), dens = Math.min(.78, .45 + nivel * .02), D = [[-1,0],[1,0],[0,-1],[0,1]];
+  for(let t = 0; t < 400; t++){
+    const g = Array(N * N).fill(null);
+    for(let i = 0; i < N * N; i++) if(Math.random() < dens) g[i] = {d: Math.floor(Math.random() * 4), b: SE_BICHOS[Math.floor(Math.random() * SE_BICHOS.length)]};
+    if(g.filter(Boolean).length < 3) continue;
+    const h = g.slice(); let mudou = true, passos = 0;
+    while(mudou){ mudou = false; for(let i = 0; i < N * N; i++) if(h[i] && seLivre(h, N, i)){ h[i] = null; mudou = true; passos++; } }
+    if(h.every(x => !x) && g.filter((x, i) => x && !seLivre(g, N, i)).length >= Math.min(3, nivel)) return {N, g};
+  }
+  return seGerar(Math.max(0, nivel - 1));
+}
+function seLivre(g, N, i){ const D = [[-1,0],[1,0],[0,-1],[0,1]][g[i].d]; let r = Math.floor(i / N) + D[0], c = i % N + D[1];
+  while(r >= 0 && r < N && c >= 0 && c < N){ if(g[r * N + c]) return false; r += D[0]; c += D[1]; } return true; }
+function jgSetas(){
+  JG.jogo = 'setas'; JG.ultimo = 'setas'; track('jogo', {jogo:'setas'});
+  S.recordes = S.recordes || {}; const nivel = (S.recordes.setas || 0) + 1;
+  puzShell('setas', `<div class="pz-info" id="pzInfo">${TXN.nivel} ${nivel} · 💛💛💛</div>`);
+  const L = seGerar(nivel), N = L.N; let vidas = 3, ativo = true;
+  const A = $('pzArea'); A.innerHTML = `<div class="se-grade" style="grid-template-columns:repeat(${N},1fr)" id="seG">${L.g.map((x, i) => `<button class="se-c" data-i="${i}">${x ? `<span class="se-b" style="--r:${[-90,90,180,0][x.d]}deg">${x.b}<i>➜</i></span>` : ''}</button>`).join('')}</div><p class="jg-nota pz-dica">${TXN.dicaSetas}</p>`;
+  A.querySelectorAll('.se-c').forEach(b => b.onclick = () => {
+    const i = +b.dataset.i, x = L.g[i]; if(!ativo || !x) return;
+    const s = b.querySelector('.se-b');
+    if(seLivre(L.g, N, i)){ L.g[i] = null; const D = [[-1,0],[1,0],[0,-1],[0,1]][x.d]; s.style.transform = `translate(${D[1] * 600}px,${D[0] * 600}px)`; s.style.opacity = '0'; try{ SOM.plim(); }catch(e){}
+      setTimeout(() => s.remove(), 400);
+      if(L.g.every(v => !v)){ ativo = false; S.recordes.setas = nivel; const c = premioFixo(nivel % 5 ? 1 : 4); save(); pzPill(); try{ SOM.achado(); }catch(e){}
+        setTimeout(() => pzFimNivel(TXN.passou, c, () => jgSetas()), 500); }
+    } else { vidas--; s.classList.remove('se-bate'); void s.offsetWidth; s.classList.add('se-bate'); pzToast(TXN.bateu);
+      $('pzInfo').textContent = `${TXN.nivel} ${nivel} · ${'💛'.repeat(vidas)}${'🤍'.repeat(3 - vidas)}`;
+      if(vidas <= 0){ ativo = false; setTimeout(() => pzFimNivel(TXN.perdeu, 0, () => jgSetas(), true), 600); } }
+  });
+}
+function pzFimNivel(txt, c, depois, perdeu){
+  const A = $('pzArea'); if(!A) return; const box = document.createElement('div'); box.className = 'jg-fim';
+  box.innerHTML = `<div class="jg-fim-in"><div class="jg-fim-dudu">${duduSVG(perdeu ? 'sono' : 'radiante', !perdeu)}</div><h3>${txt}</h3>${c ? `<p class="jg-ganho">${TXJ.ganhou(c)}</p>` : ''}<div class="jg-btns"><button class="btn" id="pzSeg">${perdeu ? TXN.denovo : TXN.proximo}</button><button class="btn ghost" data-jg="menu">${TXJ.sair}</button></div></div>`;
+  A.appendChild(box); $('pzSeg').onclick = depois;
+}
+
+/* ---- Sucos em Ordem ---- */
+const SU_COR = ['#E8665A','#F7B24A','#7DB87A','#8FC1E3','#B07CD8','#F28CA8','#F7D04A'];
+function jgSucos(){
+  JG.jogo = 'sucos'; JG.ultimo = 'sucos'; track('jogo', {jogo:'sucos'});
+  S.recordes = S.recordes || {}; const nivel = (S.recordes.sucos || 0) + 1, lv = SUCOS_LV[(nivel - 1) % SUCOS_LV.length];
+  const inicial = lv.split(',').map(s => s.split('').map(Number));
+  let T = inicial.map(x => x.slice()), sel = -1, hist = [], ativo = true;
+  puzShell('sucos', `<div class="pz-info" id="pzInfo">${TXN.nivel} ${nivel}</div>`);
+  const A = $('pzArea');
+  function desenha(){
+    A.innerHTML = `<div class="su-copos">${T.map((t, i) => `<button class="su-copo ${i === sel ? 'sel' : ''}" data-i="${i}">${t.map(c => `<i style="background:${SU_COR[c]}"></i>`).join('')}</button>`).join('')}</div>
+      <div class="xz-btns"><button class="btn ghost" id="suDes">↶ ${TXN.desfazer}</button><button class="btn ghost" id="suRec">⟲ ${TXN.recomecar}</button></div><p class="jg-nota pz-dica">${TXN.dicaSucos}</p>`;
+    A.querySelectorAll('.su-copo').forEach(b => b.onclick = () => toque(+b.dataset.i));
+    $('suDes').onclick = () => { if(hist.length && ativo){ T = hist.pop(); sel = -1; desenha(); } };
+    $('suRec').onclick = () => { if(ativo){ T = inicial.map(x => x.slice()); hist = []; sel = -1; desenha(); } };
+  }
+  function toque(i){
+    if(!ativo) return;
+    if(sel < 0){ if(T[i].length){ sel = i; desenha(); } return; }
+    if(sel === i){ sel = -1; desenha(); return; }
+    const a = T[sel], b = T[i], top = a[a.length - 1];
+    if(b.length < 4 && (!b.length || b[b.length - 1] === top)){
+      hist.push(T.map(x => x.slice())); let n = 0; while(a.length && a[a.length - 1] === top && b.length < 4){ b.push(a.pop()); n++; } try{ SOM.plim(); }catch(e){}
+      sel = -1; desenha();
+      if(T.every(t => !t.length || (t.length === 4 && t.every(c => c === t[0])))){ ativo = false; S.recordes.sucos = nivel; const c = premioFixo(nivel % 5 ? 1 : 4); save(); pzPill(); try{ SOM.achado(); }catch(e){}
+        setTimeout(() => pzFimNivel(TXN.perfeito, c, () => jgSucos()), 500); }
+    } else { sel = i; desenha(); }
+  }
+  desenha();
+}
+
+/* ---------- pacotes temáticos (conteúdo à vista) e presentes do Dudu (ganhos, nunca comprados) ---------- */
+const TXP = ({
+  'pt-BR':{titulo:'Pacotes 📦', sub:'Você vê tudo o que vem dentro e paga menos do que comprando separado.', nomes:{inverno:'Pacote Inverno ❄️', praia:'Pacote Praia 🏖️', brasil:'Pacote Brasil 💚', pijama:'Pacote Festa do Pijama 🌙'}, poupa:n => `economiza ${n}`, tem:'Já tem tudo ✓', comprar:p => `Comprar por 💛 ${p}`, falta:n => `Faltam ${n} cafunés 💛`, comprado:'Pacote aberto! Tudo no guarda-roupa e na casa 💛',
+    presente:'Você tem um presente do Dudu! 🎁', abrir:'Abrir presente', toque:'Toque na caixa', ganhou:'Dentro tinha:', fechar:'Oba!', porque:{s:n => `${n} dias seguidos de passinhos`, n:'Você e o Dudu subiram de nível', c:n => `${n} cromos no álbum`},
+    cartas:{x2:'Carta bônus: cafunés em dobro nos jogos por 1 hora ⚡', cromo:'Carta bônus: um cromo novo 🃏', caf:'Carta bônus: +15 cafunés 💛'}, item:'Mimo novo: ', cafExtra:'Você já tem tudo! Ganhou 25 cafunés 💛', x2ativo:'⚡ x2 ativo'},
+  'pt-PT':{titulo:'Pacotes 📦', sub:'Vês tudo o que vem lá dentro e pagas menos do que a comprar separado.', nomes:{inverno:'Pacote Inverno ❄️', praia:'Pacote Praia 🏖️', brasil:'Pacote Brasil 💚', pijama:'Pacote Festa do Pijama 🌙'}, poupa:n => `poupas ${n}`, tem:'Já tens tudo ✓', comprar:p => `Comprar por 💛 ${p}`, falta:n => `Faltam ${n} cafunés 💛`, comprado:'Pacote aberto! Está tudo no guarda-roupa e na casa 💛',
+    presente:'Tens um presente do Dudu! 🎁', abrir:'Abrir presente', toque:'Toca na caixa', ganhou:'Lá dentro estava:', fechar:'Boa!', porque:{s:n => `${n} dias seguidos de passinhos`, n:'Tu e o Dudu subiram de nível', c:n => `${n} cromos na caderneta`},
+    cartas:{x2:'Carta bónus: cafunés a dobrar nos jogos durante 1 hora ⚡', cromo:'Carta bónus: um cromo novo 🃏', caf:'Carta bónus: +15 cafunés 💛'}, item:'Mimo novo: ', cafExtra:'Já tens tudo! Ganhaste 25 cafunés 💛', x2ativo:'⚡ x2 ativo'},
+  'en':{titulo:'Bundles 📦', sub:'You see everything inside and pay less than buying each item.', nomes:{inverno:'Winter Bundle ❄️', praia:'Beach Bundle 🏖️', brasil:'Brazil Bundle 💚', pijama:'Pyjama Party Bundle 🌙'}, poupa:n => `save ${n}`, tem:'You own it all ✓', comprar:p => `Buy for 💛 ${p}`, falta:n => `${n} more cuddles needed 💛`, comprado:'Bundle opened! Everything is in the wardrobe and the house 💛',
+    presente:'You have a gift from Dudu! 🎁', abrir:'Open gift', toque:'Tap the box', ganhou:'Inside you found:', fechar:'Yay!', porque:{s:n => `${n} days in a row of steps`, n:'You and Dudu levelled up', c:n => `${n} stickers in the album`},
+    cartas:{x2:'Bonus card: double cuddles in games for 1 hour ⚡', cromo:'Bonus card: a new sticker 🃏', caf:'Bonus card: +15 cuddles 💛'}, item:'New treat: ', cafExtra:'You own everything! +25 cuddles 💛', x2ativo:'⚡ x2 on'}
+})[window.CAFUNE_LANG || 'pt-BR'];
+const PACOTES = {inverno:['puffer','trico','gorro','cachecol'], praia:['havaiana','oculosSol','palha','flor'], brasil:['brasil','futebol','bandana','bone'], pijama:['pijama','ursinho','mobile','fofo']};
+function itemDe(k){ return ACC[k] ? {tipo:'acc', it:ACC[k], vb:ACC_VB[k]} : SCN[k] ? {tipo:'scn', it:SCN[k], vb:SCN[k].tvb || SCN[k].vb} : null; }
+function precoPacote(p){ const falta = PACOTES[p].filter(k => !S.owned.includes(k)), soma = PACOTES[p].reduce((a, k) => a + ((itemDe(k) || {}).it || {price:0}).price, 0), f = falta.reduce((a, k) => a + itemDe(k).it.price, 0); return {falta, soma, preco: Math.round(f * .7)}; }
+function renderPacotes(){
+  let c = $('pacotesCard');
+  if(!c){ const n = $('natalCard'); if(!n) return; n.insertAdjacentHTML('beforebegin', '<div class="card" id="pacotesCard"></div>'); c = $('pacotesCard'); }
+  c.innerHTML = `<h2>${TXP.titulo}</h2><p class="pk-sub">${TXP.sub}</p>` + Object.keys(PACOTES).map(p => { const {falta, preco} = precoPacote(p), fp = falta.reduce((a, k) => a + itemDe(k).it.price, 0);
+    return `<div class="pk"><b>${TXP.nomes[p]}</b><div class="pk-itens">${PACOTES[p].map(k => { const d = itemDe(k); return `<span class="${S.owned.includes(k) ? 'tem' : ''}"><svg viewBox="${d.vb}">${d.it.svg}</svg><small>${d.it.name}</small></span>`; }).join('')}</div>
+      ${falta.length ? `<button class="btn pk-btn" data-pk="${p}">${TXP.comprar(preco)} <s>${fp}</s> · ${TXP.poupa(fp - preco)}</button>` : `<p class="pk-tem">${TXP.tem}</p>`}</div>`; }).join('');
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-pk]'); if(!b) return;
+  const p = b.dataset.pk, {falta, preco} = precoPacote(p);
+  if(!falta.length) return;
+  if(S.coins < preco){ toast(TXP.falta(preco - S.coins)); return; }
+  S.coins -= preco; falta.forEach(k => S.owned.push(k)); save(); track('pacote', {p, preco}); hearts(6); toast(TXP.comprado); render();
+});
+
+/* presentes: ganhos com sequências, níveis e cromos */
+function presentesChecar(){
+  S.pres = S.pres || {feitos:[], pend:[]};
+  const marcos = [];
+  const st = streak(); [3, 7, 14, 30, 60].forEach(n => { if(st >= n) marcos.push(['s' + n, TXP.porque.s(n)]); });
+  const nv = nivelIdx(diasJuntos()); for(let i = 1; i <= nv; i++) marcos.push(['n' + i, TXP.porque.n]);
+  const nc = Object.keys(S.cromos || {}).length; [6, 12, 18, 24].forEach(n => { if(nc >= n) marcos.push(['c' + n, TXP.porque.c(n)]); });
+  let novo = false;
+  marcos.forEach(([k, txt]) => { if(!S.pres.feitos.includes(k)){ S.pres.feitos.push(k); S.pres.pend.push(txt); novo = true; } });
+  if(novo) save();
+  renderPresenteCard();
+}
+function renderPresenteCard(){
+  let c = $('presenteCard'); const n = (S.pres && S.pres.pend.length) || 0;
+  if(!n){ if(c) c.remove(); return; }
+  if(!c){ const ref = $('jogosCard') || $('salaBar'); if(!ref) return; ref.insertAdjacentHTML('beforebegin', '<button class="presenteCard" id="presenteCard" data-pres="1"></button>'); c = $('presenteCard'); }
+  c.innerHTML = `<span class="pr-caixa">🎁</span><span><b>${TXP.presente}</b><small>${S.pres.pend[0]}</small></span><span class="jc-go">${TXP.abrir}</span>`;
+}
+function sortearPresente(){
+  const ganhos = [];
+  const pool = Object.keys(ACC).filter(k => !ACC[k].pack && !S.owned.includes(k)).concat(Object.keys(SCN).filter(k => !SCN[k].pack && !S.owned.includes(k)));
+  if(pool.length){ const k = pool[Math.floor(Math.random() * pool.length)]; S.owned.push(k); const d = itemDe(k); ganhos.push({svg:`<svg viewBox="${d.vb}">${d.it.svg}</svg>`, txt: TXP.item + d.it.name}); }
+  else { S.coins += 25; ganhos.push({svg:'<span class="pr-em">💛</span>', txt: TXP.cafExtra}); }
+  const carta = ['x2', 'cromo', 'caf'][Math.floor(Math.random() * 3)];
+  if(carta === 'x2') S.bonusX2 = Date.now() + 3600e3;
+  if(carta === 'cromo'){ try{ ganharCromo(); }catch(e){} }
+  if(carta === 'caf') S.coins += 15;
+  ganhos.push({svg:`<span class="pr-em">${{x2:'⚡', cromo:'🃏', caf:'💛'}[carta]}</span>`, txt: TXP.cartas[carta]});
+  return ganhos;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-pres]'); if(!b || !S.pres || !S.pres.pend.length) return;
+  const motivo = S.pres.pend.shift(), ganhos = sortearPresente(); save(); track('presente', {motivo});
+  const o = document.createElement('div'); o.className = 'pr-modal'; o.innerHTML = `<div class="pr-in"><p class="pr-mot">${motivo}</p><button class="pr-box" id="prBox">🎁</button><p class="jg-nota">${TXP.toque}</p></div>`;
+  document.body.appendChild(o);
+  $('prBox').onclick = () => { $('prBox').classList.add('abre'); try{ SOM.achado(); }catch(e){}
+    setTimeout(() => { o.querySelector('.pr-in').innerHTML = `<div class="jg-fim-dudu">${duduSVG('radiante', true)}</div><h3>${TXP.ganhou}</h3>${ganhos.map(g => `<div class="pr-g">${g.svg}<span>${g.txt}</span></div>`).join('')}<button class="btn" id="prOk">${TXP.fechar}</button>`;
+      $('prOk').onclick = () => { o.remove(); render(); drawDudu(); }; hearts(6); }, 700); };
+});
+const _multBase = multCaf;
+multCaf = function(){ return _multBase() * (S.bonusX2 && S.bonusX2 > Date.now() ? 2 : 1); };
+const _renderPac = render;
+render = function(){ _renderPac(); try{ renderPacotes(); presentesChecar(); }catch(e){} };
 
 /* ---------- boot ---------- */
 render(); drawDudu(); idleLine(); renderConta();
