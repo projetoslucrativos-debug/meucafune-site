@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- © 2026 Cafuné (meucafune.app). All rights reserved. Copying, reproduction or derivative versions without written permission are prohibited. -->
 <html lang="en">
 <head>
 <script>(function(){var p=location.pathname,cur=/\/app\/en\//.test(p)?'en':/\/app\/pt\//.test(p)?'pt-PT':'pt-BR',l=null;
@@ -195,7 +196,7 @@ button{cursor:pointer;border:none;background:none}
 .jg-tile b{display:block;font-size:16px;font-weight:900}.jg-tile small{display:block;font-size:13.5px;color:var(--ink2);font-weight:700}
 .jg-tile i{margin-left:auto;font-style:normal;background:var(--yel2);border-radius:999px;padding:3px 9px;font-size:12px;font-weight:900}
 .jg-ic{position:relative;width:52px;height:52px;flex:none;border-radius:16px;display:grid;place-items:center;font-size:28px;background:var(--yel2)}
-.jg-lianas .jg-ic{background:#CDEBC8}.jg-fruta .jg-ic{background:#FFE1D6}.jg-memoria .jg-ic{background:#E3E1F7}.jg-duelos .jg-ic{background:#FBEFB5}
+.jg-lianas .jg-ic{background:#CDEBC8}.jg-pong .jg-ic{background:#FFE7C2}.jg-xadrez .jg-ic{background:#E9F4E4}.jg-fruta .jg-ic{background:#FFE1D6}.jg-memoria .jg-ic{background:#E3E1F7}.jg-duelos .jg-ic{background:#FBEFB5}
 .jg-ic em{position:absolute;top:-6px;right:-6px;background:#E8665A;color:#fff;font-style:normal;font-size:12px;font-weight:900;border-radius:999px;padding:2px 7px}
 .jg-aviso{background:var(--card);border-radius:20px;padding:16px;margin-top:12px;text-align:center;display:flex;flex-direction:column;gap:8px}
 .jg-area{position:relative;flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
@@ -234,10 +235,28 @@ button{cursor:pointer;border:none;background:none}
 .jg-pop{position:absolute;transform:translate(-50%,-50%);font-size:26px;pointer-events:none;animation:popf .9s ease-out forwards;z-index:3}@keyframes popf{100%{transform:translate(-50%,-140%) scale(1.3);opacity:0}}
 .jg-duelos-in h4{margin:14px 0 6px;font-size:16px}.jg-linha{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border-radius:14px;padding:10px 12px;margin-bottom:6px}
 .jg-linha small{display:block;color:var(--ink2);font-weight:700}.jg-linha i{font-style:normal;font-weight:900}.jg-linha.eu{background:var(--yel2)}.jg-linha .btn{padding:8px 14px}
-.jg-abas{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.jg-abas{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:8px}
 .jogosCard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:linear-gradient(135deg,#CDEBC8,#FBEFB5);border-radius:22px;padding:12px 14px;margin:0 0 14px;box-shadow:0 2px 0 var(--line);color:var(--ink)}
 .jogosCard b{display:block;font-size:16px;font-weight:900}.jogosCard small{display:block;font-size:12.5px;font-weight:800;color:var(--ink2)}
 .jc-ic{font-size:30px}.jc-go{margin-left:auto;background:var(--ink);color:#fff;border-radius:999px;padding:8px 12px;font-weight:900;font-size:13.5px;white-space:nowrap}
+.xz-menu h4{margin:14px 0 8px;font-size:16px}.xz-niveis{display:flex;flex-direction:column;gap:8px}
+.xz-hero{display:flex;justify-content:center;gap:4px;height:92px}.xz-hero svg{height:100%;width:auto}
+.xz-legenda{display:grid;grid-template-columns:1fr 1fr;gap:6px}.xz-legenda div{display:flex;align-items:center;gap:2px;background:var(--card);border-radius:14px;padding:4px 8px;font-weight:800;font-size:12.5px}
+.xz-legenda svg{width:34px;height:34px;flex:none}.xz-legenda span{margin-left:4px}
+.xz-jogo{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:10px}
+.xz-info{background:#fff;border-radius:999px;padding:8px 16px;font-weight:900;box-shadow:0 2px 0 rgba(107,52,32,.08)}.xz-info.pensa{opacity:.75}.xz-info.xq{background:#FFE1D6}
+.xz-tab{display:grid;grid-template-columns:repeat(8,1fr);width:min(100%,440px);aspect-ratio:1;border-radius:14px;overflow:hidden;box-shadow:0 0 0 4px var(--ink),0 6px 18px rgba(107,52,32,.2)}
+.xz-c{position:relative;padding:0;border:0;display:grid;place-items:center;aspect-ratio:1}
+.xz-c.cla{background:#F6EACB}.xz-c.esc{background:#8CC9A4}
+.xz-c.ult.cla{background:#F7E08B}.xz-c.ult.esc{background:#C6D772}
+.xz-c.sel{box-shadow:inset 0 0 0 4px #F7B24A}
+.xz-c.xq{background:radial-gradient(circle,#FF8A73 0 45%,transparent 75%),#E8665A}
+.xz-c.alvo::after{content:'';position:absolute;width:28%;height:28%;border-radius:50%;background:rgba(59,29,18,.28)}
+.xz-c.cap::after{content:'';position:absolute;inset:6%;border-radius:50%;box-shadow:inset 0 0 0 4px rgba(59,29,18,.3)}
+.xz-c .xz-p{width:94%;height:94%;pointer-events:none;filter:drop-shadow(0 1px 0 rgba(0,0,0,.15))}
+.xz-c em{position:absolute;font-style:normal;font-size:9px;font-weight:900;opacity:.55;pointer-events:none}.xz-c .rk{left:2px;top:1px}.xz-c .fl{right:3px;bottom:0}
+.xz-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.xz-btns .btn{padding:9px 14px;font-size:14px}
+.lojaTabs{grid-template-columns:repeat(3,1fr)!important}
 /* onboarding */
 #onb{position:fixed;inset:0;background:var(--yel2);z-index:40;display:none;overflow:auto}
 #onb.on{display:block}
@@ -437,6 +456,7 @@ body.teste .testonly{display:block}
         <button class="btn ghost" id="reset">Start over</button>
       </div>
       <p class="fine" style="text-align:left;margin:12px 0 0"><a href="/en/termos" style="color:inherit">Terms</a> · <a href="/en/privacidade" style="color:inherit">Privacy</a> · Help: meucafune@gmail.com</p>
+      <p class="fine" style="text-align:left;margin:6px 0 0;opacity:.75">© 2026 Cafuné · All rights reserved.</p>
       <p class="fine" style="text-align:left;margin:6px 0 0">Cafuné is a self-care app and doesn’t replace professional help. Need to talk? findahelpline.com</p>
     </div>
   </section>
@@ -992,7 +1012,7 @@ document.addEventListener('click', e => {
   if(t.dataset.acc){
     const k = t.dataset.acc, a = ACC[k];
     let line;
-    const put = () => { if(HATS.includes(k)) S.wearing = S.wearing.filter(x => !HATS.includes(x)); S.wearing.push(k); line = accLine(k) || ACCX[S.persona] || ACCX.fofo; };
+    const put = () => { if(HATS.includes(k)) S.wearing = S.wearing.filter(x => !HATS.includes(x)); if(window.ROUPAS && ROUPAS.includes(k)) S.wearing = S.wearing.filter(x => !ROUPAS.includes(x)); S.wearing.push(k); line = accLine(k) || ACCX[S.persona] || ACCX.fofo; };
     if(a.pack && !hasPack(a.pack)){ $('natalCard').scrollIntoView({behavior:'smooth', block:'center'}); toast('Part of the Christmas pack 🎄'); return; }
     if(S.wearing.includes(k)){ S.wearing = S.wearing.filter(x => x !== k); line = accLine('off'); }
     else if(S.owned.includes(k) || a.pack){ put(); }
@@ -2163,36 +2183,36 @@ function renderCenario(){
 
 /* ---------- jogos do Dudu ---------- */
 const TXJ = ({
-  'pt-BR':{titulo:'Jogos do Dudu', sub:'Cada passinho de hoje dá +1 jogada', btn:'🎮 Jogar', jogadas:n => n === Infinity ? '∞ jogadas (Cafuné+)' : `🎟️ ${n} jogada${n === 1 ? '' : 's'} hoje`,
-    semJog:'Acabaram as jogadas de hoje. Cada passinho dá mais uma 💛', irPassinho:'Fazer um passinho', plusIlim:'Jogadas ilimitadas no Cafuné+',
-    nomes:{lianas:'Dudu nas Lianas', fruta:'Pega a Fruta', memoria:'Memória de Cromos', brincar:'Brincar com o Dudu', duelos:'Duelos e ranking'},
-    desc:{lianas:'Toque pra saltar entre as lianas', fruta:'Arraste o Dudu e pegue a fruta', memoria:'Encontre os pares de cromos', brincar:'Cócegas, banho, bola e escova', duelos:'Desafie amigos e veja o ranking'},
-    gratis:'Grátis', toque:'Toque pra começar', arraste:'Arraste pra mover o Dudu', pontos:'pontos', recorde:'Novo recorde! 🏆', melhor:'Seu recorde', ganhou:n => `+${n} cafunés 💛`, cromo:'Ganhou um cromo: ', denovo:'Jogar de novo', sair:'Sair', desafiar:'Desafiar amigo', partilhar:'Compartilhar',
-    fim:{lianas:'Bateu na árvore!', fruta:'Acabaram as vidas!', memoria:'Todos os pares!'}, erros:'erros', tempo:'tempo',
+  'pt-BR':{titulo:'Jogos do Dudu', sub:'Jogue à vontade. 3 passinhos hoje = cafunés em dobro', btn:'🎮 Jogar', jogadas:(c, t, x2) => `💛 ${c}/${t} cafunés hoje${x2 ? ' · x2 🔥' : ''}`, tetoMsg:'Chegou ao limite de cafunés de hoje. Pode continuar jogando por diversão 😄',
+    semJog:'Acabaram as jogadas de hoje. Cada passinho dá mais uma 💛', irPassinho:'Fazer um passinho', plusIlim:'Limite de cafunés em dobro no Cafuné+',
+    nomes:{pong:'Copo Pong', xadrez:'Xadrez da Selva', lianas:'Dudu nas Lianas', fruta:'Pega a Fruta', memoria:'Memória de Cromos', brincar:'Brincar com o Dudu', duelos:'Duelos e ranking'},
+    desc:{pong:'Arraste pra cima e acerte os copos de suco', xadrez:'Xadrez com os bichos da selva', lianas:'Toque pra saltar entre as lianas', fruta:'Arraste o Dudu e pegue a fruta', memoria:'Encontre os pares de cromos', brincar:'Cócegas, banho, bola e escova', duelos:'Desafie amigos e veja o ranking'},
+    gratis:'Grátis', toque:'Toque pra começar', lancar:'Arraste pra cima pra lançar', arraste:'Arraste pra mover o Dudu', pontos:'pontos', recorde:'Novo recorde! 🏆', melhor:'Seu recorde', ganhou:n => `+${n} cafunés 💛`, cromo:'Ganhou um cromo: ', denovo:'Jogar de novo', sair:'Sair', desafiar:'Desafiar amigo', partilhar:'Compartilhar',
+    fim:{pong:'Acabaram as bolinhas!', lianas:'Bateu na árvore!', fruta:'Acabaram as vidas!', memoria:'Todos os pares!'}, erros:'erros', tempo:'tempo',
     partTxt:(j, p, c) => `Fiz ${p} pontos no ${j} 🦥 Bate isso? ${c}`, escolheAmigo:'Desafiar quem?', semAmigos:'Adicione amigos na aba Amigos pra desafiar.', desafioEnviado:'Desafio enviado! 🏆', jaPend:'Esse amigo já tem um desafio seu pendente.',
     precisaConta:'Salve seu Dudu (crie uma conta) pra jogar duelos e ver o ranking.', irConta:'Criar conta', pendentes:'Desafios pra você', semPend:'Nenhum desafio agora.', aceitar:'Aceitar', bate:p => `Bater ${p} pontos`, resultados:'Seus desafios', venceu:'Você ganhou 🏆', perdeu:'Você perdeu 😅', ranking:'Ranking da semana (amigos)', semRank:'Ninguém jogou esta semana. Seja o primeiro!', eu:'você',
     duelGanhou:p => `Você bateu ${p} pontos! Vitória 🏆`, duelPerdeu:p => `Faltou pouco pra ${p} pontos 😅`,
     brincar:{coc:'Cócegas', banho:'Banho', bola:'Bola', escova:'Escova'}, dicas:{coc:'Faça cócegas na barriga do Dudu', banho:'Estoure as bolhas de sabão', bola:'Toque na bola pra jogar', escova:'Passe o dedo no pelo do Dudu'},
     falas:{coc:['Hihihi! 🤭','Para, para! 😂','Aí não! Hahaha','Cócegas não vale! 🤣'], banho:['Cheirosinho! 🫧','Que banho bom 🛁','Agora tô limpinho ✨'], pegou:['Peguei! ⚽','Defesa da preguiça! 🧤','Mais uma!'], errou:['Ops, devagar demais 🦥','Essa passou…','Fui tirar uma soneca no meio 😴'], escova:['Que brilho! ✨','Pelo de comercial 💇','Tô um gato. Digo, uma preguiça.']},
     pegadas:'pegou', vidas:'vidas'},
-  'pt-PT':{titulo:'Jogos do Dudu', sub:'Cada passinho de hoje dá +1 jogada', btn:'🎮 Jogar', jogadas:n => n === Infinity ? '∞ jogadas (Cafuné+)' : `🎟️ ${n} jogada${n === 1 ? '' : 's'} hoje`,
-    semJog:'Acabaram as jogadas de hoje. Cada passinho dá mais uma 💛', irPassinho:'Fazer um passinho', plusIlim:'Jogadas ilimitadas no Cafuné+',
-    nomes:{lianas:'Dudu nas Lianas', fruta:'Apanha a Fruta', memoria:'Memória de Cromos', brincar:'Brincar com o Dudu', duelos:'Duelos e ranking'},
-    desc:{lianas:'Toca para saltar entre as lianas', fruta:'Arrasta o Dudu e apanha a fruta', memoria:'Encontra os pares de cromos', brincar:'Cócegas, banho, bola e escova', duelos:'Desafia amigos e vê o ranking'},
-    gratis:'Grátis', toque:'Toca para começar', arraste:'Arrasta para mover o Dudu', pontos:'pontos', recorde:'Novo recorde! 🏆', melhor:'O teu recorde', ganhou:n => `+${n} cafunés 💛`, cromo:'Ganhaste um cromo: ', denovo:'Jogar outra vez', sair:'Sair', desafiar:'Desafiar amigo', partilhar:'Partilhar',
-    fim:{lianas:'Bateste na árvore!', fruta:'Acabaram as vidas!', memoria:'Todos os pares!'}, erros:'erros', tempo:'tempo',
+  'pt-PT':{titulo:'Jogos do Dudu', sub:'Joga à vontade. 3 passinhos hoje = cafunés a dobrar', btn:'🎮 Jogar', jogadas:(c, t, x2) => `💛 ${c}/${t} cafunés hoje${x2 ? ' · x2 🔥' : ''}`, tetoMsg:'Chegaste ao limite de cafunés de hoje. Podes continuar a jogar por diversão 😄',
+    semJog:'Acabaram as jogadas de hoje. Cada passinho dá mais uma 💛', irPassinho:'Fazer um passinho', plusIlim:'Limite de cafunés em dobro no Cafuné+',
+    nomes:{pong:'Copo Pong', xadrez:'Xadrez da Selva', lianas:'Dudu nas Lianas', fruta:'Apanha a Fruta', memoria:'Memória de Cromos', brincar:'Brincar com o Dudu', duelos:'Duelos e ranking'},
+    desc:{pong:'Arrasta para cima e acerta nos copos de sumo', xadrez:'Xadrez com os bichos da selva', lianas:'Toca para saltar entre as lianas', fruta:'Arrasta o Dudu e apanha a fruta', memoria:'Encontra os pares de cromos', brincar:'Cócegas, banho, bola e escova', duelos:'Desafia amigos e vê o ranking'},
+    gratis:'Grátis', toque:'Toca para começar', lancar:'Arrasta para cima para lançar', arraste:'Arrasta para mover o Dudu', pontos:'pontos', recorde:'Novo recorde! 🏆', melhor:'O teu recorde', ganhou:n => `+${n} cafunés 💛`, cromo:'Ganhaste um cromo: ', denovo:'Jogar outra vez', sair:'Sair', desafiar:'Desafiar amigo', partilhar:'Partilhar',
+    fim:{pong:'Acabaram as bolinhas!', lianas:'Bateste na árvore!', fruta:'Acabaram as vidas!', memoria:'Todos os pares!'}, erros:'erros', tempo:'tempo',
     partTxt:(j, p, c) => `Fiz ${p} pontos no ${j} 🦥 Consegues bater? ${c}`, escolheAmigo:'Desafiar quem?', semAmigos:'Adiciona amigos no separador Amigos para desafiar.', desafioEnviado:'Desafio enviado! 🏆', jaPend:'Esse amigo já tem um desafio teu pendente.',
     precisaConta:'Guarda o teu Dudu (cria uma conta) para jogares duelos e veres o ranking.', irConta:'Criar conta', pendentes:'Desafios para ti', semPend:'Nenhum desafio agora.', aceitar:'Aceitar', bate:p => `Bater ${p} pontos`, resultados:'Os teus desafios', venceu:'Ganhaste 🏆', perdeu:'Perdeste 😅', ranking:'Ranking da semana (amigos)', semRank:'Ninguém jogou esta semana. Sê o primeiro!', eu:'tu',
     duelGanhou:p => `Bateste os ${p} pontos! Vitória 🏆`, duelPerdeu:p => `Faltou pouco para os ${p} pontos 😅`,
     brincar:{coc:'Cócegas', banho:'Banho', bola:'Bola', escova:'Escova'}, dicas:{coc:'Faz cócegas na barriga do Dudu', banho:'Rebenta as bolhas de sabão', bola:'Toca na bola para a atirar', escova:'Passa o dedo no pelo do Dudu'},
     falas:{coc:['Hihihi! 🤭','Pára, pára! 😂','Aí não! Hahaha','Cócegas não vale! 🤣'], banho:['Cheirosinho! 🫧','Que banho tão bom 🛁','Agora estou limpinho ✨'], pegou:['Apanhei! ⚽','Defesa da preguiça! 🧤','Mais uma!'], errou:['Ops, devagar demais 🦥','Essa passou…','Fui fazer uma sesta a meio 😴'], escova:['Que brilho! ✨','Pelo de anúncio 💇','Estou um gato. Quer dizer, uma preguiça.']},
     pegadas:'apanhadas', vidas:'vidas'},
-  'en':{titulo:'Dudu’s Games', sub:'Each step today gives +1 play', btn:'🎮 Play', jogadas:n => n === Infinity ? '∞ plays (Cafuné+)' : `🎟️ ${n} play${n === 1 ? '' : 's'} today`,
-    semJog:'No plays left today. Each step gives you one more 💛', irPassinho:'Do a step', plusIlim:'Unlimited plays with Cafuné+',
-    nomes:{lianas:'Vine Swing', fruta:'Fruit Catch', memoria:'Sticker Memory', brincar:'Play with Dudu', duelos:'Duels & ranking'},
-    desc:{lianas:'Tap to jump between the vines', fruta:'Drag Dudu and catch the fruit', memoria:'Find the sticker pairs', brincar:'Tickles, bath, ball and brush', duelos:'Challenge friends and see the ranking'},
-    gratis:'Free', toque:'Tap to start', arraste:'Drag to move Dudu', pontos:'points', recorde:'New record! 🏆', melhor:'Your best', ganhou:n => `+${n} cuddles 💛`, cromo:'You got a sticker: ', denovo:'Play again', sair:'Exit', desafiar:'Challenge a friend', partilhar:'Share',
-    fim:{lianas:'You hit a tree!', fruta:'Out of lives!', memoria:'All pairs found!'}, erros:'misses', tempo:'time',
+  'en':{titulo:'Dudu’s Games', sub:'Play as much as you like. 3 steps today = double cuddles', btn:'🎮 Play', jogadas:(c, t, x2) => `💛 ${c}/${t} cuddles today${x2 ? ' · x2 🔥' : ''}`, tetoMsg:'You’ve hit today’s cuddle limit. Keep playing for fun 😄',
+    semJog:'No plays left today. Each step gives you one more 💛', irPassinho:'Do a step', plusIlim:'Double cuddle limit with Cafuné+',
+    nomes:{pong:'Cup Pong', xadrez:'Jungle Chess', lianas:'Vine Swing', fruta:'Fruit Catch', memoria:'Sticker Memory', brincar:'Play with Dudu', duelos:'Duels & ranking'},
+    desc:{pong:'Swipe up and land the ball in the juice cups', xadrez:'Chess with jungle animals', lianas:'Tap to jump between the vines', fruta:'Drag Dudu and catch the fruit', memoria:'Find the sticker pairs', brincar:'Tickles, bath, ball and brush', duelos:'Challenge friends and see the ranking'},
+    gratis:'Free', toque:'Tap to start', lancar:'Swipe up to throw', arraste:'Drag to move Dudu', pontos:'points', recorde:'New record! 🏆', melhor:'Your best', ganhou:n => `+${n} cuddles 💛`, cromo:'You got a sticker: ', denovo:'Play again', sair:'Exit', desafiar:'Challenge a friend', partilhar:'Share',
+    fim:{pong:'Out of balls!', lianas:'You hit a tree!', fruta:'Out of lives!', memoria:'All pairs found!'}, erros:'misses', tempo:'time',
     partTxt:(j, p, c) => `I scored ${p} in ${j} 🦥 Can you beat it? ${c}`, escolheAmigo:'Challenge who?', semAmigos:'Add friends in the Friends tab to challenge them.', desafioEnviado:'Challenge sent! 🏆', jaPend:'That friend already has a pending challenge from you.',
     precisaConta:'Save your Dudu (create an account) to play duels and see the ranking.', irConta:'Create account', pendentes:'Challenges for you', semPend:'No challenges right now.', aceitar:'Accept', bate:p => `Beat ${p} points`, resultados:'Your challenges', venceu:'You won 🏆', perdeu:'You lost 😅', ranking:'This week’s ranking (friends)', semRank:'Nobody played this week. Be the first!', eu:'you',
     duelGanhou:p => `You beat ${p} points! Victory 🏆`, duelPerdeu:p => `So close to ${p} points 😅`,
@@ -2203,9 +2223,13 @@ const TXJ = ({
 
 const JG = {jogo:null, raf:0, desafio:null};
 function jgEstado(){ if(!S.jg || S.jg.d !== today()) S.jg = {d:today(), n:0, c:0, cromo:false, banho:false}; return S.jg; }
-function jogadasRest(){ if(plus) return Infinity; const j = jgEstado(); return Math.max(0, 3 + Math.min(7, doneToday().length) - j.n); }
-function gastarJogada(){ if(plus) return true; if(jogadasRest() <= 0) return false; jgEstado().n++; save(); return true; }
-function premioJogo(pts, base){ const j = jgEstado(), c = Math.max(0, Math.min(5, Math.floor(pts / base), 20 - j.c)); j.c += c; S.coins += c; return c; }
+function tetoCaf(){ return (30 + 5 * Math.min(6, doneToday().length)) * (plus ? 2 : 1); }
+function multCaf(){ return doneToday().length >= 3 ? 2 : 1; }
+function jogadasRest(){ return Infinity; }
+function gastarJogada(){ jgEstado().n++; return true; }
+function premioFixo(n){ const j = jgEstado(), c = Math.max(0, Math.min(n * multCaf(), tetoCaf() - j.c)); j.c += c; S.coins += c; return c; }
+function premioJogo(pts, base){ return premioFixo(Math.min(8, Math.floor(pts / base))); }
+function cafPill(){ return TXJ.jogadas(jgEstado().c, tetoCaf(), multCaf() > 1); }
 function duduImg(face, wave){
   const im = new Image(); let s = duduSVG(face || 'feliz', !!wave).replace('<svg ', '<svg width="330" height="360" ');
   im.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s); return im;
@@ -2221,10 +2245,10 @@ function jgShell(html){
 function jgFechar(){ cancelAnimationFrame(JG.raf); JG.jogo = null; JG.desafio = null; const o = $('jogos'); if(o){ o.classList.remove('on'); o.innerHTML = ''; } document.body.classList.remove('jg-on'); render(); }
 function jgMenu(){
   cancelAnimationFrame(JG.raf); JG.jogo = null;
-  const r = jogadasRest(), ic = {lianas:'🌿', fruta:'🍎', memoria:'🃏', brincar:'🤗', duelos:'🏆'};
-  const o = jgShell(`<div class="jg-top"><button class="jg-x" data-jg="fechar">×</button><b>${TXJ.titulo}</b><span class="jg-pill">${TXJ.jogadas(r)}</span></div>
-  <div class="jg-menu">${['lianas','fruta','memoria','brincar','duelos'].map(k => `<button class="jg-tile jg-${k}" data-jg="${k}"><span class="jg-ic">${ic[k]}</span><span><b>${TXJ.nomes[k]}</b><small>${TXJ.desc[k]}</small></span>${k === 'brincar' ? `<i>${TXJ.gratis}</i>` : ''}</button>`).join('')}</div>
-  ${r === 0 ? `<div class="jg-aviso"><p>${TXJ.semJog}</p><button class="btn" data-jg="passinho">${TXJ.irPassinho}</button>${plus ? '' : `<button class="btn ghost" data-jg="plus">${TXJ.plusIlim}</button>`}</div>` : ''}`);
+  const ic = {lianas:'🌿', fruta:'🍎', pong:'🏓', memoria:'🃏', xadrez:'♟️', brincar:'🤗', duelos:'🏆'};
+  const o = jgShell(`<div class="jg-top"><button class="jg-x" data-jg="fechar">×</button><b>${TXJ.titulo}</b><span class="jg-pill">${cafPill()}</span></div>
+  <div class="jg-menu">${['lianas','fruta','pong','memoria','xadrez','brincar','duelos'].map(k => `<button class="jg-tile jg-${k}" data-jg="${k}"><span class="jg-ic">${ic[k]}</span><span><b>${TXJ.nomes[k]}</b><small>${TXJ.desc[k]}</small></span>${k === 'brincar' ? `<i>${TXJ.gratis}</i>` : ''}</button>`).join('')}</div>
+  ${jgEstado().c >= tetoCaf() ? `<div class="jg-aviso"><p>${TXJ.tetoMsg}</p>${plus ? '' : `<button class="btn ghost" data-jg="plus">${TXJ.plusIlim}</button>`}</div>` : ''}`);
   if(sb && user) carregarDuelosBadge();
 }
 async function carregarDuelosBadge(){
@@ -2239,9 +2263,10 @@ document.addEventListener('click', e => {
   if(k === 'passinho'){ jgFechar(); go('hoje'); $('listCard') && $('listCard').scrollIntoView({behavior:'smooth', block:'center'}); return; }
   if(k === 'plus'){ jgFechar(); go('dudu'); setTimeout(() => $('plusCard') && $('plusCard').scrollIntoView({behavior:'smooth', block:'center'}), 200); return; }
   if(k === 'brincar') return jgBrincar();
+  if(k === 'xadrez') return xzMenu();
   if(k === 'duelos') return jgDuelos();
   if(k === 'conta'){ jgFechar(); go('amigos'); return; }
-  if(['lianas','fruta','memoria'].includes(k)) return jgComecar(k, b.dataset.des ? JSON.parse(b.dataset.des) : null);
+  if(['lianas','fruta','pong','memoria'].includes(k)) return jgComecar(k, b.dataset.des ? JSON.parse(b.dataset.des) : null);
   if(k === 'denovo') return jgComecar(JG.ultimo, null);
   if(k === 'desafiar') return jgEscolherAmigo();
   if(k === 'partilhar') return jgPartilhar();
@@ -2252,22 +2277,22 @@ function jgComecar(jogo, desafio){
   JG.ultimo = jogo; JG.desafio = desafio; JG.jogo = jogo; track('jogo', {jogo, desafio: !!desafio});
   if(jogo === 'memoria') return jgMemoria();
   const o = jgShell(`<div class="jg-top"><button class="jg-x" data-jg="menu">×</button><b>${TXJ.nomes[jogo]}</b><span class="jg-pill" id="jgPts">0</span></div>
-  ${desafio ? `<div class="jg-desafio">🏆 ${TXJ.bate(desafio.pontos_de)}</div>` : ''}<div class="jg-area"><canvas id="jgCv"></canvas><div class="jg-msg" id="jgMsg">${jogo === 'lianas' ? TXJ.toque : TXJ.arraste}</div></div>`);
+  ${desafio ? `<div class="jg-desafio">🏆 ${TXJ.bate(desafio.pontos_de)}</div>` : ''}<div class="jg-area"><canvas id="jgCv"></canvas><div class="jg-msg" id="jgMsg">${jogo === 'lianas' ? TXJ.toque : jogo === 'pong' ? TXJ.lancar : TXJ.arraste}</div></div>`);
   const cv = $('jgCv'), area = o.querySelector('.jg-area'), dpr = Math.min(2, window.devicePixelRatio || 1);
   const W = 360, H = 560, sc = Math.min(area.clientWidth / W, area.clientHeight / H);
   cv.style.width = W * sc + 'px'; cv.style.height = H * sc + 'px'; cv.width = W * dpr; cv.height = H * dpr;
   const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  (jogo === 'lianas' ? jgLianas : jgFruta)(cv, ctx, W, H, sc);
+  ({lianas: jgLianas, fruta: jgFruta, pong: jgPong})[jogo](cv, ctx, W, H, sc);
 }
 async function jgFim(pts, extra){
   cancelAnimationFrame(JG.raf);
   const jogo = JG.jogo; if(!jogo) return; JG.jogo = null;
   S.recordes = S.recordes || {}; const antes = S.recordes[jogo] || 0, rec = pts > antes;
   if(rec) S.recordes[jogo] = pts;
-  const c = premioJogo(pts, jogo === 'memoria' ? 20 : jogo === 'lianas' ? 3 : 8);
+  const c = premioJogo(pts, jogo === 'memoria' ? 20 : jogo === 'lianas' ? 3 : jogo === 'pong' ? 15 : 8);
   let cromoTxt = '';
   if(jogo === 'memoria' && !jgEstado().cromo){ jgEstado().cromo = true; const g = ganharCromo(); cromoTxt = `<p class="jg-cromo">${TXJ.cromo}${cromoNome(g.id)}</p>`; }
-  save(); try{ SOM.achado(); }catch(e){}
+  save(); try{ SOM.achado(); }catch(e){} { const pl = document.querySelector('#jogos .jg-pill'); if(pl) pl.textContent = cafPill(); }
   let duel = '';
   if(JG.desafio && sb && user){
     try{ const {data} = await sb.rpc('responder_desafio', {p_id: JG.desafio.id, p_pontos: pts}); if(data && data.ok) duel = `<p class="jg-duel ${data.venceu ? 'ok' : ''}">${data.venceu ? TXJ.duelGanhou(data.alvo) : TXJ.duelPerdeu(data.alvo)}</p>`; }catch(e){}
@@ -2281,7 +2306,7 @@ async function jgFim(pts, extra){
     <p>${rec && antes ? TXJ.recorde : `${TXJ.melhor}: ${Math.max(antes, pts)}`}</p>${c ? `<p class="jg-ganho">${TXJ.ganhou(c)}</p>` : ''}${cromoTxt}${duel}
     <div class="jg-btns"><button class="btn" data-jg="denovo">${TXJ.denovo}</button><button class="btn ghost" data-jg="desafiar">🏆 ${TXJ.desafiar}</button><button class="btn ghost" data-jg="partilhar">📤 ${TXJ.partilhar}</button><button class="btn ghost" data-jg="menu">${TXJ.sair}</button></div></div>`;
   (area || $('jogos')).appendChild(box);
-  if(jogadasRest() === 0) box.querySelector('[data-jg=denovo]').style.display = 'none';
+  if(!c && jgEstado().c >= tetoCaf()) box.querySelector('.jg-btns').insertAdjacentHTML('beforebegin', `<p class="jg-nota">${TXJ.tetoMsg}</p>`);
 }
 function jgPartilhar(){
   const link = location.origin + (location.pathname.includes('/app/') ? location.pathname.replace(/[^/]*$/, '') : '/app/') + (meuCodigo ? '?amigo=' + meuCodigo : '');
@@ -2387,6 +2412,69 @@ function jgFruta(cv, ctx, W, H, sc){
   JG.raf = requestAnimationFrame(loop);
 }
 
+/* ---- Copo Pong ---- */
+function jgPong(cv, ctx, W, H, sc){
+  const img = duduImg('feliz', true), imgR = duduImg('radiante', true), imgS = duduImg('triste', false);
+  const SUCOS = ['#E8665A', '#F7B24A', '#8FC1E3', '#B07CD8'];
+  let bolas = 10, pts = 0, seq = 0, copos = [], voo = null, ini = null, estado = 'jogo', fx = [], cara = 0, caraImg = img, ult = performance.now(), rack = 0;
+  function montar(){
+    rack++; copos = [];
+    const linhas = [[0], [-1, 1], [-2, 0, 2]], cx = W/2;
+    linhas.forEach((l, r) => l.forEach(k => { const y = 120 + r * 34, esc = .78 + r * .09; copos.push({x: cx + k * 27 * esc, y, r: 20 * esc, cor: SUCOS[(r + k + 9) % 4], vivo: true}); }));
+  }
+  montar();
+  const pos = e => { const r = cv.getBoundingClientRect(); return {x: (e.clientX - r.left) / sc, y: (e.clientY - r.top) / sc, t: performance.now()}; };
+  let mir = null;
+  const mira = (dx, dy) => { const forca = Math.min(1.35, Math.max(0, -dy / 200)); return {x: W/2 + dx * 1.1, y: H - 120 - forca * 290}; };
+  cv.onpointerdown = e => { e.preventDefault(); if(voo || estado !== 'jogo') return; ini = pos(e); $('jgMsg').style.display = 'none'; };
+  cv.onpointermove = e => { if(!ini || voo) return; const f = pos(e), dy = f.y - ini.y; mir = dy < -25 ? mira(f.x - ini.x, dy) : null; };
+  cv.onpointerup = e => {
+    if(!ini || voo) return; const f = pos(e), dx = f.x - ini.x, dy = f.y - ini.y; ini = null;
+    if(dy > -25) return;
+    const a = mira(dx, dy); mir = null;
+    voo = {t: 0, x0: W/2, y0: H - 112, tx: a.x + (Math.random() - .5) * 8, ty: a.y + (Math.random() - .5) * 6}; bolas--; $('jgPts').textContent = pts + ' · 🏓' + bolas;
+  };
+  function copo(c){
+    ctx.save(); ctx.translate(c.x, c.y); const r = c.r;
+    ctx.fillStyle = '#fff'; ctx.strokeStyle = OL; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(-r, -r*.2); ctx.lineTo(-r*.72, r*1.5); ctx.quadraticCurveTo(0, r*1.75, r*.72, r*1.5); ctx.lineTo(r, -r*.2); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#F2A7B5'; ctx.fillRect(-r*.86, r*.35, r*1.72, r*.32);
+    ctx.beginPath(); ctx.ellipse(0, -r*.2, r, r*.36, 0, 0, 7); ctx.fillStyle = c.cor; ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+  function loop(now){
+    const dt = Math.min(2.5, (now - ult) / 16.67); ult = now;
+    const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#FFF3DA'); g.addColorStop(1, '#F6E3BE'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    // mesa em perspetiva
+    ctx.fillStyle = '#7DB87A'; ctx.strokeStyle = OL; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(W*.24, 70); ctx.lineTo(W*.76, 70); ctx.lineTo(W + 10, H - 70); ctx.lineTo(-10, H - 70); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(W/2, 72); ctx.lineTo(W/2, H - 72); ctx.stroke();
+    copos.filter(c => c.vivo).sort((a, b) => a.y - b.y).forEach(copo);
+    // Dudu a torcer
+    if(cara > 0){ cara -= dt; if(cara <= 0) caraImg = img; }
+    ctx.drawImage(caraImg, W - 96, H - 168, 84, 92);
+    // bola
+    if(voo){
+      voo.t += dt / 38; const t = Math.min(1, voo.t), x = voo.x0 + (voo.tx - voo.x0) * t, y = voo.y0 + (voo.ty - voo.y0) * t - Math.sin(t * Math.PI) * 120, r = 13 - 6 * t;
+      ctx.fillStyle = '#fff'; ctx.strokeStyle = OL; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); ctx.stroke();
+      if(t >= 1){
+        const alvo = copos.filter(c => c.vivo).sort((a, b) => Math.hypot(a.x - voo.tx, a.y - voo.ty) - Math.hypot(b.x - voo.tx, b.y - voo.ty)).find(c => Math.hypot(c.x - voo.tx, (c.y - voo.ty) * 1.3) < c.r * 1.2);
+        if(alvo){ alvo.vivo = false; seq++; const p = 10 * (seq >= 3 ? 2 : 1); pts += p; fx.push({x: alvo.x, y: alvo.y, s: seq >= 3 ? `+${p} 🔥` : `+${p}`, t: 40}); caraImg = imgR; cara = 50; try{ SOM.plim(); }catch(e){}
+          if(!copos.some(c => c.vivo)){ pts += 20; bolas += 4; fx.push({x: W/2, y: 200, s: '+20 ✨', t: 50}); setTimeout(montar, 500); } }
+        else { seq = 0; fx.push({x: voo.tx, y: voo.ty, s: '💦', t: 30}); caraImg = imgS; cara = 40; }
+        voo = null; $('jgPts').textContent = pts + ' · 🏓' + bolas;
+        if(bolas <= 0){ estado = 'fim'; setTimeout(() => jgFim(pts), 700); }
+      }
+    } else if(estado === 'jogo'){ if(mir){ ctx.setLineDash([6, 8]); ctx.strokeStyle = 'rgba(107,52,32,.55)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(W/2, H - 112); ctx.quadraticCurveTo((W/2 + mir.x)/2, Math.min(H - 112, mir.y) - 120, mir.x, mir.y); ctx.stroke(); ctx.setLineDash([]); ctx.beginPath(); ctx.arc(mir.x, mir.y, 8, 0, 7); ctx.stroke(); } ctx.fillStyle = '#fff'; ctx.strokeStyle = OL; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.arc(W/2, H - 112, 13, 0, 7); ctx.fill(); ctx.stroke(); }
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    fx = fx.filter(f => (f.t -= dt) > 0); fx.forEach(f => { ctx.globalAlpha = Math.min(1, f.t / 20); ctx.font = 'bold 24px system-ui'; ctx.fillStyle = OL; ctx.fillText(f.s, f.x, f.y - (40 - f.t)); ctx.globalAlpha = 1; });
+    ctx.textAlign = 'start'; ctx.textBaseline = 'alphabetic';
+    JG.raf = requestAnimationFrame(loop);
+  }
+  $('jgPts').textContent = '0 · 🏓' + bolas;
+  JG.raf = requestAnimationFrame(loop);
+}
+
 /* ---- 3. Memória de cromos ---- */
 function jgMemoria(){
   const tem = Object.keys(S.cromos || {}), base = CROMOS.slice().sort((a, b) => (tem.includes(b[0]) - tem.includes(a[0])) || Math.random() - .5).slice(0, 8);
@@ -2441,7 +2529,7 @@ async function jgDuelos(aba){
   const el = $('jgDu'); if(!el) return;
   el.innerHTML = `<h4>${TXJ.pendentes}</h4>${d.pendentes.length ? d.pendentes.map(p => `<div class="jg-linha"><span>🦥 <b>${esc(p.nome)}</b><small>${TXJ.nomes[p.jogo]} · ${p.pontos_de} ${TXJ.pontos}</small></span><button class="btn" data-jg="${p.jogo}" data-des='${JSON.stringify({id:p.id, pontos_de:p.pontos_de})}'>${TXJ.aceitar}</button></div>`).join('') : `<p class="jg-nota">${TXJ.semPend}</p>`}
   ${d.resultados.length ? `<h4>${TXJ.resultados}</h4>` + d.resultados.map(r => `<div class="jg-linha"><span>🦥 <b>${esc(r.nome)}</b><small>${TXJ.nomes[r.jogo]} · ${r.pontos_de} × ${r.pontos_para}</small></span><i>${r.pontos_para > r.pontos_de ? TXJ.perdeu : TXJ.venceu}</i></div>`).join('') : ''}
-  <h4>${TXJ.ranking}</h4><div class="jg-abas">${['lianas','fruta','memoria'].map(k => `<button class="salaB ${k === aba ? 'sel' : ''}" data-rk="${k}">${TXJ.nomes[k]}</button>`).join('')}</div>
+  <h4>${TXJ.ranking}</h4><div class="jg-abas">${['lianas','fruta','pong','memoria'].map(k => `<button class="salaB ${k === aba ? 'sel' : ''}" data-rk="${k}">${TXJ.nomes[k]}</button>`).join('')}</div>
   ${rk.length ? rk.map((r, i) => `<div class="jg-linha ${r.eu ? 'eu' : ''}"><span><b>${['🥇','🥈','🥉'][i] || (i + 1) + '.'} ${r.eu ? TXJ.eu : esc(r.nome)}</b></span><i>${r.pontos}</i></div>`).join('') : `<p class="jg-nota">${TXJ.semRank}</p>`}`;
   el.querySelectorAll('[data-rk]').forEach(b => b.onclick = () => jgDuelos(b.dataset.rk));
 }
@@ -2450,11 +2538,350 @@ async function jgDuelos(aba){
 function renderJogosCard(){
   let c = $('jogosCard');
   if(!c){ const bar = $('salaBar'); if(!bar) return; bar.insertAdjacentHTML('afterend', `<button class="jogosCard" id="jogosCard" data-jg="abrir"></button>`); c = $('jogosCard'); }
-  c.innerHTML = `<span class="jc-ic">🎮</span><span><b>${TXJ.titulo}</b><small>${TXJ.jogadas(jogadasRest())} · ${TXJ.sub}</small></span><span class="jc-go">${TXJ.btn}</span>`;
+  c.innerHTML = `<span class="jc-ic">🎮</span><span><b>${TXJ.titulo}</b><small>${cafPill()} · ${TXJ.sub}</small></span><span class="jc-go">${TXJ.btn}</span>`;
 }
 document.addEventListener('visibilitychange', () => { if(document.hidden && JG.jogo && JG.jogo !== 'memoria'){ /* pausa simples: termina o frame loop até voltar */ } });
 const _renderJg = render;
 render = function(){ _renderJg(); try{ renderJogosCard(); }catch(e){} };
+
+/* ---------- xadrez: motor ---------- */
+const XZ = (function(){
+  const N = -8, S = 8, E = 1, W = -1;
+  const VAL = {P:100, N:320, B:335, R:500, Q:925, K:0};
+  const PST = {
+    P:[0,0,0,0,0,0,0,0, 60,60,60,60,60,60,60,60, 12,14,20,28,28,20,14,12, 6,8,12,24,24,12,8,6, 2,4,8,20,20,8,4,2, 4,2,-4,4,4,-4,2,4, 4,8,8,-16,-16,8,8,4, 0,0,0,0,0,0,0,0],
+    N:[-40,-25,-20,-20,-20,-20,-25,-40, -25,-10,0,4,4,0,-10,-25, -20,4,10,14,14,10,4,-20, -20,4,14,18,18,14,4,-20, -20,0,14,18,18,14,0,-20, -20,4,10,14,14,10,4,-20, -25,-10,0,4,4,0,-10,-25, -40,-25,-20,-20,-20,-20,-25,-40],
+    B:[-15,-8,-8,-8,-8,-8,-8,-15, -8,4,0,0,0,0,4,-8, -8,8,8,10,10,8,8,-8, -8,0,10,12,12,10,0,-8, -8,4,8,12,12,8,4,-8, -8,6,8,8,8,8,6,-8, -8,6,0,0,0,0,6,-8, -15,-8,-10,-8,-8,-10,-8,-15],
+    R:[0,0,0,4,4,0,0,0, 8,12,12,12,12,12,12,8, -4,0,0,0,0,0,0,-4, -4,0,0,0,0,0,0,-4, -4,0,0,0,0,0,0,-4, -4,0,0,0,0,0,0,-4, -4,0,0,0,0,0,0,-4, 0,0,0,6,6,4,0,0],
+    Q:[-15,-8,-8,-4,-4,-8,-8,-15, -8,0,0,0,0,0,0,-8, -8,0,4,4,4,4,0,-8, -4,0,4,4,4,4,0,-4, -4,0,4,4,4,4,0,-4, -8,4,4,4,4,4,0,-8, -8,0,4,0,0,0,0,-8, -15,-8,-8,-4,-4,-8,-8,-15],
+    K:[-30,-40,-40,-50,-50,-40,-40,-30, -30,-40,-40,-50,-50,-40,-40,-30, -30,-40,-40,-50,-50,-40,-40,-30, -30,-40,-40,-50,-50,-40,-40,-30, -20,-30,-30,-40,-40,-30,-30,-20, -10,-20,-20,-20,-20,-20,-20,-10, 16,16,0,0,0,0,16,16, 16,28,8,0,0,8,28,16]
+  };
+  const DIRS = {N:[-17,-15,-10,-6,6,10,15,17], B:[-9,-7,7,9], R:[-8,-1,1,8], Q:[-9,-8,-7,-1,1,7,8,9], K:[-9,-8,-7,-1,1,7,8,9]};
+  const col = i => i & 7, row = i => i >> 3;
+  const isW = p => p && p === p.toUpperCase(), cor = p => !p ? null : isW(p) ? 'w' : 'b';
+
+  function fromFEN(fen){
+    const [pos, turn, castle, ep, half, full] = fen.split(' ');
+    const b = []; for(const ch of pos.replace(/\//g, '')) { if(/\d/.test(ch)) for(let k = 0; k < +ch; k++) b.push(null); else b.push(ch); }
+    return {b, turn: turn || 'w', castle: castle && castle !== '-' ? castle : '', ep: ep && ep !== '-' ? (8 - +ep[1]) * 8 + (ep.charCodeAt(0) - 97) : -1, half: +(half || 0), full: +(full || 1), hist: []};
+  }
+  const START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+  function clone(s){ return {b: s.b.slice(), turn: s.turn, castle: s.castle, ep: s.ep, half: s.half, full: s.full, hist: s.hist.slice()}; }
+
+  function attacked(b, sq, by){
+    const r = row(sq), c = col(sq);
+    // peões
+    const pr = by === 'w' ? r + 1 : r - 1, P = by === 'w' ? 'P' : 'p';
+    if(pr >= 0 && pr < 8){ if(c > 0 && b[pr*8 + c - 1] === P) return true; if(c < 7 && b[pr*8 + c + 1] === P) return true; }
+    const up = x => by === 'w' ? x.toUpperCase() : x.toLowerCase();
+    for(const d of DIRS.N){ const t = sq + d; if(t < 0 || t > 63 || Math.abs(col(t) - c) > 2) continue; if(b[t] === up('n')) return true; }
+    for(const d of DIRS.K){ const t = sq + d; if(t < 0 || t > 63 || Math.abs(col(t) - c) > 1) continue; if(b[t] === up('k')) return true; }
+    for(const d of DIRS.Q){
+      let t = sq, pc = c;
+      while(true){ t += d; if(t < 0 || t > 63 || Math.abs(col(t) - pc) > 1) break; pc = col(t);
+        const p = b[t]; if(!p) continue;
+        if(cor(p) === by){ const k = p.toUpperCase(); const diag = d === -9 || d === -7 || d === 7 || d === 9; if(k === 'Q' || (diag && k === 'B') || (!diag && k === 'R')) return true; }
+        break; }
+    }
+    return false;
+  }
+  function kingSq(b, c){ const K = c === 'w' ? 'K' : 'k'; return b.indexOf(K); }
+  function inCheck(s, c){ c = c || s.turn; return attacked(s.b, kingSq(s.b, c), c === 'w' ? 'b' : 'w'); }
+
+  function pseudo(s){
+    const b = s.b, me = s.turn, op = me === 'w' ? 'b' : 'w', mv = [];
+    for(let i = 0; i < 64; i++){
+      const p = b[i]; if(!p || cor(p) !== me) continue;
+      const k = p.toUpperCase(), r = row(i), c = col(i);
+      if(k === 'P'){
+        const d = me === 'w' ? -8 : 8, start = me === 'w' ? 6 : 1, last = me === 'w' ? 0 : 7, t = i + d;
+        const push = (f, t, extra) => { if(row(t) === last) for(const pr of ['Q','R','B','N']) mv.push(Object.assign({f, t, pr}, extra)); else mv.push(Object.assign({f, t}, extra)); };
+        if(t >= 0 && t < 64 && !b[t]){ push(i, t); if(r === start && !b[t + d]) mv.push({f:i, t:t + d, dbl:true}); }
+        for(const dc of [-1, 1]){ const cc = c + dc; if(cc < 0 || cc > 7) continue; const tt = t + dc;
+          if(b[tt] && cor(b[tt]) === op) push(i, tt);
+          else if(tt === s.ep) mv.push({f:i, t:tt, ep:true}); }
+      } else if(k === 'N' || k === 'K'){
+        for(const d of DIRS[k]){ const t = i + d; if(t < 0 || t > 63 || Math.abs(col(t) - c) > (k === 'N' ? 2 : 1)) continue; if(!b[t] || cor(b[t]) === op) mv.push({f:i, t}); }
+        if(k === 'K'){
+          const R = me === 'w' ? 7 : 0, base = R * 8;
+          if(i === base + 4 && !attacked(b, i, op)){
+            if(s.castle.includes(me === 'w' ? 'K' : 'k') && !b[base+5] && !b[base+6] && b[base+7] === (me === 'w' ? 'R' : 'r') && !attacked(b, base+5, op) && !attacked(b, base+6, op)) mv.push({f:i, t:base+6, cs:'k'});
+            if(s.castle.includes(me === 'w' ? 'Q' : 'q') && !b[base+3] && !b[base+2] && !b[base+1] && b[base] === (me === 'w' ? 'R' : 'r') && !attacked(b, base+3, op) && !attacked(b, base+2, op)) mv.push({f:i, t:base+2, cs:'q'});
+          }
+        }
+      } else {
+        for(const d of DIRS[k]){ let t = i, pc = c;
+          while(true){ t += d; if(t < 0 || t > 63 || Math.abs(col(t) - pc) > 1) break; pc = col(t);
+            if(!b[t]){ mv.push({f:i, t}); continue; } if(cor(b[t]) === op) mv.push({f:i, t}); break; } }
+      }
+    }
+    return mv;
+  }
+  function make(s, m){
+    const n = clone(s), b = n.b, p = b[m.f], me = s.turn;
+    n.hist.push(posKey(s));
+    const cap = b[m.t] || (m.ep ? b[m.t + (me === 'w' ? 8 : -8)] : null);
+    b[m.t] = m.pr ? (me === 'w' ? m.pr : m.pr.toLowerCase()) : p; b[m.f] = null;
+    if(m.ep) b[m.t + (me === 'w' ? 8 : -8)] = null;
+    if(m.cs){ const base = me === 'w' ? 56 : 0; if(m.cs === 'k'){ b[base+5] = b[base+7]; b[base+7] = null; } else { b[base+3] = b[base]; b[base] = null; } }
+    n.ep = m.dbl ? (m.f + m.t) / 2 : -1;
+    let cs = n.castle;
+    if(p === 'K') cs = cs.replace(/[KQ]/g, ''); if(p === 'k') cs = cs.replace(/[kq]/g, '');
+    const tira = sq => { if(sq === 63) cs = cs.replace('K', ''); if(sq === 56) cs = cs.replace('Q', ''); if(sq === 7) cs = cs.replace('k', ''); if(sq === 0) cs = cs.replace('q', ''); };
+    tira(m.f); tira(m.t); n.castle = cs;
+    n.half = (p.toUpperCase() === 'P' || cap) ? 0 : s.half + 1;
+    if(me === 'b') n.full++;
+    n.turn = me === 'w' ? 'b' : 'w';
+    n.last = m; n.cap = cap;
+    return n;
+  }
+  function legal(s){ return pseudo(s).filter(m => !inCheck(make(s, m), s.turn)); }
+  function posKey(s){ return s.b.map(x => x || '.').join('') + s.turn + s.castle + s.ep; }
+  function insuf(b){ const ps = b.filter(Boolean).map(x => x.toUpperCase()).filter(x => x !== 'K'); return ps.length === 0 || (ps.length === 1 && (ps[0] === 'N' || ps[0] === 'B')); }
+  function status(s){
+    const L = legal(s);
+    if(!L.length) return inCheck(s) ? 'mate' : 'afogado';
+    if(s.half >= 100) return 'empate50';
+    if(insuf(s.b)) return 'material';
+    const k = posKey(s); if(s.hist.filter(h => h === k).length >= 2) return 'repeticao';
+    return null;
+  }
+  function evalPos(s){
+    let sc = 0;
+    for(let i = 0; i < 64; i++){ const p = s.b[i]; if(!p) continue; const k = p.toUpperCase();
+      if(isW(p)) sc += VAL[k] + PST[k][i]; else sc -= VAL[k] + PST[k][(7 - row(i)) * 8 + col(i)]; }
+    return s.turn === 'w' ? sc : -sc;
+  }
+  const ordem = (s, ms) => ms.map(m => { const v = s.b[m.t]; return [m, (v ? 10 * VAL[v.toUpperCase()] - VAL[s.b[m.f].toUpperCase()] + 1000 : 0) + (m.pr ? 800 : 0)]; }).sort((a, b) => b[1] - a[1]).map(x => x[0]);
+  let nos = 0;
+  function quies(s, a, bt, d){
+    nos++; const sp = evalPos(s); if(sp >= bt) return bt; if(sp > a) a = sp; if(d <= 0) return a;
+    const caps = ordem(s, pseudo(s).filter(m => s.b[m.t] || m.ep || m.pr));
+    for(const m of caps){ const n = make(s, m); if(inCheck(n, s.turn)) continue; const v = -quies(n, -bt, -a, d - 1); if(v >= bt) return bt; if(v > a) a = v; }
+    return a;
+  }
+  function nega(s, d, a, bt, ply){
+    nos++;
+    if(d <= 0) return quies(s, a, bt, 4);
+    const ms = ordem(s, pseudo(s)); let n_ = 0;
+    for(const m of ms){ const n = make(s, m); if(inCheck(n, s.turn)) continue; n_++;
+      const v = -nega(n, d - 1, -bt, -a, ply + 1); if(v >= bt) return bt; if(v > a) a = v; }
+    if(!n_) return inCheck(s) ? -100000 + ply : 0;
+    return a;
+  }
+  function melhor(s, nivel){
+    const L = legal(s); if(!L.length) return null;
+    const prof = nivel === 0 ? 1 : nivel === 1 ? 2 : 3, ruido = nivel === 0 ? 180 : nivel === 1 ? 35 : 0;
+    nos = 0; let best = null, bv = -Infinity;
+    for(const m of ordem(s, L)){
+      const v = -nega(make(s, m), prof - 1, -Infinity, Infinity, 1) + (ruido ? (Math.random() - .5) * ruido : 0);
+      if(v > bv){ bv = v; best = m; }
+    }
+    return best;
+  }
+  function perft(s, d){ if(!d) return 1; let n = 0; for(const m of legal(s)) n += perft(make(s, m), d - 1); return n; }
+  function mateEm(s, n){ // devolve lance que força mate em n (para o lado a jogar), ou null
+    function forca(st, k){
+      for(const m of legal(st)){ const a = make(st, m), L = legal(a);
+        if(!L.length){ if(inCheck(a)) return m; continue; }
+        if(k > 1 && L.every(r => forca(make(a, r), k - 1))) return m; }
+      return null;
+    }
+    return forca(s, n);
+  }
+  return {START, fromFEN, legal, make, inCheck, status, melhor, perft, mateEm, cor, isW, row, col};
+})();
+
+
+/* ---------- xadrez da selva: peças e ecrã ---------- */
+const TXZ = ({
+  'pt-BR':{titulo:'Xadrez da Selva', contra:'Jogar contra o Dudu', niveis:['Soneca','Desperto','Mestre'], nivelDesc:['Pra aprender','Um bom desafio','Pense bem antes'], desafio:'Desafio do dia', mateEm:n => `Brancas jogam e dão mate em ${n}`, feito:'Feito hoje ✓',
+    pecas:{K:'Rei · Dudu', Q:'Rainha · Onça', R:'Torre · Tartaruga', B:'Bispo · Arara', N:'Cavalo · Anta', P:'Peão · Capivara'}, legenda:'Quem é quem', vez:'Sua vez', pensa:'O Dudu está pensando…', xeque:'Xeque!',
+    fim:{vit:'Xeque-mate! Você ganhou 🏆', der:'Xeque-mate… o Dudu ganhou 😴', afogado:'Afogado: empate 🤝', empate50:'Empate pela regra dos 50 lances 🤝', material:'Empate: não há peças pra dar mate 🤝', repeticao:'Empate por repetição 🤝'},
+    novo:'Nova partida', desfazer:'Desfazer', sair:'Sair', certo:'Isso! Mate! 🎉', quase:'Quase! Esse lance não força o mate. Tente outra vez.', resolve:'Agora termine com mate!', promo:'Promover a:', abandonar:'Desistir', confirmaAband:'Desistir mesmo?'},
+  'pt-PT':{titulo:'Xadrez da Selva', contra:'Jogar contra o Dudu', niveis:['Soneca','Desperto','Mestre'], nivelDesc:['Para aprender','Um bom desafio','Pensa bem antes'], desafio:'Desafio do dia', mateEm:n => `As brancas jogam e dão mate em ${n}`, feito:'Feito hoje ✓',
+    pecas:{K:'Rei · Dudu', Q:'Rainha · Onça', R:'Torre · Tartaruga', B:'Bispo · Arara', N:'Cavalo · Anta', P:'Peão · Capivara'}, legenda:'Quem é quem', vez:'É a tua vez', pensa:'O Dudu está a pensar…', xeque:'Xeque!',
+    fim:{vit:'Xeque-mate! Ganhaste 🏆', der:'Xeque-mate… o Dudu ganhou 😴', afogado:'Rei afogado: empate 🤝', empate50:'Empate pela regra dos 50 lances 🤝', material:'Empate: não há peças para dar mate 🤝', repeticao:'Empate por repetição 🤝'},
+    novo:'Nova partida', desfazer:'Desfazer', sair:'Sair', certo:'Isso! Mate! 🎉', quase:'Quase! Esse lance não força o mate. Tenta outra vez.', resolve:'Agora termina com mate!', promo:'Promover a:', abandonar:'Desistir', confirmaAband:'Desistir mesmo?'},
+  'en':{titulo:'Jungle Chess', contra:'Play against Dudu', niveis:['Snooze','Awake','Master'], nivelDesc:['To learn','A good challenge','Think twice'], desafio:'Daily puzzle', mateEm:n => `White to play, mate in ${n}`, feito:'Done today ✓',
+    pecas:{K:'King · Dudu', Q:'Queen · Jaguar', R:'Rook · Tortoise', B:'Bishop · Macaw', N:'Knight · Tapir', P:'Pawn · Capybara'}, legenda:'Who’s who', vez:'Your move', pensa:'Dudu is thinking…', xeque:'Check!',
+    fim:{vit:'Checkmate! You win 🏆', der:'Checkmate… Dudu wins 😴', afogado:'Stalemate: draw 🤝', empate50:'Draw by the 50-move rule 🤝', material:'Draw: not enough pieces to mate 🤝', repeticao:'Draw by repetition 🤝'},
+    novo:'New game', desfazer:'Undo', sair:'Exit', certo:'Yes! Mate! 🎉', quase:'Close! That move doesn’t force mate. Try again.', resolve:'Now finish with mate!', promo:'Promote to:', abandonar:'Resign', confirmaAband:'Really resign?'}
+})[window.CAFUNE_LANG || 'pt-BR'];
+
+const XZ_PUZ = {1:['4k3/7Q/8/4n3/8/1K6/8/2R5 w - - 0 1','8/5p1k/8/r3Qp2/8/7p/6R1/7K w - - 0 1','7k/6R1/1p6/6Q1/8/2p3p1/K7/8 w - - 0 1','k7/p5Q1/4R1p1/8/3p4/8/8/1K6 w - - 0 1','4k3/2R5/8/8/n6R/8/8/5K2 w - - 0 1','k7/4R3/8/5R2/5n2/4K3/8/8 w - - 0 1','k7/2R5/8/8/8/5R2/8/7K w - - 0 1','8/7k/8/4R3/8/b5Q1/8/7K w - - 0 1'],
+  2:['8/2p4k/8/p7/8/8/K3R3/R7 w - - 0 1','8/2p4k/6R1/8/8/8/6K1/1R6 w - - 0 1','8/6kp/8/4R3/5Q2/2K5/8/8 w - - 0 1','6k1/4Q2N/8/8/2p4p/8/3K4/8 w - - 0 1','7k/8/8/8/1p6/4p3/2QR2K1/8 w - - 0 1','1k6/8/6p1/3R4/8/8/2R5/6K1 w - - 0 1','k7/3Q4/8/8/8/8/2B5/5K2 w - - 0 1','8/rk6/R1R5/8/2p5/8/8/7K w - - 0 1','7k/8/8/3Q4/8/8/1K1R4/8 w - - 0 1','7k/8/1p5N/8/8/5Q2/8/1K6 w - - 0 1']};
+
+/* peças: mesma figura, duas cores. Coroa dourada só no Rei e na Rainha. */
+const XZ_COR = {w:{f:'#FBE7C6', s:'#EBCB9C', o:'#6B3420', b:'#FFFFFF', e:'#3B1D12', d:'#C98E5E'}, b:{f:'#7A4A2E', s:'#5C341E', o:'#1F1008', b:'#3A2215', e:'#FFF3E0', d:'#B8825C'}};
+function xzPeca(k, t){
+  const c = XZ_COR[t], O = `stroke="${c.o}" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"`;
+  const base = `<path d="M24 92 Q26 80 50 80 Q74 80 76 92 Z" fill="${c.b}" ${O}/>`;
+  const coroa = cruz => `<path d="M33 24 L36 8 L44 18 L50 4 L56 18 L64 8 L67 24 Z" fill="#F7D04A" ${O}/>${cruz ? `<path d="M50 -4 V8 M45 1 H55" stroke="${c.o}" stroke-width="3.5" stroke-linecap="round"/>` : `<circle cx="50" cy="4" r="3" fill="#E8665A" ${O}/>`}`;
+  const P = {
+    P:`${base}<ellipse cx="50" cy="70" rx="17" ry="12" fill="${c.f}" ${O}/><circle cx="38" cy="42" r="4.5" fill="${c.s}" ${O}/><circle cx="62" cy="42" r="4.5" fill="${c.s}" ${O}/><rect x="35" y="40" width="30" height="27" rx="13" fill="${c.f}" ${O}/><rect x="40" y="52" width="20" height="13" rx="6" fill="${c.s}" ${O}/><circle cx="44" cy="49" r="2.4" fill="${c.e}"/><circle cx="56" cy="49" r="2.4" fill="${c.e}"/><circle cx="46.5" cy="58" r="1.5" fill="${c.o}"/><circle cx="53.5" cy="58" r="1.5" fill="${c.o}"/>`,
+    R:`${base}<path d="M30 80 L32 36 H68 L70 80 Z" fill="${c.f}" ${O}/><path d="M28 36 V22 H36 V28 H44 V22 H56 V28 H64 V22 H72 V36 Z" fill="${c.f}" ${O}/><path d="M38 44 L50 40 L62 44 L62 58 L50 62 L38 58 Z" fill="${c.s}" ${O}/><path d="M32 66 L50 62 L68 66 M50 62 V40" stroke="${c.o}" stroke-width="2" fill="none"/><ellipse cx="22" cy="62" rx="9" ry="7.5" fill="${c.d}" ${O}/><circle cx="19" cy="60" r="1.8" fill="${c.e}"/>`,
+    N:`${base}<path d="M34 80 C34 70 36 64 34 60 L22 58 C14 56 12 48 18 44 L34 30 C38 22 46 16 54 18 L60 10 L64 22 C72 28 74 40 72 52 C70 62 66 70 68 80 Z" fill="${c.f}" ${O}/><path d="M18 44 C14 48 15 54 20 55" fill="${c.s}" ${O}/><circle cx="18" cy="50" r="1.6" fill="${c.o}"/><circle cx="40" cy="34" r="3" fill="${c.e}"/><path d="M60 24 C66 32 68 44 64 56 C62 62 60 68 62 76" stroke="${c.s}" stroke-width="6" fill="none"/>`,
+    B:`${base}<path d="M34 80 C30 62 34 46 50 40 C66 46 70 62 66 80 Z" fill="${c.f}" ${O}/><path d="M40 60 Q50 54 60 60 M38 70 Q50 64 62 70" stroke="${c.s}" stroke-width="3" fill="none"/><circle cx="50" cy="32" r="12" fill="${c.f}" ${O}/><path d="M42 24 Q44 8 50 2 Q56 8 58 24 Q50 18 42 24 Z" fill="${c.s}" ${O}/><path d="M50 6 L47 16" stroke="${c.o}" stroke-width="2.5" stroke-linecap="round"/><path d="M60 30 Q70 32 66 42 Q62 38 58 38 Z" fill="${c.d}" ${O}/><circle cx="51" cy="30" r="2.6" fill="${c.e}"/>`,
+    Q:`${base}<path d="M32 80 C30 64 36 54 50 50 C64 54 70 64 68 80 Z" fill="${c.f}" ${O}/><path d="M34 32 L30 20 L42 26 Z M66 32 L70 20 L58 26 Z" fill="${c.f}" ${O}/><circle cx="50" cy="38" r="16" fill="${c.f}" ${O}/><g fill="${c.d}"><circle cx="40" cy="31" r="2"/><circle cx="60" cy="31" r="2"/><circle cx="38" cy="42" r="1.8"/><circle cx="62" cy="42" r="1.8"/><circle cx="42" cy="66" r="2.4"/><circle cx="56" cy="62" r="2.4"/><circle cx="52" cy="72" r="2.4"/></g><ellipse cx="50" cy="44" rx="7" ry="5" fill="${c.b === '#FFFFFF' ? '#FFF8EC' : c.s}" ${O}/><circle cx="44" cy="36" r="2.4" fill="${c.e}"/><circle cx="56" cy="36" r="2.4" fill="${c.e}"/><path d="M48 42 L52 42 L50 45 Z" fill="${c.o}"/>${coroa(false)}`,
+    K:`${base}<path d="M30 80 C28 64 34 54 50 50 C66 54 72 64 70 80 Z" fill="${c.f}" ${O}/><path d="M40 68 Q50 76 60 68" stroke="${c.s}" stroke-width="4" fill="none"/><circle cx="50" cy="38" r="17" fill="${c.f}" ${O}/><ellipse cx="50" cy="40" rx="13" ry="10" fill="${t === 'w' ? '#FFF8EC' : '#A9724E'}"/><ellipse cx="43" cy="39" rx="4.6" ry="3.6" fill="${c.s}" transform="rotate(-18 43 39)"/><ellipse cx="57" cy="39" rx="4.6" ry="3.6" fill="${c.s}" transform="rotate(18 57 39)"/><circle cx="43" cy="39" r="2.2" fill="${c.e}"/><circle cx="57" cy="39" r="2.2" fill="${c.e}"/><path d="M46 46 Q50 50 54 46" stroke="${c.o}" stroke-width="2.4" fill="none" stroke-linecap="round"/>${coroa(true)}`
+  }[k];
+  return `<svg viewBox="0 -8 100 104" class="xz-p">${P}</svg>`;
+}
+
+const XG = {s:null, nivel:1, modo:'ia', sel:-1, hist:[], ocupado:false, puz:null, passo:0};
+function xzShell(inner, titulo){
+  return jgShell(`<div class="jg-top"><button class="jg-x" data-xz="menu">×</button><b>${titulo || TXZ.titulo}</b><span class="jg-pill">${cafPill()}</span></div>${inner}`);
+}
+function xzDia(){ const d = Math.floor((Date.now() - new Date().getTimezoneOffset()*60000) / 864e5), n = d % 2 ? 2 : 1, L = XZ_PUZ[n]; return {n, fen: L[d % L.length]}; }
+function xzMenu(){
+  cancelAnimationFrame(JG.raf); JG.jogo = null;
+  const pz = xzDia(), feito = (S.xz || {}).puzDia === today();
+  const o = xzShell(`<div class="xz-menu">
+    <div class="xz-hero">${xzPeca('K','w')}${xzPeca('Q','b')}${xzPeca('N','w')}</div>
+    <h4>${TXZ.contra}</h4>
+    <div class="xz-niveis">${TXZ.niveis.map((n, i) => `<button class="jg-tile" data-xz="ia" data-n="${i}"><span class="jg-ic">${['😴','🙂','🧠'][i]}</span><span><b>${n}</b><small>${TXZ.nivelDesc[i]}</small></span><i>+${[4,8,15][i]} 💛</i></button>`).join('')}</div>
+    <h4>${TXZ.desafio}</h4>
+    <button class="jg-tile" data-xz="puz"><span class="jg-ic">🧩</span><span><b>${TXZ.mateEm(pz.n)}</b><small>${feito ? TXZ.feito : '+3 💛'}</small></span></button>
+    <h4>${TXZ.legenda}</h4>
+    <div class="xz-legenda">${['K','Q','R','B','N','P'].map(k => `<div>${xzPeca(k,'w')}${xzPeca(k,'b')}<span>${TXZ.pecas[k]}</span></div>`).join('')}</div></div>`);
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('[data-xz]'); if(!b) return;
+  const k = b.dataset.xz;
+  if(k === 'menu') return jgMenu();
+  if(k === 'voltar') return xzMenu();
+  if(k === 'ia') return xzNova(+b.dataset.n);
+  if(k === 'novo') return xzNova(XG.nivel);
+  if(k === 'puz') return xzPuzzle();
+  if(k === 'desfazer') return xzDesfazer();
+  if(k === 'aband'){ if(b.dataset.c !== '1'){ b.dataset.c = '1'; b.textContent = TXZ.confirmaAband; return; } return xzFim('der'); }
+});
+function xzNova(nivel){
+  XG.s = XZ.fromFEN(XZ.START); XG.nivel = nivel; XG.modo = 'ia'; XG.sel = -1; XG.hist = []; XG.ocupado = false; XG.acabou = false;
+  track('xadrez', {nivel});
+  xzShell(`<div class="xz-jogo"><div class="xz-info" id="xzInfo">${TXZ.vez}</div><div class="xz-tab" id="xzTab"></div>
+    <div class="xz-btns"><button class="btn ghost" data-xz="desfazer" ${nivel === 0 ? '' : 'style="display:none"'}>↶ ${TXZ.desfazer}</button><button class="btn ghost" data-xz="aband">${TXZ.abandonar}</button><button class="btn ghost" data-xz="voltar">${TXZ.sair}</button></div></div>`, `♟️ ${TXZ.niveis[nivel]}`);
+  xzDesenha();
+}
+function xzPuzzle(){
+  const pz = xzDia(); XG.s = XZ.fromFEN(pz.fen); XG.modo = 'puz'; XG.puz = pz; XG.passo = 0; XG.sel = -1; XG.hist = []; XG.ocupado = false; XG.acabou = false;
+  xzShell(`<div class="xz-jogo"><div class="xz-info" id="xzInfo">${TXZ.mateEm(pz.n)}</div><div class="xz-tab" id="xzTab"></div>
+    <div class="xz-btns"><button class="btn ghost" data-xz="voltar">${TXZ.sair}</button></div></div>`, TXZ.desafio);
+  xzDesenha();
+}
+function xzDesenha(){
+  const t = $('xzTab'); if(!t) return; const s = XG.s, L = XG.sel >= 0 ? XZ.legal(s).filter(m => m.f === XG.sel) : [];
+  const alvo = new Set(L.map(m => m.t)), ult = s.last, kx = XZ.inCheck(s) ? s.b.indexOf(s.turn === 'w' ? 'K' : 'k') : -1;
+  let h = '';
+  for(let i = 0; i < 64; i++){
+    const r = i >> 3, c = i & 7, p = s.b[i], cl = (r + c) % 2 ? 'esc' : 'cla';
+    const marc = [i === XG.sel ? 'sel' : '', ult && (ult.f === i || ult.t === i) ? 'ult' : '', i === kx ? 'xq' : '', alvo.has(i) ? (p ? 'cap' : 'alvo') : ''].join(' ');
+    h += `<button class="xz-c ${cl} ${marc}" data-i="${i}">${c === 0 ? `<em class="rk">${8 - r}</em>` : ''}${r === 7 ? `<em class="fl">${'abcdefgh'[c]}</em>` : ''}${p ? xzPeca(p.toUpperCase(), XZ.isW(p) ? 'w' : 'b') : ''}</button>`;
+  }
+  t.innerHTML = h;
+  t.querySelectorAll('.xz-c').forEach(b => b.onclick = () => xzToque(+b.dataset.i));
+}
+function xzToque(i){
+  if(XG.ocupado || XG.acabou || XG.s.turn !== 'w') return;
+  const s = XG.s, p = s.b[i];
+  if(XG.sel >= 0){
+    const ms = XZ.legal(s).filter(m => m.f === XG.sel && m.t === i);
+    if(ms.length){ const m = ms.find(x => !x.pr || x.pr === 'Q') || ms[0]; return xzJoga(m); }
+  }
+  XG.sel = p && XZ.isW(p) ? (XG.sel === i ? -1 : i) : -1; xzDesenha();
+}
+function xzInfo(t, cls){ const el = $('xzInfo'); if(el){ el.textContent = t; el.className = 'xz-info ' + (cls || ''); } }
+function xzJoga(m){
+  XG.hist.push(XG.s); XG.s = XZ.make(XG.s, m); XG.sel = -1; try{ SOM.plim(); }catch(e){}
+  xzDesenha();
+  if(XG.modo === 'puz') return xzPuzPasso(m);
+  const st = XZ.status(XG.s); if(st) return xzFim(st === 'mate' ? 'vit' : st);
+  XG.ocupado = true; xzInfo(TXZ.pensa, 'pensa');
+  setTimeout(() => {
+    const r = XZ.melhor(XG.s, XG.nivel); if(!r){ XG.ocupado = false; return; }
+    XG.s = XZ.make(XG.s, r); XG.ocupado = false; xzDesenha();
+    const st2 = XZ.status(XG.s); if(st2) return xzFim(st2 === 'mate' ? 'der' : st2);
+    xzInfo(XZ.inCheck(XG.s) ? TXZ.xeque : TXZ.vez, XZ.inCheck(XG.s) ? 'xq' : '');
+  }, 350);
+}
+function xzDesfazer(){ if(XG.ocupado || XG.hist.length < 2 || XG.acabou) return; XG.hist.pop(); XG.s = XG.hist.pop(); XG.sel = -1; xzDesenha(); xzInfo(TXZ.vez); }
+function xzPuzPasso(m){
+  const s = XG.s, L = XZ.legal(s);
+  if(!L.length && XZ.inCheck(s)) return xzFim('puzOk');
+  const falta = XG.puz.n - XG.passo - 1;
+  const forca = falta > 0 && L.every(r => XZ.mateEm(XZ.make(s, r), falta));
+  if(!forca){ xzInfo(TXZ.quase, 'xq'); XG.ocupado = true; setTimeout(() => { XG.s = XG.hist.pop(); XG.ocupado = false; xzDesenha(); xzInfo(TXZ.mateEm(XG.puz.n)); }, 1300); return; }
+  XG.passo++; XG.ocupado = true; xzInfo(TXZ.pensa, 'pensa');
+  setTimeout(() => { const r = XZ.melhor(s, 2); XG.s = XZ.make(s, r); XG.ocupado = false; xzDesenha(); xzInfo(TXZ.resolve, ''); }, 500);
+}
+function xzFim(tipo){
+  XG.acabou = true; S.xz = S.xz || {v:[0,0,0], d:[0,0,0], e:[0,0,0]};
+  let c = 0, txt, face = 'orgulho';
+  if(tipo === 'puzOk'){ txt = TXZ.certo; face = 'radiante'; if(S.xz.puzDia !== today()){ S.xz.puzDia = today(); c = premioFixo(3); } }
+  else if(tipo === 'vit'){ txt = TXZ.fim.vit; face = 'radiante'; S.xz.v[XG.nivel]++; c = premioFixo([4,8,15][XG.nivel]); }
+  else if(tipo === 'der'){ txt = TXZ.fim.der; face = 'sono'; S.xz.d[XG.nivel]++; }
+  else { txt = TXZ.fim[tipo] || TXZ.fim.afogado; S.xz.e[XG.nivel]++; c = premioFixo(Math.floor([4,8,15][XG.nivel] / 2)); }
+  save(); try{ SOM.achado(); }catch(e){} track('xadrez_fim', {tipo, nivel: XG.nivel}); const pl = document.querySelector('#jogos .jg-pill'); if(pl) pl.textContent = cafPill();
+  const area = document.querySelector('#jogos .xz-jogo'); if(!area) return;
+  const box = document.createElement('div'); box.className = 'jg-fim';
+  box.innerHTML = `<div class="jg-fim-in"><div class="jg-fim-dudu">${duduSVG(face, face !== 'sono')}</div><h3>${txt}</h3>${c ? `<p class="jg-ganho">${TXJ.ganhou(c)}</p>` : (jgEstado().c >= tetoCaf() && tipo !== 'der' ? `<p class="jg-nota">${TXJ.tetoMsg}</p>` : '')}
+    <div class="jg-btns">${XG.modo === 'puz' ? '' : `<button class="btn" data-xz="novo">${TXZ.novo}</button>`}<button class="btn ghost" data-xz="voltar">${TXZ.sair}</button></div></div>`;
+  area.appendChild(box);
+}
+
+/* ---------- guarda-roupa: roupas e mais chapéus ---------- */
+const TXR = ({
+  'pt-BR':{cats:{roupa:'👕 Roupas', cabeca:'🎩 Cabeça', outros:'🧣 Acessórios'}, n:{tshirt:'Camiseta amarela', brasil:'Camisa do Brasil', listras:'Camiseta listrada', havaiana:'Camisa havaiana', futebol:'Camisa 10', pijama:'Pijama de estrelas', moletom:'Moletom cinza', moletomRosa:'Moletom rosa', puffer:'Casaco acolchoado', jeans:'Jaqueta jeans', chuva:'Capa de chuva', trico:'Suéter de tricô', palha:'Chapéu de palha', coroa:'Coroa', bandana:'Bandana', oculosSol:'Óculos escuros'}},
+  'pt-PT':{cats:{roupa:'👕 Roupa', cabeca:'🎩 Cabeça', outros:'🧣 Acessórios'}, n:{tshirt:'T-shirt amarela', brasil:'Camisola do Brasil', listras:'T-shirt às riscas', havaiana:'Camisa havaiana', futebol:'Camisola 10', pijama:'Pijama de estrelas', moletom:'Hoodie cinzento', moletomRosa:'Hoodie cor-de-rosa', puffer:'Casaco almofadado', jeans:'Casaco de ganga', chuva:'Impermeável', trico:'Camisola de malha', palha:'Chapéu de palha', coroa:'Coroa', bandana:'Bandana', oculosSol:'Óculos de sol'}},
+  'en':{cats:{roupa:'👕 Clothes', cabeca:'🎩 Head', outros:'🧣 Extras'}, n:{tshirt:'Yellow tee', brasil:'Brazil shirt', listras:'Striped tee', havaiana:'Hawaiian shirt', futebol:'No. 10 jersey', pijama:'Star pyjamas', moletom:'Grey hoodie', moletomRosa:'Pink hoodie', puffer:'Puffer jacket', jeans:'Denim jacket', chuva:'Raincoat', trico:'Knit sweater', palha:'Straw hat', coroa:'Crown', bandana:'Bandana', oculosSol:'Sunglasses'}}
+})[window.CAFUNE_LANG || 'pt-BR'];
+(function(){
+  const S5 = `stroke="${OL}" stroke-width="5" stroke-linejoin="round"`;
+  const TORSO = 'M104 252 Q116 236 134 236 Q200 248 252 232 Q268 236 276 254 C280 270 280 284 278 296 C232 308 150 308 98 296 C96 282 98 266 104 252 Z';
+  const MANGAS = cor => `<path d="M104 252 Q88 262 86 282 L104 288 Z" fill="${cor}" ${S5}/><path d="M276 254 Q292 264 294 284 L276 290 Z" fill="${cor}" ${S5}/>`;
+  const corpo = (cor, extra, def) => `<g>${def || ''}${MANGAS(cor)}<path d="${TORSO}" fill="${cor}" ${S5}/>${extra || ''}</g>`;
+  const clip = id => `<clipPath id="${id}"><path d="${TORSO}"/></clipPath>`;
+  const R = {
+    tshirt:{price:10, svg:corpo('#F7D04A', `<path d="M168 246 Q190 262 212 247" fill="none" stroke="${OL}" stroke-width="4"/><path d="M178 272 l8 -8 8 8 -8 8 Z" fill="#E8665A"/>`)},
+    brasil:{price:15, svg:corpo('#F7D04A', `<path d="M104 252 Q116 236 134 236 L150 240 L150 300 L100 296 C98 280 98 266 104 252 Z M276 254 Q268 236 252 232 L236 236 L236 302 L278 296 C280 282 280 268 276 254 Z" fill="#3E9B5B"/><circle cx="192" cy="272" r="13" fill="#3B6FC4" ${S5}/><path d="M180 270 Q192 264 204 272" stroke="#fff" stroke-width="3" fill="none"/>`)},
+    listras:{price:15, svg:corpo('#fff', `<g clip-path="url(#clL)" stroke="#3B6FC4" stroke-width="9">${[252,270,288].map(y => `<path d="M90 ${y} H290"/>`).join('')}</g>`, `<defs>${clip('clL')}</defs>`)},
+    havaiana:{price:20, svg:corpo('#4FB3B0', `<g clip-path="url(#clH)">${[[130,262],[176,286],[222,258],[258,284],[150,296],[200,268]].map(([x,y]) => `<g transform="translate(${x} ${y})"><circle r="7" fill="#F7D04A"/><circle r="7" cx="9" fill="#F28CA8"/><circle r="5" cy="-8" fill="#F28CA8"/></g>`).join('')}</g><path d="M178 246 L192 270 L206 246" fill="none" stroke="${OL}" stroke-width="4"/>`, `<defs>${clip('clH')}</defs>`)},
+    futebol:{price:20, svg:corpo('#E8665A', `<text x="190" y="290" font-size="44" font-weight="900" text-anchor="middle" fill="#fff" stroke="${OL}" stroke-width="2.5" font-family="system-ui,sans-serif">10</text><path d="M104 252 L86 282 M276 254 L294 284" stroke="#fff" stroke-width="5"/>`)},
+    pijama:{price:20, svg:corpo('#9FB4E8', `<g fill="#FFF3B0">${[[130,266],[170,288],[212,262],[250,286],[150,246],[236,250]].map(([x,y]) => `<path transform="translate(${x} ${y})" d="M0 -8 L2.4 -2.4 8 -2 3.6 1.8 5 8 0 4.6 -5 8 -3.6 1.8 -8 -2 -2.4 -2.4 Z"/>`).join('')}</g>`)},
+    moletom:{price:25, svg:corpo('#A9AEB8', `<path d="M140 238 Q190 266 244 236" fill="none" stroke="${OL}" stroke-width="5"/><path d="M178 250 L176 276 M206 250 L208 276" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><path d="M150 278 H234 L226 300 H158 Z" fill="#959AA5" ${S5}/>`)},
+    moletomRosa:{price:25, svg:corpo('#F2A7C3', `<path d="M140 238 Q190 266 244 236" fill="none" stroke="${OL}" stroke-width="5"/><path d="M178 250 L176 276 M206 250 L208 276" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><path d="M150 278 H234 L226 300 H158 Z" fill="#E68DB0" ${S5}/>`)},
+    puffer:{price:30, svg:corpo('#5B8DEF', `<g clip-path="url(#clP)" stroke="#3E6FD0" stroke-width="4" fill="none">${[256,272,288].map(y => `<path d="M90 ${y} Q190 ${y + 8} 290 ${y}"/>`).join('')}</g><path d="M192 244 V304" stroke="${OL}" stroke-width="4"/><rect x="186" y="250" width="12" height="9" rx="2" fill="#DDE6F7" stroke="${OL}" stroke-width="2.5"/>`, `<defs>${clip('clP')}</defs>`)},
+    jeans:{price:30, svg:corpo('#6C8FC7', `<path d="M190 244 V304" stroke="#4E6FA6" stroke-width="4"/><path d="M140 240 L170 262 L190 244 M244 236 L214 262 L194 244" fill="none" stroke="${OL}" stroke-width="4"/><g fill="#F3C969" stroke="${OL}" stroke-width="2"><circle cx="198" cy="270" r="3.5"/><circle cx="198" cy="288" r="3.5"/></g><rect x="134" y="270" width="28" height="18" rx="3" fill="none" stroke="#F3C969" stroke-width="3" stroke-dasharray="4 3"/><rect x="220" y="270" width="28" height="18" rx="3" fill="none" stroke="#F3C969" stroke-width="3" stroke-dasharray="4 3"/>`)},
+    chuva:{price:25, svg:corpo('#F7D04A', `<path d="M192 244 V304" stroke="${OL}" stroke-width="4"/><g fill="#fff" stroke="${OL}" stroke-width="2.5"><rect x="196" y="256" width="10" height="5" rx="2"/><rect x="196" y="272" width="10" height="5" rx="2"/><rect x="196" y="288" width="10" height="5" rx="2"/></g><path d="M134 236 Q150 260 172 248" fill="#E8B92E" ${S5}/>`)},
+    trico:{price:25, svg:corpo('#C9563F', `<g clip-path="url(#clT)" fill="none" stroke="#E58A6D" stroke-width="3.5">${[150,190,230].map(x => `<path d="M${x} 240 l8 10 -8 10 8 10 -8 10 8 10 -8 10"/>`).join('')}</g><path d="M104 286 C150 300 232 300 278 288" stroke="#A3432F" stroke-width="7" fill="none"/>`, `<defs>${clip('clT')}</defs>`)},
+    palha:{price:20, cab:true, svg:`<g transform="rotate(-10 198 150)"><ellipse cx="198" cy="96" rx="132" ry="26" fill="#F1D08A" ${S5}/><path d="M128 96 C128 40 268 40 268 96 Z" fill="#F1D08A" ${S5}/><path d="M130 84 Q198 100 266 84" stroke="#E8665A" stroke-width="10" fill="none"/><path d="M150 60 L162 70 M198 52 V64 M246 60 L234 70" stroke="#D6B26A" stroke-width="3"/></g>`},
+    coroa:{price:40, cab:true, svg:`<g transform="rotate(-10 198 150)"><path d="M136 100 L130 38 L166 70 L198 26 L230 70 L266 38 L260 100 Z" fill="#F7D04A" ${S5}/><rect x="130" y="92" width="136" height="16" rx="6" fill="#F2B90F" ${S5}/><circle cx="198" cy="76" r="9" fill="#E8665A" stroke="${OL}" stroke-width="4"/><circle cx="160" cy="84" r="6" fill="#8FC1E3" stroke="${OL}" stroke-width="3"/><circle cx="236" cy="84" r="6" fill="#7DB87A" stroke="${OL}" stroke-width="3"/></g>`},
+    bandana:{price:15, cab:true, svg:`<g transform="rotate(-10 198 150)"><path d="M118 104 C116 50 280 50 278 104 C230 94 166 94 118 104 Z" fill="#E8665A" ${S5}/><g fill="#fff">${[[150,80],[182,72],[214,72],[246,80],[198,90],[166,92],[230,92]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="4"/>`).join('')}</g><path d="M276 100 L306 92 L300 116 Z M278 104 L308 120 L292 132 Z" fill="#E8665A" ${S5}/></g>`},
+    oculosSol:{price:20, svg:`<g transform="rotate(-10 210 155)" stroke="${OL}" stroke-width="5"><path d="M134 156 H198 Q198 196 166 196 Q134 196 134 156 Z" fill="#2E2A36"/><path d="M222 156 H286 Q286 196 254 196 Q222 196 222 156 Z" fill="#2E2A36"/><path d="M198 162 Q210 154 222 162" fill="none"/><path d="M146 166 L160 160" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".7"/></g>`}
+  };
+  const VB_ROUPA = '80 222 220 92', VB_CAB = '110 10 220 130', VB_OC = '120 130 180 80';
+  window.ROUPAS = [];
+  Object.entries(R).forEach(([k, v]) => {
+    ACC[k] = {name: TXR.n[k], price: v.price, svg: v.svg};
+    if(v.cab){ HATS.push(k); ACC_VB[k] = VB_CAB; ACC_ORDER.push(k); }
+    else if(k === 'oculosSol'){ ACC_VB[k] = VB_OC; ACC_ORDER.push(k); }
+    else { ROUPAS.push(k); ACC_VB[k] = VB_ROUPA; }
+  });
+  ACC_ORDER.unshift(...ROUPAS);
+})();
+function accCat(k){ return ROUPAS.includes(k) ? 'roupa' : (HATS.includes(k) || ['laco','flor','fones'].includes(k)) ? 'cabeca' : 'outros'; }
+function renderLojaTabs(){
+  const shop = $('shop'); if(!shop) return;
+  let tabs = $('lojaTabs');
+  if(!tabs){ shop.insertAdjacentHTML('beforebegin', '<div class="salaRow lojaTabs" id="lojaTabs"></div>'); tabs = $('lojaTabs'); }
+  const cat = S.lojaCat || 'roupa';
+  tabs.innerHTML = Object.keys(TXR.cats).map(c => `<button class="salaB ${c === cat ? 'sel' : ''}" data-lcat="${c}">${TXR.cats[c]}</button>`).join('');
+  shop.querySelectorAll('[data-acc]').forEach(b => { b.style.display = accCat(b.dataset.acc) === cat ? '' : 'none'; });
+}
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-lcat]'); if(!b) return; S.lojaCat = b.dataset.lcat; renderLojaTabs(); });
+const _renderRoupa = render;
+render = function(){ _renderRoupa(); try{ renderLojaTabs(); }catch(e){} };
 
 /* ---------- boot ---------- */
 render(); drawDudu(); idleLine(); renderConta();
